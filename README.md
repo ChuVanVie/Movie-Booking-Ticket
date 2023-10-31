@@ -28,7 +28,7 @@ docker compose up -d
 
 ```sh
 docker exec -it mbt-backend bash
-cd backend
+# cd backend
 ```
 
 ### 4. **Laravel** set up:
@@ -42,9 +42,9 @@ cp .env.example .env
 
 ```sh
 DB_CONNECTION=mysql
-DB_HOST=movie-booking-ticket-db
+DB_HOST=mbt-db
 DB_PORT=3306
-DB_DATABASE=movie-booking-ticket
+DB_DATABASE=mbt
 DB_USERNAME=admin
 DB_PASSWORD=12345678
 
