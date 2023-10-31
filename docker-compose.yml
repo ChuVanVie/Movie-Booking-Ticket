@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+
+  server:
+    container_name: mbt-nginx
+    image: 'nginx:alpine'
+    ports:
+      - '8080:80'
+    volumes:
+      - ./backend:/var/www/backend
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - backend
+    networks:
+      - mbt-network
+  
+  backend:
+    build:
+      context: ./docker
+      dockerfile: backend.dockerfile
+    container_name: mbt-backend
+    volumes:
+      - ./backend:/var/www/backend
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - mbt-network
+  
+  db:
+    image: mysql:8.0.32
+    container_name: mbt-db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345678
+      - MYSQL_DATABASE=mbt
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=12345678
+    networks:
+      - mbt-network
+
+  redis:
+    image: redis:alpine
+    container_name: mbt-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./docker/redis/data:/data
+    networks:
+      - mbt-network
+  
+networks:
+  mbt-network:
+    driver: bridge
