@@ -6,9 +6,11 @@ services:
     container_name: mbt-nginx
     image: 'nginx:alpine'
     ports:
+      - '5000:81'
       - '8080:80'
     volumes:
       - ./backend:/var/www/backend
+      - ./frontend:/var/www/frontend
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     depends_on:
       - backend

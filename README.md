@@ -1,9 +1,6 @@
 # Movie-Booking-Ticket
 Movie Booking Ticket for Teeiv Cinema 
 
-
-# Vote App
-
 ## Components Versions
 
 - [Nginx](https://hub.docker.com/_/nginx)
@@ -27,8 +24,8 @@ docker compose up -d
 ### 3. Exec into `backend` container:
 
 ```sh
+cd backend
 docker exec -it mbt-backend bash
-# cd backend
 ```
 
 ### 4. **Laravel** set up:
@@ -83,6 +80,14 @@ PASSPORT_PASSWORD_GRANT_CLIENT_ID=2
 PASSPORT_PASSWORD_GRANT_CLIENT_SECRET=K3AKgZGMtXo9lPXBDT6UFrnyr4o0XThrZvthfsUq
 ```
 
+#### Redis configuration:
+
+```sh
+# REDIS_HOST=vote-app-redis
+# REDIS_PASSWORD=null
+# REDIS_PORT=6379
+# REDIS_CLIENT=predis
+
 ### 5. Stop and clear services:
 
 ```sh
@@ -103,3 +108,42 @@ yarn build
 Go to http://localhost:8080/ to test api on swagger.
 ```
 
+## Frontend set up
+
+### 1. Install dependencies:
+
+`cd frontend`
+
+```sh
+npm install
+# or
+yarn install
+```
+
+### 2. Create `.env` file:
+
+```sh
+cp .env.example .env
+```
+
+set `VUE_APP_API_URL` in `.env` file:
+
+```sh
+VUE_APP_API_URL=http://localhost:8080/api
+```
+
+### 3. Run project on development mode:
+
+```sh
+npm run dev
+# or
+yarn dev
+```
+
+### 4. Build project:
+
+```sh
+npm run build
+# or
+yarn build
+```
