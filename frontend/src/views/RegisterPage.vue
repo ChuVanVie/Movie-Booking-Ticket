@@ -3,7 +3,7 @@
 </script>
 <template>
     <div>
-        Đây là homepageee!
+        Đây là register
     </div>
 </template>
 

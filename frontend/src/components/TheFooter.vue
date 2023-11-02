@@ -1,9 +1,9 @@
 <script setup>
 
 </script>
-<template>
+<template lang="">
     <div>
-        Đây là homepageee!
+        Teeiv Cinema Footer
     </div>
 </template>
 
