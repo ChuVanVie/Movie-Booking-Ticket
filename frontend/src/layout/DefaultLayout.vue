@@ -13,5 +13,7 @@ import TheFooter from '../components/TheFooter.vue'
 </template>
 
 <style scoped> 
-
+  #main {
+    position: relative;
+  }
 </style>
