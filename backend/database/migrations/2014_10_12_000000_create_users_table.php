@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email')->unique()->comment('Email');
             $table->string('password')->comment('Mật khẩu');
             $table->tinyInteger('role')->default(config('constants.ROLE.USER'));
-            $table->string('avatar')->nullable()->comment('Avatar');
             $table->dateTime('dob')->nullable()->comment('Ngày sinh');
             $table->string('phone', 100)->unique(true)->nullable()->comment('SĐT');
             $table->string('address')->nullable()->comment('Địa chỉ');
