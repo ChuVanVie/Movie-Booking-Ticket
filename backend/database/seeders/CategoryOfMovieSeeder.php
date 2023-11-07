@@ -84,6 +84,21 @@ class CategoryOfMovieSeeder extends Seeder
         ]);
 
         DB::table('categories_of_movies')->insert([
+            'movie_id' => 6,
+            'category_id' => 5
+        ]);
+
+        DB::table('categories_of_movies')->insert([
+            'movie_id' => 6,
+            'category_id' => 9
+        ]);
+
+        DB::table('categories_of_movies')->insert([
+            'movie_id' => 6,
+            'category_id' => 10
+        ]);
+
+        DB::table('categories_of_movies')->insert([
             'movie_id' => 7,
             'category_id' => 4
         ]);

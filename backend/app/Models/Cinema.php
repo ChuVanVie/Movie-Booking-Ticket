@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Cinema extends Model
 {
@@ -36,5 +37,9 @@ class Cinema extends Model
 
     public function theaters(){
         return $this->hasMany(Theater::class);
+    }
+
+    public function showtimes(){
+        return $this->hasMany(Showtime::class);
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('country_id');
             $table->string('duration')->comment('Thời lượng');
             $table->integer('year')->comment('Năm phát hành');
-            $table->string('decs')->comment('Mô tả');
+            $table->text('desc')->comment('Mô tả');
             $table->float('rating')->nullable()->comment('Đánh giá trung bình');
             $table->string('thumb_url')->comment('Link thumbnail');
             $table->string('poster_url')->comment('Link poster');

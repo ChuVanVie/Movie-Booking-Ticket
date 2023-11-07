@@ -13,11 +13,256 @@ class SeatSeeder extends Seeder
      */
     public function run(): void
     {
-        Seat::create([
-            'theater_id' => 1,
-            'seat_number' => 'HN001',
-            'status' => 40,
-            'price' => 'available',
-        ]);
+        // 'status' => ($id > 1 && $id < 6) ? 'Reserved' : 'Available',
+
+        //Rạp Hà Nội
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 1,
+                'seat_number' => 'A' . $id,
+                'status' => 'Available',
+                'price' => 80000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 1,
+                'seat_number' => 'B' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 1,
+                'seat_number' => 'C' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 1,
+                'seat_number' => 'D' . $id,
+                'status' => 'Available',
+                'price' => 40000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 1,
+                'seat_number' => 'E' . $id,
+                'status' => 'Available',
+                'price' => 40000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 2,
+                'seat_number' => 'A' . $id,
+                'status' => 'Available',
+                'price' => 80000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 2,
+                'seat_number' => 'B' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 2,
+                'seat_number' => 'C' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 2,
+                'seat_number' => 'D' . $id,
+                'status' => 'Available',
+                'price' => 40000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 2,
+                'seat_number' => 'E' . $id,
+                'status' => 'Available',
+                'price' => 40000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 3,
+                'seat_number' => 'A' . $id,
+                'status' => 'Available',
+                'price' => 80000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 3,
+                'seat_number' => 'B' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 3,
+                'seat_number' => 'C' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 3,
+                'seat_number' => 'D' . $id,
+                'status' => 'Available',
+                'price' => 40000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 3,
+                'seat_number' => 'E' . $id,
+                'status' => 'Available',
+                'price' => 40000,
+            ]);
+        }
+
+
+        //Rạp Hải Phòng
+        foreach (range(1, 6) as $id) {
+            Seat::create([
+                'theater_id' => 4,
+                'seat_number' => 'A' . $id,
+                'status' => 'Available',
+                'price' => 80000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 4,
+                'seat_number' => 'B' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 4,
+                'seat_number' => 'C' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 4,
+                'seat_number' => 'D' . $id,
+                'status' => 'Available',
+                'price' => 40000,
+            ]);
+        }
+
+
+        //Rạp Vĩnh Phúc
+        foreach (range(1, 6) as $id) {
+            Seat::create([
+                'theater_id' => 5,
+                'seat_number' => 'A' . $id,
+                'status' => 'Available',
+                'price' => 80000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 5,
+                'seat_number' => 'B' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 5,
+                'seat_number' => 'C' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 5,
+                'seat_number' => 'D' . $id,
+                'status' => 'Available',
+                'price' => 40000,
+            ]);
+        }
+
+        //Rạp Phú Thọ
+        foreach (range(1, 6) as $id) {
+            Seat::create([
+                'theater_id' => 6,
+                'seat_number' => 'A' . $id,
+                'status' => 'Available',
+                'price' => 80000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 6,
+                'seat_number' => 'B' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 6,
+                'seat_number' => 'C' . $id,
+                'status' => 'Available',
+                'price' => 60000,
+            ]);
+        }
+
+        foreach (range(1, 8) as $id) {
+            Seat::create([
+                'theater_id' => 6,
+                'seat_number' => 'D' . $id,
+                'status' => 'Available',
+                'price' => 40000,
+            ]);
+        }
+        
     }
 }

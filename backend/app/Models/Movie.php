@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Movie extends Model
 {
@@ -20,7 +21,7 @@ class Movie extends Model
         'country_id',
         'duration',
         'year',
-        'decs',
+        'desc',
         'rating',
         'thumb_url',
         'poster_url',

@@ -15,37 +15,30 @@ class CountrySeeder extends Seeder
     {
         Country::create([
             'country_name' => 'Hàn Quốc',
-            'slug' => 'han-quoc'
         ]);
 
         Country::create([
             'country_name' => 'Trung Quốc',
-            'slug' => 'trung-quoc'
         ]);
 
         Country::create([
             'country_name' => 'Canada',
-            'slug' => 'canada'
         ]);
 
         Country::create([
             'country_name' => 'Âu Mỹ',
-            'slug' => 'au-my'
         ]);
 
         Country::create([
             'country_name' => 'Thổ Nhĩ Kỳ',
-            'slug' => 'tho-nhi-ky'
         ]);
 
         Country::create([
             'country_name' => 'Việt Nam',
-            'slug' => 'viet-nam'
         ]);
 
         Country::create([
             'country_name' => 'Nhật Bản',
-            'slug' => 'nhat-ban'
         ]);
     }
 }
