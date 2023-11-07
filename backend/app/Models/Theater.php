@@ -18,10 +18,18 @@ class Theater extends Model
         'cinema_id',
         'theater_name',
         'capacity',
-        'state',
+        'status',
     ];
 
     public function cinema(){
         return $this->belongsTo(Cinema::class, 'cinema_id');
+    }
+
+    public function seats(){
+        return $this->hasMany(Seat::class);
+    }
+
+    public function showtimes(){
+        return $this->hasMany(Showtime::class);
     }
 }

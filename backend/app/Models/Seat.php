@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PaymentHistory extends Model
+class Seat extends Model
 {
     use HasFactory;
 
@@ -15,13 +15,14 @@ class PaymentHistory extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'reservation_id',
-        'payment_date',
-        'payment_method',
-        'amout',
+        'theater_id',
+        'seat_number',
+        'status',
+        'price',
     ];
 
-    public function reservations(){
-        return $this->belongsTo(Reservation::class, 'reservation_id');
+    public function theater(){
+        return $this->belongsTo(Theater::class, 'theater_id');
     }
+
 }

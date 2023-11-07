@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cinemas', function (Blueprint $table) {
             $table->id();
-            $table->string('cinema_name')->comment('Tên rạp');
+            $table->string('cinema_name')->unique()->comment('Tên rạp');
             $table->string('slug');
             $table->string('address')->comment('Địa chỉ rạp');
             $table->string('phone')->comment('SĐT rạp');

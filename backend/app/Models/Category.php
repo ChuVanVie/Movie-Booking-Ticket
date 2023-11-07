@@ -26,4 +26,8 @@ class Category extends Model
             $model->slug = Str::slug($model->category_name);
         });
     }
+
+    public function movies(){
+        return $this->belongsToMany(Movie::class, 'movies_categories', 'category_id');
+    }
 }

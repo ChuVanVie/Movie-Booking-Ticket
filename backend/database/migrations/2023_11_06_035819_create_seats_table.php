@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('showtimes', function (Blueprint $table) {
+        Schema::create('seats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('movie_id');
             $table->unsignedBigInteger('theater_id');
-            $table->dateTime('start_time')->comment('Thời gian bắt đầu movie');
-            $table->dateTime('end_time')->comment('Thời gian kết thúc movie');
+            $table->string('seat_number')->comment('Tên phòng chiếu');
+            $table->string('status')->comment('Trạng thái ghế');
+            $table->integer('price')->comment('Giá ghế');
             $table->timestamps();
 
-            $table->foreign('movie_id')->references('id')->on('movies')->onDelete('cascade');
             $table->foreign('theater_id')->references('id')->on('theaters')->onDelete('cascade');
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('showtimes');
+        Schema::dropIfExists('seats');
     }
 };

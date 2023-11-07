@@ -26,4 +26,8 @@ class Country extends Model
             $model->slug = Str::slug($model->country_name);
         });
     }
+
+    public function movies(){
+        return $this->hasMany(Movie::class);
+    }
 }

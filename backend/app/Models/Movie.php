@@ -17,7 +17,6 @@ class Movie extends Model
     protected $fillable = [
         'movie_name',
         'slug',
-        'category_id',
         'country_id',
         'duration',
         'year',
@@ -41,13 +40,20 @@ class Movie extends Model
         });
     }
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'category_id');
+    public function categories(){
+        return $this->belongsToMany(Category::class, 'movies_categories', 'movie_id');
     }
 
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    public function showtimes(){
+        return $this->hasMany(Showtime::class);
+    }
+
+    public function rates(){
+        return $this->hasMany(Rate::class);
     }
 }

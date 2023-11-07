@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('cinema_id');
             $table->string('theater_name')->comment('Tên phòng chiếu');
-            $table->string('capacity')->comment('Tổng số ghế');
-            $table->string('state')->comment('Trạng thái');
+            $table->integer('capacity')->comment('Tổng số ghế');
+            $table->string('status')->comment('Trạng thái');
             $table->timestamps();
 
             $table->foreign('cinema_id')->references('id')->on('cinemas')->onDelete('cascade');

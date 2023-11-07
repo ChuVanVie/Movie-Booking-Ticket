@@ -13,20 +13,18 @@ return new class extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
-            $table->string('movie_name')->comment('Tên movie');
+            $table->string('movie_name')->unique()->comment('Tên movie');
             $table->string('slug');
-            $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('country_id');
             $table->string('duration')->comment('Thời lượng');
             $table->integer('year')->comment('Năm phát hành');
             $table->string('decs')->comment('Mô tả');
-            $table->string('rating')->nullable()->comment('Đánh giá trung bình');
+            $table->float('rating')->nullable()->comment('Đánh giá trung bình');
             $table->string('thumb_url')->comment('Link thumbnail');
             $table->string('poster_url')->comment('Link poster');
             $table->string('trailer_url')->comment('Link trailer');
             $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });
     }
