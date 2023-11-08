@@ -21,7 +21,7 @@ class PaymentHistory extends Model
         'amout',
     ];
 
-    public function reservations(){
+    public function reservation(){
         return $this->belongsTo(Reservation::class, 'reservation_id');
     }
 }

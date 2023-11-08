@@ -29,7 +29,7 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 1,
                 'seat_number' => 'B' . $id,
-                'status' => 'Available',
+                'status' => ($id > 3 && $id < 6) ? 'Reserved' : 'Available',
                 'price' => 60000,
             ]);
         }
@@ -65,7 +65,7 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 2,
                 'seat_number' => 'A' . $id,
-                'status' => 'Available',
+                'status' => ($id > 1 && $id < 4) ? 'Reserved' : 'Available',
                 'price' => 80000,
             ]);
         }
@@ -74,7 +74,7 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 2,
                 'seat_number' => 'B' . $id,
-                'status' => 'Available',
+                'status' => $id == 4 ? 'Reserved' : 'Available',
                 'price' => 60000,
             ]);
         }
@@ -110,7 +110,7 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 3,
                 'seat_number' => 'A' . $id,
-                'status' => 'Available',
+                'status' => ($id > 2 && $id < 5) ? 'Reserved' : 'Available',
                 'price' => 80000,
             ]);
         }
@@ -128,7 +128,7 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 3,
                 'seat_number' => 'C' . $id,
-                'status' => 'Available',
+                'status' => ($id > 1 && $id < 6) ? 'Reserved' : 'Available',
                 'price' => 60000,
             ]);
         }
@@ -222,7 +222,7 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 5,
                 'seat_number' => 'D' . $id,
-                'status' => 'Available',
+                'status' => ($id > 2 && $id < 6) ? 'Reserved' : 'Available',
                 'price' => 40000,
             ]);
         }
@@ -232,7 +232,7 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 6,
                 'seat_number' => 'A' . $id,
-                'status' => 'Available',
+                'status' =>  $id < 3 ? 'Reserved' : 'Available',
                 'price' => 80000,
             ]);
         }

@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
                 ShowtimeSeeder::class,
                 ReservationSeeder::class,
                 RateSeeder::class,
+                PaymentHistorySeeder::class,
             ]);
     }
 }

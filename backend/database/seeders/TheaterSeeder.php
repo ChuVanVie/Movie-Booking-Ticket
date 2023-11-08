@@ -17,7 +17,7 @@ class TheaterSeeder extends Seeder
             'cinema_id' => 1,
             'theater_name' => 'HN001',
             'capacity' => 40,
-            'status' => 'available',
+            'status' => 'Available',
         ]);
 
         Theater::create([
@@ -31,7 +31,7 @@ class TheaterSeeder extends Seeder
             'cinema_id' => 1,
             'theater_name' => 'HN003',
             'capacity' => 40,
-            'status' => 'In use',
+            'status' => 'Available',
         ]);
 
         Theater::create([
