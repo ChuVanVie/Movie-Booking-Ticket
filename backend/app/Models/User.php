@@ -13,7 +13,8 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements CanResetPassword
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    // use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +26,6 @@ class User extends Authenticatable implements CanResetPassword
         'email',
         'password',
         'role',
-        'avatar',
         'dob',
         'phone',
         'address'
@@ -50,4 +50,12 @@ class User extends Authenticatable implements CanResetPassword
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function reservations(){
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function rates(){
+        return $this->hasMany(Rate::class);
+    }
 }

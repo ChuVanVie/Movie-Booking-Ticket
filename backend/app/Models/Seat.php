@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Seat extends Model
+{
+    use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'theater_id',
+        'seat_number',
+        'status',
+        'price',
+    ];
+
+    public function theater(){
+        return $this->belongsTo(Theater::class, 'theater_id');
+    }
+
+}
