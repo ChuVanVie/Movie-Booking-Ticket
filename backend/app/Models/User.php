@@ -13,8 +13,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements CanResetPassword
 {
-    // use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Api\AuthController;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Apis authentication
+Route::prefix('auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/refresh', [AuthController::class, 'refreshToken']);
+    Route::delete('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.forgot');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 });
