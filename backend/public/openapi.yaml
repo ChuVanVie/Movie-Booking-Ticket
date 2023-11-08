@@ -1,0 +1,415 @@
+openapi: 3.0.0
+info:
+  title: Movie Booking Ticket API - OpenAPI 3.0
+  description: This is a sample MBT Server based on the OpenAPI 3.0 specification.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080/api
+    description: local server
+
+tags:
+  - name: auth
+    description: Everything about Api Authentication
+
+paths:
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Api login
+      description: Verify email and password
+      operationId: login
+      requestBody:
+        description: Info login
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Login"
+      responses:
+        "200":
+          description: Login successful!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAuthentication"
+        "401":
+          description: Login failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  code:
+                    type: integer
+                    default: 401
+                  message:
+                    type: string
+  /auth/refresh:
+    post:
+      tags:
+        - auth
+      summary: Api refresh token
+      description: Return new access token and refresh token
+      operationId: refresh
+      requestBody:
+        description: Refresh token
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+      responses:
+        "200":
+          description: Successfull
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token_type:
+                    type: string
+                    default: "Bearer"
+                  expires_in:
+                    type: integer
+                  access_token:
+                    type: string
+                  refresh_token:
+                    type: string
+        "401":
+          description: Token Invalid or Token Expired
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  code:
+                    type: integer
+                    default: 401
+                  message:
+                    type: string
+                    default: "TOKEN_INVALID"
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: Api register
+      description: Register new user
+      operationId: register
+      requestBody:
+        description: Info register
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Register"
+      responses:
+        "201":
+          description: Register successful!
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegisterResponse"
+        "401":
+          description: Register failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  code:
+                    type: integer
+                    default: 401
+                  message:
+                    type: string
+  /auth/logout:
+    delete:
+      tags:
+        - auth
+      summary: Api logout
+      description: Revoke access token & refresh token
+      operationId: logout
+      responses:
+        "200":
+          description: Login successful!
+        "401":
+          description: Token Invalid or Token Expired
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  code:
+                    type: integer
+                    default: 401
+                  message:
+                    type: string
+      security:
+        - bearerAuth: [ ]
+
+  /auth/forgot-password:
+    post:
+      tags:
+        - auth
+      summary: Api forgot password
+      description: Send email reset password
+      operationId: forgotPassword
+      requestBody:
+        description: Info forgot password
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        "200":
+          description: Send email reset password successful!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: 'Send email reset password successfully!'
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  code:
+                    type: integer
+                    default: 404
+                  message:
+                    type: string
+                    default: 'User not found'
+        "500":
+          description: Send email reset password failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Send email reset password failed'
+
+  /auth/reset-password:
+    post:
+      tags:
+        - auth
+      summary: Api reset password
+      description: Reset password
+      operationId: resetPassword
+      requestBody:
+        description: Info reset password
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                new_password:
+                  type: string
+                token:
+                  type: string
+      responses:
+        "200":
+          description: Reset password successful!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: 'Reset password successfully!'
+        "401":
+          description: Token Invalid or Token Expired
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  code:
+                    type: integer
+                    default: 401
+                  message:
+                    type: string
+                    default: 'Token invalid or token expired'
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  code:
+                    type: integer
+                    default: 404
+                  message:
+                    type: string
+                    default: 'User not found'
+        "500":
+          description: Reset password failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+        
+components:
+  schemas:
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+          default: "vietcv@mail.com"
+        password:
+          type: string
+          default: '12345678'
+
+    Register:
+      type: object
+      properties:
+        email:
+          type: string
+          default: "vietcv@mail.com"
+        password:
+          type: string
+          default: "12345678"
+        name:
+          type: string
+          default: "Chu Văn Việt"
+        dob:
+          type: string
+          format: date
+        phone:
+          type: string
+          default: '0721198873'
+        address:
+          type: string
+          default: 'Hà Nội'
+
+    RegisterResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        code:
+          type: integer
+          default: 201
+        data:
+          type: object
+
+    ResponseAuthentication:
+      type: object
+      properties:
+        success:
+          type: boolean
+        code:
+          type: integer
+          default: 200
+        message:
+          type: string
+          default: "LOGIN_SUCCESSFUL"
+        token_type:
+          type: string
+          default: "Bearer"
+        expires_in:
+          type: integer
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        data:
+          type: object
+
+    ResponseSuccess:
+      type: object
+      properties:
+        success:
+          type: boolean
+        code:
+          type: integer
+          default: 200
+        data:
+          type: object
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: integer
+        dob:
+          type: datetime
+        phone:
+          type: string
+        address:
+          type: string
+        email_verified_at:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        deleted_at:
+          type: string
+
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
