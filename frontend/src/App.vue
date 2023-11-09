@@ -28,7 +28,7 @@ const scrollToTop = () => {
 }
 
 .btn-scroll-top:hover {
-    background: #050505;
+    background: #FFF;
     color: #004999;
 }
 </style>

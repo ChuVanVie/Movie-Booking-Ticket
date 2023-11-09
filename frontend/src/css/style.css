@@ -33,6 +33,10 @@ html {
     scroll-behavior: smooth;
   }
 
+/* body {
+    color: #fff;
+    background-color: #0f172a;
+} */
 
 .m-mask {
     position: fixed;
@@ -138,6 +142,17 @@ html {
 
 .absolute {
     position: absolute;
+}
+
+input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
 }
 
 @keyframes opacity {
