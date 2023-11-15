@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\MovieController;
 
 
 /*
@@ -25,4 +26,11 @@ Route::prefix('auth')->group(function () {
     Route::delete('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('password.forgot');
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
+});
+
+// Apis movie
+Route::prefix('movies')->group(function () {
+    Route::get('/', [MovieController::class, 'getAllMovies']);
+    Route::get('/{movieId}', [MovieController::class, 'getDetailMovie'])->where(['movieId' => '[0-9]+']);
+    Route::get('/search', [MovieController::class, 'seachMovie']);
 });

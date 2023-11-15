@@ -25,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\User\UserRepository::class,
         );
 
+        $this->app->singleton(
+            \App\Repositories\Movie\MovieRepositoryInterface::class,
+            \App\Repositories\Movie\MovieRepository::class,
+        );
+
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
