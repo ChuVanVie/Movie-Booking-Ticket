@@ -28,12 +28,16 @@ class MovieRepository implements MovieRepositoryInterface
                 ->with([
                     'country' => function ($query) {
                         $query->select('id', 'country_name', 'slug');
-                    }
-                ])
-                ->with([
+                    },
                     'categories' => function ($query) {
-                        $query->select('id', 'category_name', 'slug');
-                    }
+                        $query->select('category_id', 'category_name', 'slug');
+                    },
+                    'rates' => function ($query) {
+                        $query
+                            ->with(['user' => function ($query) {
+                                  $query->select('id', 'name');
+                            }]);
+                    },
                 ])
                 ->where('id', $movieId)
                 ->first();

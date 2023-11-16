@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MovieController;
+use App\Http\Controllers\Api\CinemaController;
 
 
 /*
@@ -33,4 +34,9 @@ Route::prefix('movies')->group(function () {
     Route::get('/', [MovieController::class, 'getAllMovies']);
     Route::get('/{movieId}', [MovieController::class, 'getDetailMovie'])->where(['movieId' => '[0-9]+']);
     Route::get('/search', [MovieController::class, 'seachMovie']);
+});
+
+// Apis cinema
+Route::prefix('cinemas')->group(function () {
+    Route::get('/', [CinemaController::class, 'getAllCinemas']);
 });

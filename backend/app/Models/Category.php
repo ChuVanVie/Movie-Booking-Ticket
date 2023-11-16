@@ -15,6 +15,8 @@ class Category extends Model
         'slug'
     ];
 
+    protected $hidden = ['pivot'];
+
     protected static function boot()
     {
         parent::boot();

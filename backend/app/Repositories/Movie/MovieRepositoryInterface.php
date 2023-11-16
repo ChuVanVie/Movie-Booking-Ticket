@@ -10,7 +10,7 @@ interface MovieRepositoryInterface
 {
     /**
      * Get all movies
-     * @return Movie
+     * @return Collection
      */
     public function getAll(): Collection;
 
