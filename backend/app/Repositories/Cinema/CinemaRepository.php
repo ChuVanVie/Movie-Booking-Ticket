@@ -18,8 +18,17 @@ class CinemaRepository implements CinemaRepositoryInterface
     public function getAll(): Collection
     {
         return $this->cinema
-                ->select('id', 'cinema_name', 'slug', 'address', 'phone')
+                ->select('id', 'cinema_name', 'slug')
                 ->get();
+    }
+
+    public function getDetail(int $cinemaId): ?Cinema
+    {
+        return $this->cinema
+                ->where('id', $cinemaId)
+                ->select('id', 'cinema_name', 'slug', 'address', 'phone')
+                ->withCount('theaters')->withSum('theaters', 'capacity')
+                ->first();
     }
 
 }

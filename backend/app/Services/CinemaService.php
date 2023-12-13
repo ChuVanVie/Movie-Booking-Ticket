@@ -20,7 +20,8 @@ class CinemaService
         $this->cinemaRepository = $cinemaRepository;
     }
 
-    /** Get all movies
+    /**
+     * Get all cinemas
      * @return Response
      * @throws Exception
      */
@@ -34,6 +35,26 @@ class CinemaService
 
         return $this->apiResponse(
             $cinemas,
+            Response::HTTP_OK
+        );
+    }
+
+    /**
+     * Get data cinema
+     * @param int $cinemaId
+     * @return Response
+     * @throws Exception
+     */
+    public function getDetail(int $cinemaId): Response
+    {
+        $cinema = $this->cinemaRepository->getDetail($cinemaId);
+        
+        if (!$cinema) {
+            return $this->apiResponseError('Cinema not found', Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->apiResponse(
+            $cinema,
             Response::HTTP_OK
         );
     }

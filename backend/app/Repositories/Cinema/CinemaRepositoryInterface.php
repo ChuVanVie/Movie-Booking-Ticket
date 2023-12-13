@@ -7,11 +7,18 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 interface CinemaRepositoryInterface
-{
+{   
     /**
-     * Get all movies
-     * @return Collection
+     * Get all cinemas
+     * @return Colection
      */
     public function getAll(): Collection;
+
+    /**
+     * Get data cinema
+     * @param int $cinemaId
+     * @return Cinema|null
+     */
+    public function getDetail(int $cinemaId): ?Cinema;
 
 }

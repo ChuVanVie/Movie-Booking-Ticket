@@ -35,6 +35,16 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Cinema\CinemaRepository::class,
         );
 
+        $this->app->singleton(
+            \App\Repositories\Showtime\ShowtimeRepositoryInterface::class,
+            \App\Repositories\Showtime\ShowtimeRepository::class,
+        );
+
+        $this->app->singleton(
+            \App\Repositories\Seat\SeatRepositoryInterface::class,
+            \App\Repositories\Seat\SeatRepository::class,
+        );
+
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }

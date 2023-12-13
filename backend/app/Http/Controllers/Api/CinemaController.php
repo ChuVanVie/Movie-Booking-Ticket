@@ -16,7 +16,8 @@ class CinemaController extends Controller
         $this->cinemaService = $cinemaService;
     }
 
-    /** Get all cinemas
+    /** Get detail cinema
+     * @param Request $request
      * @return Response
      * @throws Exception
      * @api /api/cinemas/
@@ -24,5 +25,16 @@ class CinemaController extends Controller
     public function getAllCinemas(): Response
     {
         return $this->cinemaService->getAll();
+    }
+
+    /** Get detail cinema
+     * @param Request $request
+     * @return Response
+     * @throws Exception
+     * @api /api/cinemas/{cinemaId}
+     */
+    public function getDetailCinema(Request $request): Response
+    {
+        return $this->cinemaService->getDetail($request->cinemaId);
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\MovieController;
 use App\Http\Controllers\Api\CinemaController;
+use App\Http\Controllers\Api\ShowtimeController;
+use App\Http\Controllers\Api\SeatController;
 
 
 /*
@@ -33,10 +35,21 @@ Route::prefix('auth')->group(function () {
 Route::prefix('movies')->group(function () {
     Route::get('/', [MovieController::class, 'getAllMovies']);
     Route::get('/{movieId}', [MovieController::class, 'getDetailMovie'])->where(['movieId' => '[0-9]+']);
-    Route::get('/search', [MovieController::class, 'seachMovie']);
 });
 
 // Apis cinema
 Route::prefix('cinemas')->group(function () {
     Route::get('/', [CinemaController::class, 'getAllCinemas']);
+    Route::get('/{cinemaId}', [CinemaController::class, 'getDetailCinema']);
 });
+
+// Apis showtime
+Route::get('/showtimes', [ShowtimeController::class, 'getShowtimes']);
+
+// Apis seat
+Route::get('/theaters/{theaterId}/seats', [SeatController::class, 'getListSeats']);
+
+//Apis search
+Route::get('/search/movies', [MovieController::class, 'seachMovie']);
+Route::get('/search/showtimes', [ShowtimeController::class, 'seachShowtime']);
+

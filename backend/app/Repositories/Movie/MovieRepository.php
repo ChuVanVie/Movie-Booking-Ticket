@@ -49,12 +49,12 @@ class MovieRepository implements MovieRepositoryInterface
                 ->where('movie_name', 'like', '%' . $name . '%')
                 ->where(function ($query) use ($category) {
                     $query->whereHas('categories', function ($query) use ($category) {
-                                $query->where('slug', 'like', "%" . $category . "%");
+                                $query->where('slug', $category);
                             });
                 })
                 ->where(function ($query) use ($country) {
                     $query->whereHas('country', function ($query) use ($country) {
-                                $query->where('slug', 'like', "%" . $country . "%");
+                                $query->where('slug', $country);
                             });
                 })
                 ->select('id', 'movie_name', 'slug', 'duration', 'year', 'rating', 'thumb_url')
