@@ -13,13 +13,21 @@ interface SeatRepositoryInterface
      * @param int $theaterId|null
      * @return Collection|null
      */
-    public function getListSeats(int $theaterId): ?Collection;
+    public function getList(int $theaterId): ?Collection;
+
+    /**
+     * Get array seatNumbers from seatIds
+     * @param array $seatIds
+     * @return array
+     */
+    public function getArraySeatNumbers(array $seatIds): array;
 
     /**
      * Update status of seat in theater
      * @param int $seatId
+     * @param string $status
      * @return bool
      */
-    public function updateStatus(int $seatId): bool;
+    public function updateStatus(int $seatId, string $status): bool;
 
 }

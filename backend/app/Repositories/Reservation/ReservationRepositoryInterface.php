@@ -15,6 +15,12 @@ interface ReservationRepositoryInterface
     public function getAll(): ?Collection;
 
     /**
+     * Get detail reservation that user has booked
+     * @return Reservation|null
+     */
+    public function getDetail(int $reservationId): ?Reservation;
+
+    /**
      * Create new reservation
      * @param array $data
      * @return bool

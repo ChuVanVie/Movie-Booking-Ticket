@@ -20,10 +20,22 @@ class SeatController extends Controller
      * @param Request $request
      * @return Response
      * @throws Exception
-     * @api /api/seats/
+     * @api /api/seats/theater{theaterId}
      */
     public function getListSeats(Request $request): Response
     {
-        return $this->seatService->getListSeats($request->theaterId);
+        return $this->seatService->getList($request->theaterId);
+    }
+
+    /**
+     * Update status of seat
+     * @param Request $request
+     * @return Response
+     * @throws Exception
+     * @api /api/seats/{seatId}/update-status
+     */
+    public function updateStatusSeat(Request $request): Response
+    {
+        return $this->seatService->updateStatus($request->seatId, $request->status);
     }
 }
