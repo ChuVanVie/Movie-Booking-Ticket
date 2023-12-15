@@ -42,7 +42,7 @@ class Movie extends Model
     }
 
     public function categories(){
-        return $this->belongsToMany(Category::class, 'movies_categories', 'movie_id');
+        return $this->belongsToMany(Category::class, 'categories_of_movies', 'movie_id');
     }
 
     public function country()

@@ -15,6 +15,8 @@ class Category extends Model
         'slug'
     ];
 
+    protected $hidden = ['pivot'];
+
     protected static function boot()
     {
         parent::boot();
@@ -29,6 +31,6 @@ class Category extends Model
     }
 
     public function movies(){
-        return $this->belongsToMany(Movie::class, 'movies_categories', 'category_id');
+        return $this->belongsToMany(Movie::class, 'categories_of_movies', 'category_id');
     }
 }
