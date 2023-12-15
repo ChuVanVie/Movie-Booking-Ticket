@@ -23,11 +23,18 @@ interface SeatRepositoryInterface
     public function getArraySeatNumbers(array $seatIds): array;
 
     /**
+     * Calculate total price of seat_numbers
+     * @param array $seatIds
+     * @return int
+     */
+    public function calculateTotalPrice(array $seatIds): int;
+
+    /**
      * Update status of seat in theater
      * @param int $seatId
      * @param string $status
      * @return bool
      */
-    public function updateStatus(int $seatId, string $status): bool;
+    public function updateStatus(int $seatId): bool;
 
 }

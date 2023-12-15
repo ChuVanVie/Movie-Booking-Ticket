@@ -36,6 +36,6 @@ class SeatController extends Controller
      */
     public function updateStatusSeat(Request $request): Response
     {
-        return $this->seatService->updateStatus($request->seatId, $request->status);
+        return $this->seatService->updateStatus($request->seatId);
     }
 }

@@ -14,18 +14,30 @@ class RateRepository implements RateRepositoryInterface
     } 
 
     /**
-     * Create new rating in 1 movie
-     * @param int $movieId
+     * Create new rating for movie
+     * @param array $data
      * @return bool
      */
-    public function create(int $movieId, int $star, ?string $comment): bool {
-        return this->rate
-                    ->create([
-                        'user_id' => auth()->user()->id,
-                        'movie_id' => $movieId,
-                        'star' => $star,
-                        'comment' => $comment
-                    ]);
+    public function create(array $data): bool {
+        if (empty($data['user_id']) || empty($data['movie_id']) || empty($data['star'])) {
+            return false;
+        }
+
+        $newRate =  this->rate->create($data);
+        
+        return true;
+    }
+
+    /**
+     * Find rate whom user was evaluated
+     * @param int $userId
+     * @param int $movieId
+     * @return Rate||null
+     */
+    public function find(int $userId, int $movieId): ?Rate {
+        return $this->rate
+                   ->where(['user_id' => $userId, 'movie_id' => $movieId])
+                   ->first();
     }
 
 }

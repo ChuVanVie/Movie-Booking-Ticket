@@ -41,6 +41,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton(
+            \App\Repositories\Theater\TheaterRepositoryInterface::class,
+            \App\Repositories\Theater\TheaterRepository::class,
+        );
+
+        $this->app->singleton(
             \App\Repositories\Seat\SeatRepositoryInterface::class,
             \App\Repositories\Seat\SeatRepository::class,
         );

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CinemaController;
 use App\Http\Controllers\Api\ShowtimeController;
 use App\Http\Controllers\Api\SeatController;
 use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\RateController;
 
 
 /*
@@ -41,20 +42,23 @@ Route::prefix('movies')->group(function () {
 // Apis cinema
 Route::prefix('cinemas')->group(function () {
     Route::get('/', [CinemaController::class, 'getAllCinemas']);
-    Route::get('/{cinemaId}', [CinemaController::class, 'getDetailCinema']);
+    Route::get('/{cinemaId}', [CinemaController::class, 'getDetailCinema'])->where(['cinemaId' => '[0-9]+']);
 });
 
 // Apis showtime
 Route::get('/showtimes', [ShowtimeController::class, 'getShowtimes']);
 
 // Apis seat
-Route::get('/seats/theater{theaterId}', [SeatController::class, 'getListSeats'])->middleware('auth:api');
-Route::post('/seats/{seatId}/update-status', [SeatController::class, 'updateStatusSeat'])->middleware('auth:api');
+Route::get('/seats/theater{theaterId}', [SeatController::class, 'getListSeats'])->where(['theaterId' => '[0-9]+'])->middleware('auth:api');
+// Route::post('/seats/{seatId}/update-status', [SeatController::class, 'updateStatusSeat'])->where(['seatId' => '[0-9]+'])->middleware('auth:api');
 
 // Apis seat
 Route::get('/reservations', [ReservationController::class, 'getAllReservations'])->middleware('auth:api');
-Route::get('/reservations/{reservationId}', [ReservationController::class, 'getDetailReservation'])->middleware('auth:api');
+Route::get('/reservations/{reservationId}', [ReservationController::class, 'getDetailReservation'])->where(['reservationId' => '[0-9]+'])->middleware('auth:api');
 Route::post('/reservations/new-reservation', [ReservationController::class, 'createNewReservation'])->middleware('auth:api');
+
+// Apis rate
+Route::post('/rates/new-rating', [RateController::class, 'createNewRate'])->middleware('auth:api');
 
 //Apis search
 Route::get('/search/movies', [MovieController::class, 'seachMovie']);

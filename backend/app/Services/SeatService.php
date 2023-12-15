@@ -49,10 +49,10 @@ class SeatService
      * @return Response
      * @throws Exception
      */
-    public function updateStatus(int $seatId, string $status): Response
+    public function updateStatus(int $seatId): Response
     {
         try {
-            $this->seatRepository->updateStatus($seatId, $status);
+            $this->seatRepository->updateStatus($seatId);
         } catch (Exception $e) {
             return $this->apiResponseError(
                 'Update status seat failed!', 

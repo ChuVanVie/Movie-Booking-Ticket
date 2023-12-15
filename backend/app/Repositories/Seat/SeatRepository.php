@@ -48,15 +48,30 @@ class SeatRepository implements SeatRepositoryInterface
     }
 
     /**
+     * Calculate total price of seat_numbers
+     * @param array $seatIds
+     * @return int
+     */
+    public function calculateTotalPrice(array $seatIds): int {
+        $seats = $this->seat
+                      ->whereIn('id', $seatIds)
+                      ->get();
+
+        $totalPrice = $seats->sum('price');
+
+        return $totalPrice;
+    }
+
+    /**
      * Update status of seat in theater
      * @param int $seatId
      * @param string $status
      * @return bool
      */
-    public function updateStatus(int $seatId, string $status): bool {
+    public function updateStatus(int $seatId): bool {
         return $this->seat
                     ->where('id', $seatId)
-                    ->update(['status' => $status]);
+                    ->update(['status' => 'Reserved']);
     }
 
 }

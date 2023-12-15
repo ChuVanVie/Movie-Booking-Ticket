@@ -38,11 +38,11 @@ class MovieController extends Controller
         return $this->movieService->getDetail($request->movieId);
     }
 
-    /** Get detail movie
+    /** Seach movie by name, country, category
      * @param Request $request
      * @return Response
      * @throws Exception
-     * @api /api/movies/search
+     * @api /api/search/movies
      */
     public function seachMovie(Request $request): Response
     {
