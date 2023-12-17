@@ -10,8 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Filament\Models\Contracts\FilamentUser;
 
-class User extends Authenticatable implements CanResetPassword
+class User extends Authenticatable implements CanResetPassword, FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
@@ -56,5 +57,10 @@ class User extends Authenticatable implements CanResetPassword
 
     public function rates(){
         return $this->hasMany(Rate::class);
+    }
+
+    public function canAccessFilament(): bool
+    {
+        return true;
     }
 }
