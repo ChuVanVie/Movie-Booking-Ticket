@@ -17,7 +17,11 @@ class PaymentHistoryResource extends Resource
 {
     protected static ?string $model = PaymentHistory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-credit-card';
+
+    protected static ?string $navigationGroup = 'Ticket Management';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
