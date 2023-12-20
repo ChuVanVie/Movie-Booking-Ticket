@@ -23,4 +23,11 @@ interface RateRepositoryInterface
      */
     public function find(int $userId, int $movieId): ?Rate;
 
+    /**
+     * Get list rating of movie
+     * @param int $movieId
+     * @return array
+     */
+    public function getListStar(int $movieId): array;
+
 }

@@ -60,4 +60,18 @@ class MovieRepository implements MovieRepositoryInterface
                 ->select('id', 'movie_name', 'slug', 'duration', 'year', 'rating', 'thumb_url')
                 ->get();
     }
+
+    /**
+     * Update movie's rating
+     * @param int $movieId
+     * @param int $star
+     * @return bool
+     */
+    public function updateRating(int $movieId, int $star, array $listStar): bool {
+        $listStar[] = $star;
+        $newRating = number_format(array_sum($listStar) / count($listStar), 1);
+        
+        return $this->movie->where('id', $movieId)
+                    ->update(['rating' => $newRating]);
+    }
 }

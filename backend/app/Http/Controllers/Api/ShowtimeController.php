@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ShowtimeRequest;
 use Illuminate\Http\Request;
 use App\Services\ShowtimeService;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +18,12 @@ class ShowtimeController extends Controller
     }
 
     /** Get detail cinema
-     * @param Request $request
+     * @param ShowtimeRequest $request
      * @return Response
      * @throws Exception
      * @api /api/showtimes/
      */
-    public function getShowtimes(Request $request): Response
+    public function getShowtimes(ShowtimeRequest $request): Response
     {
         return $this->showtimeService->getShowtimes($request->movieId, $request->cinemaId, $request->time);
     }

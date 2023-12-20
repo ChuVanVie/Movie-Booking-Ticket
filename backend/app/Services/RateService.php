@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\Rate\RateRepository;
+use App\Repositories\Movie\MovieRepository;
 use App\Repositories\Reservation\ReservationRepository;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -16,11 +17,13 @@ class RateService
     use ApiResponse;
 
     protected RateRepository $rateRepository;
+    protected MovieRepository $movieRepository;
     protected ReservationRepository $reservationRepository;
 
-    public function __construct(RateRepository $rateRepository, ReservationRepository $reservationRepository)
+    public function __construct(RateRepository $rateRepository, MovieRepository $movieRepository, ReservationRepository $reservationRepository)
     {
         $this->rateRepository = $rateRepository;
+        $this->movieRepository = $movieRepository;
         $this->reservationRepository = $reservationRepository;
     }
 
@@ -50,6 +53,10 @@ class RateService
                     Response::HTTP_BAD_REQUEST,
                 );
             }
+
+            //Update rating of movie
+            $listStar = $this->rateRepository->getListStar($movieId);
+            $this->movieRepository->updateRating($movieId, $data['star'], $listStar);
 
             $data['user_id'] = $user->id;
             $this->rateRepository->create($data);
