@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReservationRequest;
 use Illuminate\Http\Request;
 use App\Services\ReservationService;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,12 +41,12 @@ class ReservationController extends Controller
     }
 
     /** Create a new reservation
-     * @param Request $request
+     * @param ReservationRequest $request
      * @return Response
      * @throws Exception
      * @api /api/reservations/new-reservation
      */
-    public function createNewReservation(Request $request): Response
+    public function createNewReservation(ReservationRequest $request): Response
     {
         return $this->reservationService->create($request->all());
     }

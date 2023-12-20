@@ -30,4 +30,13 @@ interface MovieRepositoryInterface
      */
     public function search(?string $name, ?string $country, ?string $category): ?Collection;
 
+    /**
+     * Update movie's rating
+     * @param int $movieId
+     * @param int $star
+     * @param array $listRating
+     * @return bool
+     */
+    public function updateRating(int $movieId, int $star,  array $listStar): bool;
+
 }

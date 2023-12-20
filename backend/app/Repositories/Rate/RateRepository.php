@@ -23,7 +23,7 @@ class RateRepository implements RateRepositoryInterface
             return false;
         }
 
-        $newRate =  this->rate->create($data);
+        $newRate =  $this->rate->create($data);
         
         return true;
     }
@@ -38,6 +38,18 @@ class RateRepository implements RateRepositoryInterface
         return $this->rate
                    ->where(['user_id' => $userId, 'movie_id' => $movieId])
                    ->first();
+    }
+
+    /**
+     * Get list rating of movie
+     * @param int $movieId
+     * @return array
+     */
+    public function getListStar(int $movieId): array {
+        return $this->rate
+                    ->where('movie_id', $movieId)
+                    ->pluck('star')
+                    ->all();
     }
 
 }
