@@ -71,8 +71,8 @@ class ReservationResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id'),
-                TextColumn::make('ticket_code'),
-                TextColumn::make('user.name'),
+                TextColumn::make('ticket_code')->sortable()->searchable(),
+                TextColumn::make('user.name')->searchable(),
                 TextColumn::make('showtime.movie.movie_name'),
                 TextColumn::make('showtime.cinema.cinema_name'),
                 TextColumn::make('showtime.theater.theater_name'),
@@ -83,11 +83,8 @@ class ReservationResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                SelectFilter::make('role')
-                    ->options([
-                        0 => 'Admin',
-                        1 => 'User',
-                    ]),
+                SelectFilter::make('User')->relationship('user', 'name'),
+                // SelectFilter::make('Cinema')->relationship('showtime', 'showtime.cinema_name'),
                 Filter::make('created_at')
                     ->form([
                         DatePicker::make('created_from'),

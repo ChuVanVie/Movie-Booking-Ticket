@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ShowtimeResource\Pages;
 use App\Filament\Resources\ShowtimeResource\RelationManagers;
+
 use App\Models\Showtime;
+use App\Models\Theater;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -48,10 +50,14 @@ class ShowtimeResource extends Resource
                                 ->disabledOn('edit'),
                             BelongsToSelect::make('cinema_id')
                                 ->relationship('cinema', 'cinema_name')
+                                ->preload()
+                                // ->live()
                                 ->required()
                                 ->disabledOn('edit'),
-                            BelongsToSelect::make('theater_id')
-                                ->relationship('theater', 'theater_name')
+                            Select::make('theater_id')
+                                ->options(fn (Get $get): Collection => Theater::query()
+                                    ->where('cinema_id', $get('cinema_id'))
+                                    ->pluck('theater_name', 'id'))
                                 ->required()
                                 ->disabledOn('edit'),
                             DateTimePicker::make('start_time')->required(),

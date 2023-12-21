@@ -83,7 +83,7 @@ class MovieResource extends Resource
             ->columns([
                 TextColumn::make('id'),
                 TextColumn::make('movie_name')->searchable(),
-                TextColumn::make('thumb_url'),
+                TextColumn::make('thumb_url')->limit(30),
                 TextColumn::make('country.country_name'),
                 TextColumn::make('categories.category_name'),
                 TextColumn::make('duration'),

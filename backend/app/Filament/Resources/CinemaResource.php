@@ -91,7 +91,7 @@ class CinemaResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TheatersRelationManager::class,
         ];
     }
     
