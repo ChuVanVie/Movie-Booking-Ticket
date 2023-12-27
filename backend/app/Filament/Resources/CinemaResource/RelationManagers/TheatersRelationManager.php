@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\CinemaResource\RelationManagers;
 
+use App\Models\Cinema;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -35,7 +36,12 @@ class TheatersRelationManager extends RelationManager
                         ->schema([
                             BelongsToSelect::make('cinema_id')
                                 ->relationship('cinema', 'cinema_name')
-                                ->default('cinema.cinema_name')
+                                // ->default(static function (Cinema $record){
+                                //     return $record->cinema_name;
+                                // })
+                                // ->formatStateUsing(function($state, callable $get, callable $set){
+                                //     dd($state);
+                                // })
                                 ->required()
                                 ->disabled(),
                             TextInput::make('theater_name')->maxLength(255)->required(),

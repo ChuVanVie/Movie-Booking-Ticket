@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\TheaterResource\RelationManagers;
 
-use App\Filament\Resources\SeatResource\Pages;
-use App\Filament\Resources\SeatResource\RelationManagers;
-use App\Models\Seat;
 use Filament\Forms;
 use Filament\Resources\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
 
@@ -19,20 +16,15 @@ use Filament\Forms\Components\BelongsToSelect;
 
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\Filter;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SeatResource extends Resource
+class SeatsRelationManager extends RelationManager
 {
-    protected static ?string $model = Seat::class;
-    
-    protected static ?string $navigationIcon = 'heroicon-o-cube';
-    
-    protected static ?string $navigationGroup = 'Cinema Management';
+    protected static string $relationship = 'seats';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?string $recordTitleAttribute = 'theater_id';
 
     public static function form(Form $form): Form
     {
@@ -64,23 +56,22 @@ class SeatResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')->sortable(),
-                TextColumn::make('theater.theater_name'),
                 TextColumn::make('seat_number')->searchable()->alignment('center'),
                 TextColumn::make('status'),
                 TextColumn::make('price')->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),
-                TextColumn::make('updated_at')->dateTime()
             ])
             ->filters([
-                SelectFilter::make('Theater')->relationship('theater', 'theater_name'),
                 SelectFilter::make('Status')
                     ->options([
                         'Available' => 'Available',
                         'Reserved' => 'Reserved',
                     ])
-                
+            ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -89,21 +80,5 @@ class SeatResource extends Resource
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }
-    
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-    
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListSeats::route('/'),
-            'create' => Pages\CreateSeat::route('/create'),
-            'edit' => Pages\EditSeat::route('/{record}/edit'),
-        ];
     }    
 }

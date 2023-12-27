@@ -20,6 +20,7 @@ use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\FileUpload;
 
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
 
@@ -54,14 +55,20 @@ class MovieResource extends Resource
                                     $set('slug', Str::slug($state));
                                 })
                                 ->required(),
-                            TextInput::make('slug')->required(),
+                            TextInput::make('slug')->disabled()->required(),
                             BelongsToSelect::make('category_id')
                                 ->relationship('categories', 'category_name')
+                                ->searchable()
+                                ->preload()
+                                ->multiple()
                                 ->required(),
                             BelongsToSelect::make('country_id')
                                 ->relationship('country', 'country_name')
+                                ->searchable()
+                                ->preload()
                                 ->required(),
                             TextInput::make('duration')
+                                ->maxLength(100)
                                 ->required(),
                             TextInput::make('year')
                                 ->numeric()
@@ -83,21 +90,34 @@ class MovieResource extends Resource
             ->columns([
                 TextColumn::make('id'),
                 TextColumn::make('movie_name')->searchable(),
-                TextColumn::make('thumb_url')->limit(30),
+                ImageColumn::make('thumb_url')
+                    ->width(80)
+                    ->height(80),
+                // TextColumn::make('thumb_url')->limit(30),
                 TextColumn::make('country.country_name'),
                 TextColumn::make('categories.category_name'),
-                TextColumn::make('duration'),
+                TextColumn::make('duration')->sortable(),
                 TextColumn::make('year')->sortable(),
                 TextColumn::make('desc')->limit(50),
                 TextColumn::make('rating')->sortable(),
-                TextColumn::make('poster_url'),
+                ImageColumn::make('poster_url')
+                    ->width(80)
+                    ->height(80),
                 TextColumn::make('trailer_url'),
-                TextColumn::make('created_at')->dateTime()->sortable(),
-                TextColumn::make('updated_at')->dateTime()
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('Category')->relationship('categories', 'category_name')->multiple(),
-                SelectFilter::make('Country')->relationship('country', 'country_name'),
+                SelectFilter::make('Category')
+                    ->relationship('categories', 'category_name')
+                    ->multiple(),
+                SelectFilter::make('Country')
+                    ->relationship('country', 'country_name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -111,7 +131,7 @@ class MovieResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\RatesRelationManager::class,
         ];
     }
     

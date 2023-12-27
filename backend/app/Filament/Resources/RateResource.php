@@ -16,6 +16,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\BelongsToSelect;
+use Filament\Forms\Components\DatePicker;
 
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -61,14 +62,35 @@ class RateResource extends Resource
                 TextColumn::make('id'),
                 TextColumn::make('user.name')->searchable(),
                 TextColumn::make('movie.movie_name')->searchable(),
-                TextColumn::make('star')->sortable(),
+                TextColumn::make('star')
+                    ->sortable()
+                    ->getStateUsing(function (Rate $record){
+                        $star = $record->star;
+                        return $star . '/10';
+                    }),
                 TextColumn::make('comment'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('Movie')->relationship('movie', 'movie_name'),
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until')->default(now()),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

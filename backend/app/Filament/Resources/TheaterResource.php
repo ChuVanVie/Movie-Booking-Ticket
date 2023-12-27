@@ -62,10 +62,10 @@ class TheaterResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id'),
+                TextColumn::make('id')->sortable(),
                 TextColumn::make('theater_name')->searchable(),
                 TextColumn::make('cinema.cinema_name'),
-                TextColumn::make('capacity'),
+                TextColumn::make('capacity')->sortable(),
                 TextColumn::make('status'),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -73,7 +73,12 @@ class TheaterResource extends Resource
                 TextColumn::make('updated_at')->dateTime()
             ])
             ->filters([
-                //
+                SelectFilter::make('Cinema')->relationship('cinema', 'cinema_name'),
+                SelectFilter::make('Status')
+                    ->options([
+                        'Available' => 'Available',
+                        'In Use' => 'In Use',
+                    ])
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -87,7 +92,7 @@ class TheaterResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\SeatsRelationManager::class,
         ];
     }
     

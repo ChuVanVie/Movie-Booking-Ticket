@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ShowtimeResource\Pages;
 
 use App\Filament\Resources\ShowtimeResource;
+use App\Filament\Resources\ShowtimeResource\Widgets\StatsOverview;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 
@@ -14,6 +15,13 @@ class ListShowtimes extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            StatsOverview::class,
         ];
     }
 }

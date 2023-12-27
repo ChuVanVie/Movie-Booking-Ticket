@@ -48,7 +48,7 @@ class CountryResource extends Resource
                                     $set('slug', Str::slug($state));
                                 })
                                 ->required(),
-                            TextInput::make('slug')->required(),
+                            TextInput::make('slug')->disabled()->required(),
                         ])->columns(2),
                 ])
             ]);

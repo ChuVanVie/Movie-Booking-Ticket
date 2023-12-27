@@ -51,7 +51,7 @@ class CinemaResource extends Resource
                                     $set('slug', Str::slug($state));
                                 })
                                 ->required(),
-                            TextInput::make('slug')->required(),
+                            TextInput::make('slug')->disabled()->required(),
                             TextInput::make('address')->maxLength(255)->required(),
                             TextInput::make('phone')
                                 ->tel()

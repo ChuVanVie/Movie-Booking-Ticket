@@ -24,8 +24,12 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
 
+use Closure;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+use App\Filament\Resources\ShowtimeResource\Widgets\StatsOverview;
 
 class ShowtimeResource extends Resource
 {
@@ -55,7 +59,8 @@ class ShowtimeResource extends Resource
                                 ->required()
                                 ->disabledOn('edit'),
                             Select::make('theater_id')
-                                ->options(fn (Get $get): Collection => Theater::query()
+                                ->label('Theater')
+                                ->options(fn (callable $get) : Collection => Theater::query()
                                     ->where('cinema_id', $get('cinema_id'))
                                     ->pluck('theater_name', 'id'))
                                 ->required()
@@ -79,10 +84,14 @@ class ShowtimeResource extends Resource
                 TextColumn::make('end_time')->dateTime()->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable(),
-                TextColumn::make('updated_at')->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                SelectFilter::make('Movie')->relationship('movie', 'movie_name'),
                 SelectFilter::make('Cinema')->relationship('cinema', 'cinema_name'),
                 Filter::make('Duration')
                     ->form([
@@ -124,5 +133,12 @@ class ShowtimeResource extends Resource
             'create' => Pages\CreateShowtime::route('/create'),
             'edit' => Pages\EditShowtime::route('/{record}/edit'),
         ];
-    }    
+    } 
+    
+    public static function getWidgets(): array
+    {
+        return [
+            StatsOverview::class,
+        ];
+    }
 }

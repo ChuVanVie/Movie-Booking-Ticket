@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\PaymentHistoryResource\Pages;
 
 use App\Filament\Resources\PaymentHistoryResource;
+use App\Filament\Resources\PaymentHistoryResource\Widgets\StatsOverview;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 
@@ -13,7 +14,14 @@ class ListPaymentHistories extends ListRecords
     protected function getActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            // Actions\CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            StatsOverview::class,
         ];
     }
 }

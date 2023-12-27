@@ -60,22 +60,27 @@ class UserResource extends Resource
                                 ->autofocus()
                                 ->required()
                                 ->placeholder('Name')
-                                ->reactive(),
-                                // ->afterStateUpdated(static function (Closure $set, $state) {
-                                //     dd($state);
-                                // })
-                                // ->disabled(static function (User $record): bool {
-                                //     if ($record->role == config('constant.ROLE.ADMIN')) {
-                                //         return false;
-                                //     }
-                                //     return true;
-                                // }),
-                            // TextInput::make('email')
-                            //     ->required()
-                            //     ->placeholder('Email')
-                            //     ->email()
-                            //     ->unique(table: User::class)
-                            //     ->hiddenOn('edit'),
+                                ->reactive()
+                                ->afterStateUpdated(static function (Closure $set, $state) {
+                                    dd($state);
+                                })
+                                ->disabled(static function (User $record): bool {
+                                    if ($record->role == config('constant.ROLE.ADMIN')) {
+                                        return false;
+                                    }
+                                    return true;
+                                }),
+                            TextInput::make('email')
+                                ->required()
+                                ->placeholder('Email')
+                                ->email()
+                                ->unique(table: User::class)
+                                ->disabled(static function (User $record): bool {
+                                    if ($record->role == config('constant.ROLE.ADMIN')) {
+                                        return false;
+                                    }
+                                    return true;
+                                }),
                             // TextInput::make('password')
                             //     ->required()
                             //     ->placeholder('Password')

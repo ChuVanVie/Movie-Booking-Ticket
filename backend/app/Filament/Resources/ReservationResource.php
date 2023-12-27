@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ReservationResource\Pages;
 use App\Filament\Resources\ReservationResource\RelationManagers;
 use App\Models\Reservation;
+use App\Models\Seat;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -24,6 +25,8 @@ use Filament\Tables\Filters\Filter;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+use App\Filament\Resources\ReservationResource\Widgets\StatsOverview;
 
 class ReservationResource extends Resource
 {
@@ -47,14 +50,12 @@ class ReservationResource extends Resource
                                 ->relationship('user', 'name')
                                 ->required()
                                 ->disabledOn('edit'),
-                            // BelongsToSelect::make('showtime_id')
-                            //     ->relationship('showtime', 'movie_name')
-                            //     ->required()
-                            //     ->disabledOn('edit'),
-                            // BelongsToSelect::make('showtime_id')
-                            //     ->relationship('showtime.cinema', 'cinema_name')
-                            //     ->required()
-                            //     ->disabledOn('edit'),
+                            // TextInput::make('showtime_id')
+                            //     ->label('Movie')
+                            //     ->formatStateUsing(function($state, callable $get, callable $set){
+                            //         dd($get);
+                            //     }),
+
                             // BelongsToSelect::make('showtime_id')
                             //     ->relationship('showtime.theater', 'theater_name')
                             //     ->required()
@@ -76,7 +77,17 @@ class ReservationResource extends Resource
                 TextColumn::make('showtime.movie.movie_name'),
                 TextColumn::make('showtime.cinema.cinema_name'),
                 TextColumn::make('showtime.theater.theater_name'),
-                TextColumn::make('seat_ids'),
+                TextColumn::make('seat_numbers')
+                    ->label('Seat Number')
+                    ->getStateUsing(function(Reservation $record){
+                        $seat_ids = json_decode($record->seat_ids);
+                        $seat_numbers = [];
+                        foreach ($seat_ids as $seatId) {
+                            $seat = Seat::where('id', $seatId)->first();
+                            $seat_numbers[] = $seat->seat_number;
+                        }
+                        return $seat_numbers;
+                    }),
                 TextColumn::make('total_price'),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -124,5 +135,12 @@ class ReservationResource extends Resource
             // 'create' => Pages\CreateReservation::route('/create'),
             // 'edit' => Pages\EditReservation::route('/{record}/edit'),
         ];
-    }    
+    }
+    
+    public static function getWidgets(): array
+    {
+        return [
+            StatsOverview::class,
+        ];
+    }
 }
