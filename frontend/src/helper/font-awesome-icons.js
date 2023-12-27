@@ -7,6 +7,7 @@ import {
   faBorderAll,
   faCamera,
   faChevronDown,
+  faChevronRight,
   faClock,
   faComment,
   faEllipsis,
@@ -46,6 +47,7 @@ import {
   faPaperPlane,
   faEllipsisVertical,
   faArrowUp,
+  faStar,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -62,6 +64,7 @@ library.add(
   faClock,
   faPeopleGroup,
   faChevronDown,
+  faChevronRight,
   faPlus,
   faThumbsUp,
   faComment,
@@ -94,7 +97,8 @@ library.add(
   faDeleteLeft,
   faPaperPlane,
   faEllipsisVertical,
-  faArrowUp
+  faArrowUp,
+  faStar,
 );
 
 export { FontAwesomeIcon };
