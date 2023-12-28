@@ -25,6 +25,14 @@ const items = reactive([
         image: "https://img.ophim9.cc/uploads/movies/mau-va-co-vat-phan-2-poster.jpg",
         caption: "Máu và Cổ Vật (Phần 2)",
     },
+    {
+        image: "https://img.ophim9.cc/uploads/movies/tho-san-ac-linh-poster.jpg",
+        caption: "Thợ săn ác linh",
+    },
+    {
+        image: "https://img.ophim9.cc/uploads/movies/dang-sau-ke-phan-dien-poster.jpg",
+        caption: "Đằng Sau Kẻ Phản Diện",
+    },
 ]);
 
 
@@ -74,7 +82,7 @@ const items = reactive([
 <style scoped>
 #homepage {
     height: auto;
-    padding: 24px 200px;
+    padding: 24px 250px 120px 250px;
 }
 
 #slideshow .slide-container {
@@ -122,6 +130,7 @@ const items = reactive([
 
 .movies-list .movies-row {
     display: flex;
+    justify-content: center;
     gap: 48px;
     margin-bottom: 36px;
 }
@@ -137,5 +146,10 @@ const items = reactive([
     border-radius: 4px;
     border: 1px solid #d5d5d5;
     cursor: pointer;
+}
+
+.movies-list .btn-more button:hover {
+    color: #fff;
+    background-color: rgb(108, 142, 173);
 }
 </style>

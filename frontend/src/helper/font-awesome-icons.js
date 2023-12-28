@@ -50,6 +50,12 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 
+import {
+  faFacebook,
+  faYoutube,
+  faSquareGithub,
+} from "@fortawesome/free-brands-svg-icons";
+
 library.add(
   faCalendarDays,
   faSignature,
@@ -99,6 +105,9 @@ library.add(
   faEllipsisVertical,
   faArrowUp,
   faStar,
+  faFacebook,
+  faYoutube,
+  faSquareGithub,
 );
 
 export { FontAwesomeIcon };
