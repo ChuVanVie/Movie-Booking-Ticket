@@ -52,15 +52,14 @@ class ShowtimeResource extends Resource
                                 ->relationship('movie', 'movie_name')
                                 ->required()
                                 ->disabledOn('edit'),
-                            BelongsToSelect::make('cinema_id')
+                            Select::make('cinema_id')
                                 ->relationship('cinema', 'cinema_name')
-                                ->preload()
-                                // ->live()
+                                ->reactive()
                                 ->required()
                                 ->disabledOn('edit'),
                             Select::make('theater_id')
                                 ->label('Theater')
-                                ->options(fn (callable $get) : Collection => Theater::query()
+                                ->options(fn (callable $get) => Theater::query()
                                     ->where('cinema_id', $get('cinema_id'))
                                     ->pluck('theater_name', 'id'))
                                 ->required()

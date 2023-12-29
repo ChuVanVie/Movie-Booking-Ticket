@@ -108,8 +108,7 @@ class PaymentHistoryResource extends Resource
     {
         return [
             'index' => Pages\ListPaymentHistories::route('/'),
-            // 'create' => Pages\CreatePaymentHistory::route('/create'),
-            // 'edit' => Pages\EditPaymentHistory::route('/{record}/edit'),
+            'view' => Pages\ViewPaymentHistory::route('/{record}'),
         ];
     }
     

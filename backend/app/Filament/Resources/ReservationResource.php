@@ -2,10 +2,14 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Reservation;
+use App\Models\Showtime;
+use App\Models\Movie;
+use App\Models\Cinema;
+use App\Models\Seat;
+
 use App\Filament\Resources\ReservationResource\Pages;
 use App\Filament\Resources\ReservationResource\RelationManagers;
-use App\Models\Reservation;
-use App\Models\Seat;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -18,6 +22,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -43,25 +48,29 @@ class ReservationResource extends Resource
         return $form
             ->schema([
                 Card::make()->schema([
-                    Section::make('Theater')
+                    Section::make('Reservation')
                         ->schema([
-                            TextInput::make('ticket_code')->required(),
-                            BelongsToSelect::make('user_id')
-                                ->relationship('user', 'name')
-                                ->required()
-                                ->disabledOn('edit'),
+                            TextInput::make('ticket_code')->label('Ticket Code'),
+                            TextInput::make('user_id')->label('User ID'),
+                            TextInput::make('showtime_id')->label('Showtime ID'),
                             // TextInput::make('showtime_id')
                             //     ->label('Movie')
                             //     ->formatStateUsing(function($state, callable $get, callable $set){
-                            //         dd($get);
+                            //         $showtime = Showtime::where('id', $state)->with('movie')->first();
+                            //         return $showtime->movie->movie_name;
                             //     }),
-
-                            // BelongsToSelect::make('showtime_id')
-                            //     ->relationship('showtime.theater', 'theater_name')
-                            //     ->required()
-                            //     ->disabledOn('edit'),
-                            TextInput::make('seat_ids')->required(),
-                            TextInput::make('total_price')->required(),
+                            TextInput::make('seat_ids')
+                                ->label('Seat Numbers')
+                                ->formatStateUsing(function($state, callable $get, callable $set){
+                                    $seat_ids = json_decode($state);
+                                    $seat_numbers = [];
+                                    foreach ($seat_ids as $seatId) {
+                                        $seat = Seat::where('id', $seatId)->first();
+                                        $seat_numbers[] = $seat->seat_number;
+                                    }
+                                    return $seat_numbers;
+                                }),
+                            TextInput::make('total_price')->label('Total Price'),
                         ])->columns(2),
                 ])
             ]);
@@ -88,6 +97,12 @@ class ReservationResource extends Resource
                         }
                         return $seat_numbers;
                     }),
+                TextColumn::make('showtime.start_time')
+                    ->label('Start Time')
+                    ->dateTime(),
+                TextColumn::make('showtime.end_time')
+                    ->label('End Time')
+                    ->dateTime(),
                 TextColumn::make('total_price'),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -95,7 +110,9 @@ class ReservationResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('User')->relationship('user', 'name'),
-                // SelectFilter::make('Cinema')->relationship('showtime', 'showtime.cinema_name'),
+                // SelectFilter::make('Cinema')->relationship('showtime', 'cinema_id', function (Builder $query){
+                //     dd($query->where('cinema_id'));
+                // }),
                 Filter::make('created_at')
                     ->form([
                         DatePicker::make('created_from'),
@@ -124,7 +141,8 @@ class ReservationResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\UserRelationManager::class,
+            RelationManagers\ShowtimeRelationManager::class,
         ];
     }
     
@@ -132,8 +150,7 @@ class ReservationResource extends Resource
     {
         return [
             'index' => Pages\ListReservations::route('/'),
-            // 'create' => Pages\CreateReservation::route('/create'),
-            // 'edit' => Pages\EditReservation::route('/{record}/edit'),
+            'view' => Pages\ViewReservation::route('/{record}'),
         ];
     }
     

@@ -13,10 +13,7 @@ class StatsOverview extends BaseWidget
     protected function getCards(): array
     {
         return [
-            Card::make('All Showtimes', Showtime::all()->count())
-                ->description('32k increase')
-                ->descriptionIcon('heroicon-s-trending-up')
-                ->color('success'),
+            Card::make('All Showtimes', Showtime::all()->count()),
             Card::make('Bounce rate', '21%')
                 ->description('7% increase')
                 ->descriptionIcon('heroicon-s-trending-down')

@@ -88,8 +88,8 @@ class UserResource extends Resource
                             //     ->hiddenOn('edit'),
                             Select::make('role')
                                 ->options([
-                                    0 => 'Admin',
-                                    1 => 'User'
+                                    0 => 'ADMIN',
+                                    1 => 'USER'
                                 ])
                                 ->required(),
                             DatePicker::make('dob'),
@@ -97,13 +97,6 @@ class UserResource extends Resource
                                 ->tel()
                                 ->telRegex('/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.\/0-9]*$/'),
                             TextInput::make('address')->maxLength(256),
-                            // FileUpload::make('avatar')
-                            //     ->image()
-                            //     ->getUploadedFileNameForStorageUsing(function (TemporaryUploadedFile $file): string {
-                            //         $originalFileName = $file->getClientOriginalName();
-                            //         $newFileName = 'storage/avatars/' . $originalFileName;
-                            //         return (string) str($newFileName);
-                            //     }),
                         ])->columns(2),
                 ])
             ]);
@@ -114,9 +107,14 @@ class UserResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id'),
-                TextColumn::make('name')->limit(50)->searchable(),
+                TextColumn::make('name')
+                    ->limit(50)
+                    ->searchable(),
                 TextColumn::make('email')->searchable(),
-                TextColumn::make('role')->sortable(),
+                TextColumn::make('role')
+                    ->getStateUsing(static function (User $record): string {
+                        return config('constants.ROLE_NAME')[$record->role];
+                    }),
                 TextColumn::make('dob')->dateTime()->sortable(),
                 TextColumn::make('phone')->searchable(),
                 TextColumn::make('address')->searchable(),

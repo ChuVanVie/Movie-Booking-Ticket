@@ -33,26 +33,26 @@ class TheatersRelationManager extends RelationManager
         return $form
             ->schema([
                 Section::make('Theater')
-                        ->schema([
-                            BelongsToSelect::make('cinema_id')
-                                ->relationship('cinema', 'cinema_name')
-                                // ->default(static function (Cinema $record){
-                                //     return $record->cinema_name;
-                                // })
-                                // ->formatStateUsing(function($state, callable $get, callable $set){
-                                //     dd($state);
-                                // })
-                                ->required()
-                                ->disabled(),
-                            TextInput::make('theater_name')->maxLength(255)->required(),
-                            TextInput::make('capacity')->numeric()->required(),
-                            Select::make('status')
-                                ->options([
-                                    'Available' => 'Available',
-                                    'In Use' => 'In Use',
-                                ])
-                                ->required()
-                        ])->columns(2),
+                    ->schema([
+                        BelongsToSelect::make('cinema_id')
+                            ->relationship('cinema', 'cinema_name')
+                            // ->default(function($state, callable $get, callable $set){
+                            //         dd($state);
+                            //     })
+                            // ->formatStateUsing(function($state, callable $get, callable $set){
+                            //     dd($get($recordTitleAttribute));
+                            // })
+                            ->required()
+                            ->disabledOn('edit'),
+                        TextInput::make('theater_name')->maxLength(255)->required(),
+                        TextInput::make('capacity')->numeric()->required(),
+                        Select::make('status')
+                            ->options([
+                                'Available' => 'Available',
+                                'In Use' => 'In Use',
+                            ])
+                            ->required()
+                    ])->columns(2),
             ]);
     }
 

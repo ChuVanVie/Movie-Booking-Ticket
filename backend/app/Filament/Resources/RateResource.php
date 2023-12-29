@@ -14,6 +14,7 @@ use Filament\Tables;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\DatePicker;
@@ -39,19 +40,17 @@ class RateResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()->schema([
-                    Section::make('Rate')
-                        ->schema([
-                            BelongsToSelect::make('user_id')
-                                ->relationship('user', 'name')
-                                ->required(),
-                            BelongsToSelect::make('movie_id')
-                                ->relationship('movie', 'movie_name')
-                                ->required(),
-                            TextInput::make('star')->required(),
-                            TextInput::make('comment')->required(),
-                        ])->columns(2),
-                ])
+                Section::make('Rate')
+                    ->schema([
+                        BelongsToSelect::make('user_id')
+                            ->relationship('user', 'name')
+                            ->required(),
+                        BelongsToSelect::make('movie_id')
+                            ->relationship('movie', 'movie_name')
+                            ->required(),
+                        TextInput::make('star')->required(),
+                        Textarea::make('comment')->columnSpanFull()->required(),
+                    ])->columns(2),
             ]);
     }
 
@@ -96,7 +95,7 @@ class RateResource extends Resource
                 Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                // Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
     

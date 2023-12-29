@@ -46,6 +46,7 @@ class CinemaResource extends Resource
                     Section::make('Cinema')
                         ->schema([
                             TextInput::make('cinema_name')
+                                ->autofocus()
                                 ->reactive()
                                 ->afterStateUpdated(function (Closure $set, $state){
                                     $set('slug', Str::slug($state));

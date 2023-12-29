@@ -43,6 +43,7 @@ class CountryResource extends Resource
                     Section::make('Country')
                         ->schema([
                             TextInput::make('country_name')
+                                ->autofocus()
                                 ->reactive()
                                 ->afterStateUpdated(function (Closure $set, $state){
                                     $set('slug', Str::slug($state));

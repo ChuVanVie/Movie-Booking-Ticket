@@ -43,6 +43,7 @@ class CategoryResource extends Resource
                     Section::make('Category')
                         ->schema([
                             TextInput::make('category_name')
+                                ->autofocus()
                                 ->reactive()
                                 ->afterStateUpdated(function (Closure $set, $state){
                                     $set('slug', Str::slug($state));
