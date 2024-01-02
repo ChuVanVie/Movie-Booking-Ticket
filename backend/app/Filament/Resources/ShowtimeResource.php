@@ -21,6 +21,7 @@ use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\DateTimePicker;
 
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
 
@@ -66,6 +67,13 @@ class ShowtimeResource extends Resource
                                 ->disabledOn('edit'),
                             DateTimePicker::make('start_time')->required(),
                             DateTimePicker::make('end_time')->required(),
+                            Select::make('status')
+                                ->options([
+                                    '0' => 'NOW SHOWING',
+                                    '1' => 'UPCOMING',
+                                    '2' => 'CANCELLED',
+                                ])
+                                ->required(),
                         ])->columns(2),
                 ])
             ]);
@@ -73,6 +81,7 @@ class ShowtimeResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $showtimeStatus = config('constants.SHOWTIME_STATUS_NAME');
         return $table
             ->columns([
                 TextColumn::make('id'),
@@ -81,6 +90,14 @@ class ShowtimeResource extends Resource
                 TextColumn::make('theater.theater_name'),
                 TextColumn::make('start_time')->dateTime()->sortable(),
                 TextColumn::make('end_time')->dateTime()->sortable(),
+                BadgeColumn::make('status')
+                    ->enum($showtimeStatus)
+                    ->colors([
+                        'success' => array_search($showtimeStatus[0], $showtimeStatus),
+                        'warning' => array_search($showtimeStatus[1], $showtimeStatus),
+                        'danger' => array_search($showtimeStatus[2], $showtimeStatus),
+                    ])
+                    ->alignment('center'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -92,6 +109,12 @@ class ShowtimeResource extends Resource
             ->filters([
                 SelectFilter::make('Movie')->relationship('movie', 'movie_name'),
                 SelectFilter::make('Cinema')->relationship('cinema', 'cinema_name'),
+                SelectFilter::make('Status')
+                    ->options([
+                        '0' => 'NOW SHOWING',
+                        '1' => 'UPCOMING',
+                        '2' => 'CANCELLED',
+                    ]),
                 Filter::make('Duration')
                     ->form([
                         DateTimePicker::make('time_from')->default(now()),

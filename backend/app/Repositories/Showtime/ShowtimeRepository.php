@@ -39,6 +39,7 @@ class ShowtimeRepository implements ShowtimeRepositoryInterface
         $time = Carbon::parse($time)->toDateString();
         // dd($time);
         $query
+            ->where('status', config('constants.SHOWTIME_STATUS.NOW_SHOWING'))
             ->whereDate('start_time', '<=', $time)
             ->whereDate('end_time', '>=', $time)
             ->with(['theater' => function($query) {

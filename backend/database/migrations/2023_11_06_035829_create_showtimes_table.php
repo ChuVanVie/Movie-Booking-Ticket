@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('theater_id');
             $table->dateTime('start_time')->comment('Thời gian bắt đầu movie');
             $table->dateTime('end_time')->comment('Thời gian kết thúc movie');
+            $table->tinyInteger('status')->comment('Trạng thái NOW_SHOWING/UPCOMING');
             $table->timestamps();
 
             $table->foreign('movie_id')->references('id')->on('movies')->onDelete('cascade');

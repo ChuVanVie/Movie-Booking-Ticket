@@ -20,6 +20,7 @@ class Showtime extends Model
         'theater_id',
         'start_time',
         'end_time',
+        'status'
     ];
 
     public function movie(){

@@ -11,6 +11,16 @@ return [
         1 => 'USER',
         2 => 'GUEST',
     ],
+    'SHOWTIME_STATUS' => [
+        'NOW_SHOWING' => 0,
+        'UPCOMING' => 1,
+        'CANCELLED' => 2,
+    ],
+    'SHOWTIME_STATUS_NAME' => [
+        0 => 'NOW SHOWING',
+        1 => 'UPCOMING',
+        2 => 'CANCELLED',
+    ],
     'REGEX_PATTERN' => [
         'URL' => '/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/'
     ],
