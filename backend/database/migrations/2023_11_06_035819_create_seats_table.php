@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('theater_id');
-            $table->string('seat_number')->comment('Tên phòng chiếu');
-            $table->string('status')->comment('Trạng thái ghế');
+            $table->string('seat_number')->comment('Số ghế');
             $table->integer('price')->comment('Giá ghế');
             $table->timestamps();
 

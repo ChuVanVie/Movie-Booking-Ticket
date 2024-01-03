@@ -22,6 +22,7 @@ class Movie extends Model
         'duration',
         'year',
         'desc',
+        'premiere_date',
         'rating',
         'thumb_url',
         'poster_url',

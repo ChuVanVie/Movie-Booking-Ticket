@@ -16,11 +16,11 @@ class SeatSeeder extends Seeder
         // 'status' => ($id > 1 && $id < 6) ? 'Reserved' : 'Available',
 
         //Rạp Hà Nội
+        //HN001
         foreach (range(1, 8) as $id) {
             Seat::create([
                 'theater_id' => 1,
                 'seat_number' => 'A' . $id,
-                'status' => 'Available',
                 'price' => 80000,
             ]);
         }
@@ -29,7 +29,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 1,
                 'seat_number' => 'B' . $id,
-                'status' => ($id > 3 && $id < 6) ? 'Reserved' : 'Available',
                 'price' => 60000,
             ]);
         }
@@ -38,7 +37,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 1,
                 'seat_number' => 'C' . $id,
-                'status' => 'Available',
                 'price' => 60000,
             ]);
         }
@@ -47,7 +45,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 1,
                 'seat_number' => 'D' . $id,
-                'status' => 'Available',
                 'price' => 40000,
             ]);
         }
@@ -56,16 +53,15 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 1,
                 'seat_number' => 'E' . $id,
-                'status' => 'Available',
                 'price' => 40000,
             ]);
         }
 
+        //HN002
         foreach (range(1, 8) as $id) {
             Seat::create([
                 'theater_id' => 2,
                 'seat_number' => 'A' . $id,
-                'status' => ($id > 1 && $id < 4) ? 'Reserved' : 'Available',
                 'price' => 80000,
             ]);
         }
@@ -74,7 +70,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 2,
                 'seat_number' => 'B' . $id,
-                'status' => $id == 4 ? 'Reserved' : 'Available',
                 'price' => 60000,
             ]);
         }
@@ -83,7 +78,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 2,
                 'seat_number' => 'C' . $id,
-                'status' => 'Available',
                 'price' => 60000,
             ]);
         }
@@ -92,7 +86,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 2,
                 'seat_number' => 'D' . $id,
-                'status' => 'Available',
                 'price' => 40000,
             ]);
         }
@@ -101,16 +94,15 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 2,
                 'seat_number' => 'E' . $id,
-                'status' => 'Available',
                 'price' => 40000,
             ]);
         }
 
+        //HN003
         foreach (range(1, 8) as $id) {
             Seat::create([
                 'theater_id' => 3,
                 'seat_number' => 'A' . $id,
-                'status' => ($id > 2 && $id < 5) ? 'Reserved' : 'Available',
                 'price' => 80000,
             ]);
         }
@@ -119,7 +111,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 3,
                 'seat_number' => 'B' . $id,
-                'status' => 'Available',
                 'price' => 60000,
             ]);
         }
@@ -128,7 +119,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 3,
                 'seat_number' => 'C' . $id,
-                'status' => ($id > 1 && $id < 6) ? 'Reserved' : 'Available',
                 'price' => 60000,
             ]);
         }
@@ -137,7 +127,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 3,
                 'seat_number' => 'D' . $id,
-                'status' => 'Available',
                 'price' => 40000,
             ]);
         }
@@ -146,18 +135,17 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 3,
                 'seat_number' => 'E' . $id,
-                'status' => 'Available',
                 'price' => 40000,
             ]);
         }
 
 
         //Rạp Hải Phòng
+        //HP001
         foreach (range(1, 6) as $id) {
             Seat::create([
                 'theater_id' => 4,
                 'seat_number' => 'A' . $id,
-                'status' => 'Available',
                 'price' => 80000,
             ]);
         }
@@ -166,7 +154,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 4,
                 'seat_number' => 'B' . $id,
-                'status' => 'Available',
                 'price' => 60000,
             ]);
         }
@@ -175,7 +162,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 4,
                 'seat_number' => 'C' . $id,
-                'status' => 'Available',
                 'price' => 60000,
             ]);
         }
@@ -184,18 +170,17 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 4,
                 'seat_number' => 'D' . $id,
-                'status' => 'Available',
                 'price' => 40000,
             ]);
         }
 
 
         //Rạp Vĩnh Phúc
+        //VP001
         foreach (range(1, 6) as $id) {
             Seat::create([
                 'theater_id' => 5,
                 'seat_number' => 'A' . $id,
-                'status' => 'Available',
                 'price' => 80000,
             ]);
         }
@@ -204,7 +189,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 5,
                 'seat_number' => 'B' . $id,
-                'status' => 'Available',
                 'price' => 60000,
             ]);
         }
@@ -213,7 +197,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 5,
                 'seat_number' => 'C' . $id,
-                'status' => 'Available',
                 'price' => 60000,
             ]);
         }
@@ -222,17 +205,16 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 5,
                 'seat_number' => 'D' . $id,
-                'status' => ($id > 2 && $id < 6) ? 'Reserved' : 'Available',
                 'price' => 40000,
             ]);
         }
 
         //Rạp Phú Thọ
+        //PT001
         foreach (range(1, 6) as $id) {
             Seat::create([
                 'theater_id' => 6,
                 'seat_number' => 'A' . $id,
-                'status' =>  $id < 3 ? 'Reserved' : 'Available',
                 'price' => 80000,
             ]);
         }
@@ -241,7 +223,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 6,
                 'seat_number' => 'B' . $id,
-                'status' => 'Available',
                 'price' => 60000,
             ]);
         }
@@ -250,7 +231,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 6,
                 'seat_number' => 'C' . $id,
-                'status' => 'Available',
                 'price' => 60000,
             ]);
         }
@@ -259,7 +239,6 @@ class SeatSeeder extends Seeder
             Seat::create([
                 'theater_id' => 6,
                 'seat_number' => 'D' . $id,
-                'status' => 'Available',
                 'price' => 40000,
             ]);
         }

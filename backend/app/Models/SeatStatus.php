@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Seat extends Model
+class SeatStatus extends Model
 {
     use HasFactory;
 
@@ -15,18 +15,18 @@ class Seat extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'theater_id',
-        'seat_number',
-        'price',
+        'showtime_id',
+        'seat_id',
+        'status',
     ];
 
-    public function theater(){
-        return $this->belongsTo(Theater::class, 'theater_id');
-    }
-
-    public function seatStatuses()
+    public function seat()
     {
-        return $this->hasMany(SeatStatus::class);
+        return $this->belongsTo(Seat::class);
     }
 
+    public function showtime()
+    {
+        return $this->belongsTo(Showtime::class);
+    }
 }

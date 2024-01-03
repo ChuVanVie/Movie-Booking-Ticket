@@ -35,6 +35,11 @@ class Showtime extends Model
         return $this->belongsTo(Theater::class, 'theater_id');
     }
 
+    public function seatStatuses()
+    {
+        return $this->hasMany(SeatStatus::class);
+    }
+
     public function reservations(){
         return $this->hasMany(Reservation::class);
     }
