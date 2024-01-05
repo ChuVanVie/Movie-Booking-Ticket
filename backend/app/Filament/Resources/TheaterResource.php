@@ -66,7 +66,10 @@ class TheaterResource extends Resource
                 TextColumn::make('theater_name')->searchable(),
                 TextColumn::make('cinema.cinema_name'),
                 TextColumn::make('capacity')->sortable(),
-                TextColumn::make('status'),
+                TextColumn::make('status')
+                    ->getStateUsing(static function (Theater $record): string {
+                        return config('constants.THEATER_STATUS_NAME')[$record->status];
+                    }),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable(),

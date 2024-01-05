@@ -35,6 +35,7 @@ class ShowtimeCommand extends Command
             ->where('end_time', '>=', $currentTime)
             ->where('start_time', '<=', $currentTime)
             ->update(['status' => config('constants.SHOWTIME_STATUS.NOW_SHOWING')]);
+            
         // Update status of showtimes that have end_time <= now to CANCELLED
         Showtime::where('end_time', '<=', $currentTime)->update(['status' => config('constants.SHOWTIME_STATUS.CANCELLED')]);
         return CommandAlias::SUCCESS;

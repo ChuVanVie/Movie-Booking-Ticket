@@ -144,7 +144,9 @@ class ShowtimeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\CinemaRelationManager::class,
+            RelationManagers\TheaterRelationManager::class,
+            RelationManagers\SeatStatusesRelationManager::class,
         ];
     }
     
