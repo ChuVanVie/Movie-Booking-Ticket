@@ -53,5 +53,9 @@ class CategorySeeder extends Seeder
             'category_name' => 'Viễn tưởng',
         ]);
 
+        Category::create([
+            'category_name' => 'Hài hước',
+        ]);
+
     }
 }
