@@ -3,13 +3,13 @@ import { reactive } from 'vue'
 
 const items = reactive({
     about: [
-        "Tuyển dụng", 
-        "Giới thiệu", 
-        "Liên hệ", 
-        "F.A.Q", 
-        "Điều khoản sử dụng", 
-        "Chính sách thanh toán, đổi trả", 
-        "Điều khoản bảo mật", 
+        "Tuyển dụng",
+        "Giới thiệu",
+        "Liên hệ",
+        "F.A.Q",
+        "Điều khoản sử dụng",
+        "Chính sách thanh toán, đổi trả",
+        "Điều khoản bảo mật",
         "Hướng dẫn đặt vé online"
     ],
     cinema: [
@@ -79,7 +79,7 @@ const items = reactive({
 <style scoped>
 #footer-container {
     height: auto;
-    padding: 24px 250px;
+    padding: 24px 200px;
     border-top: 1px solid #bbb;
     display: flex;
     justify-content: space-between;
@@ -126,5 +126,5 @@ const items = reactive({
 
 .contact-logo a {
     margin-right: 16px;
-} 
+}
 </style>

@@ -10,27 +10,27 @@ const plugins = [new AutoPlay({ duration: 2000, direction: "NEXT", stopOnHover: 
 
 const items = reactive([
     {
-        image: "https://img.ophim9.cc/uploads/movies/dai-chien-nguoi-khong-lo-phan-cuoi-poster.jpg",
+        image: "https://img.ophim10.cc/uploads/movies/dai-chien-nguoi-khong-lo-phan-cuoi-poster.jpg",
         caption: "Đại Chiến Người Khổng Lồ (Phần Cuối)",
     },
     {
-        image: "https://img.ophim9.cc/uploads/movies/tet-o-lang-dia-nguc-poster.jpg",
+        image: "https://img.ophim10.cc/uploads/movies/tet-o-lang-dia-nguc-poster.jpg",
         caption: "Tết ở làng địa ngục",
     },
     {
-        image: "https://img.ophim9.cc/uploads/movies/high-cookie-poster.jpg",
+        image: "https://img.ophim10.cc/uploads/movies/high-cookie-poster.jpg",
         caption: "Bánh Quy Ma Thuật",
     },
     {
-        image: "https://img.ophim9.cc/uploads/movies/mau-va-co-vat-phan-2-poster.jpg",
+        image: "https://img.ophim10.cc/uploads/movies/mau-va-co-vat-phan-2-poster.jpg",
         caption: "Máu và Cổ Vật (Phần 2)",
     },
     {
-        image: "https://img.ophim9.cc/uploads/movies/tho-san-ac-linh-poster.jpg",
+        image: "https://img.ophim10.cc/uploads/movies/tho-san-ac-linh-poster.jpg",
         caption: "Thợ săn ác linh",
     },
     {
-        image: "https://img.ophim9.cc/uploads/movies/dang-sau-ke-phan-dien-poster.jpg",
+        image: "https://img.ophim10.cc/uploads/movies/dang-sau-ke-phan-dien-poster.jpg",
         caption: "Đằng Sau Kẻ Phản Diện",
     },
 ]);

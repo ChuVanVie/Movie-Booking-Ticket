@@ -5,7 +5,7 @@ const movie = reactive(
     {
         movie_name: "Đại Chiến Người Khổng Lồ (Phần Cuối)",
         slug: "dai-chien-nguoi-khong-lo-phan-cuoi",
-        thumb_url: "https://img.ophim9.cc/uploads/movies/dai-chien-nguoi-khong-lo-phan-cuoi-thumb.jpg",
+        thumb_url: "https://img.ophim10.cc/uploads/movies/dai-chien-nguoi-khong-lo-phan-cuoi-thumb.jpg",
         duration: "60 phút",
         rating: 8.7,
         showtime: "12/12/2023",
@@ -144,7 +144,7 @@ const movie = reactive(
     justify-content: space-between;
 }
 
-.movie-info .time {  
+.movie-info .time {
     display: flex;
     align-items: center;
 }
