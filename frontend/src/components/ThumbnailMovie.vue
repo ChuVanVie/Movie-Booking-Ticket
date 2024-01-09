@@ -2,7 +2,8 @@
 import { reactive } from 'vue'
 
 const movie = reactive(
-    {
+    {   
+        id: 1,
         movie_name: "Đại Chiến Người Khổng Lồ (Phần Cuối)",
         slug: "dai-chien-nguoi-khong-lo-phan-cuoi",
         thumb_url: "https://img.ophim10.cc/uploads/movies/dai-chien-nguoi-khong-lo-phan-cuoi-thumb.jpg",
@@ -24,18 +25,12 @@ const movie = reactive(
         </div>
         <div class="layer-hover">
             <div class="btn-container">
-                <!-- <router-link to="/movie/detail">
+                <router-link to="/ticketing">
                     <button>Đặt vé</button>
                 </router-link>
-                <router-link to="/ticket/reserving">
+                <router-link :to="'/movies/' + movie.id +'/detail'">
                     <button>Chi tiết</button>
-                </router-link> -->
-                <a href="">
-                    <button>Đặt vé</button>
-                </a>
-                <a href="">
-                    <button>Chi tiết</button>
-                </a>
+                </router-link>
             </div>
         </div>
         <div class="text-box">

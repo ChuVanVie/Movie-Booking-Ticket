@@ -6,16 +6,17 @@
         <div class="badge">
             <p>Trang chủ</p>
             <font-awesome-icon icon="fa-solid fa-chevron-right" style="font-size: 16px; margin: 8px 12px 0 12px;" />
-            <p style="color: #03599d">Movie Name</p>
+            <p style="color: #03599d">Phim</p>
         </div>
         <div class="intro-container">
             <div class="left-intro">
                 <div class="poster">
-                    <img src="https://img.ophim10.cc/uploads/movies/dai-chien-nguoi-khong-lo-phan-cuoi-poster.jpg" alt=""
-                        width="256" height="400" style="cursor: pointer">
+                    <img src="https://img.ophim10.cc/uploads/movies/cong-chua-da-den-gio-tham-van-roi-poster.jpg" alt="" width="256" height="400" style="cursor: pointer">
                 </div>
                 <div class="btn-reserve">
-                    <button>Đặt vé</button>
+                    <router-link to="/ticketing">
+                        <button>Đặt vé</button>
+                    </router-link>
                 </div>
             </div>
             <div class="right-intro">
@@ -71,14 +72,46 @@
             </div>
             <div class="b-line" style="border: 1px solid #fff;"></div>
             <div class="all-rate">
-                <p>Xếp hạng và đánh giá phim</p>
+                <p style="font-size: 32px; font-weight: 600; margin-bottom: 24px;">Xếp hạng và đánh giá phim</p>
                 <div class="new-rate">
                     <div class="star">Số sao</div>
                     <input type="text" placeholder="Add your comment">
                     <button class="btn-send-rate">Gửi đánh giá</button>
                 </div>
+                <div class="b-line" style="margin: 16px 0; border: 1px solid #fff;"></div>
                 <div class="list-rate">
-
+                    <div class="rate-item" style="padding: 0 36px; display: flex; justify-content: space-between;">
+                        <div>
+                            <span class="user-name">Em việt</span>
+                            <span>   Hình ảnh sao  8</span>
+                            <div class="rate-comment">Hài phết!!</div>
+                        </div>
+                        <div>
+                            <div class="rate-created-at">12/01/2024</div>
+                        </div>
+                    </div>
+                    <div class="c-line" style="margin: 16px 0; border-bottom: 1px solid #dadada;"></div>
+                    <div class="rate-item" style="padding: 0 36px; display: flex; justify-content: space-between;">
+                        <div>
+                            <span class="user-name">Em việt</span>
+                            <span>   Hình ảnh sao  8</span>
+                            <div class="rate-comment">Hài phết!!</div>
+                        </div>
+                        <div>
+                            <div class="rate-created-at">12/01/2024</div>
+                        </div>
+                    </div>
+                    <div class="c-line" style="margin: 16px 0; border-bottom: 1px solid #dadada;"></div>
+                    <div class="rate-item" style="padding: 0 36px; display: flex; justify-content: space-between;">
+                        <div>
+                            <span class="user-name">Em việt</span>
+                            <span>   Hình ảnh sao  8</span>
+                            <div class="rate-comment">Hài phết!!</div>
+                        </div>
+                        <div>
+                            <div class="rate-created-at">12/01/2024</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -193,7 +226,7 @@
 }
 
 .rating-container .total-rate {
-    padding: 40px 0;
+    padding: 40px 0 24px 0;
     display: flex;
     justify-content: space-between;
 }

@@ -13,10 +13,22 @@ const items = reactive({
         "Hướng dẫn đặt vé online"
     ],
     cinema: [
-        "Teeiv Cinemas Đống Đa, Hà Nội - Hotline 0936113502",
-        "Teeiv Cinemas Hải An, Hải Phòng - Hotline 0359111306",
-        "Teeiv Cinemas Vĩnh Yên, Vĩnh Phúc - Hotline 0944213555",
-        "Teeiv Cinemas Lâm Thao, Phú Thọ - Hotline 0326107502",
+        {
+            'id': 1,
+            'name': "Teeiv Cinemas Đống Đa, Hà Nội - Hotline 0936113502",
+        },
+        {
+            'id': 2,
+            'name': "Teeiv Cinemas Hải An, Hải Phòng - Hotline 0359111306",
+        },
+        {
+            'id': 3,
+            'name': "Teeiv Cinemas Vĩnh Yên, Vĩnh Phúc - Hotline 0944213555",
+        },
+        {
+            'id': 4,
+            'name': "Teeiv Cinemas Lâm Thao, Phú Thọ - Hotline 0326107502",
+        }  
     ],
     contact: {
         address: "Tầng 3, số 377, đường Giải Phóng, phường Giáp Bát, quận Hoàng Mai, thành phố Hà Nội",
@@ -49,7 +61,7 @@ const items = reactive({
             <div class="point-list" v-for="(item, index) in items.cinema" :key="index">
                 <div class="point-item">
                     <font-awesome-icon icon="fa-solid fa-chevron-right" style="font-size: 12px; margin-right: 8px;" />
-                    <a href="#">{{item}}</a>
+                    <router-link :to="'/cinemas/' + item.id">{{item.name}}</router-link>
                 </div>
             </div>
         </div>
