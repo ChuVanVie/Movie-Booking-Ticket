@@ -48,6 +48,7 @@ import {
   faEllipsisVertical,
   faArrowUp,
   faStar,
+  faSquareXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -108,6 +109,7 @@ library.add(
   faFacebook,
   faYoutube,
   faSquareGithub,
+  faSquareXmark,
 );
 
 export { FontAwesomeIcon };
