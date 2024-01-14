@@ -49,7 +49,12 @@ import {
   faArrowUp,
   faStar,
   faSquareXmark,
+  faCircleExclamation,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
+
+import {
+} from "@fortawesome/free-regular-svg-icons";
 
 import {
   faFacebook,
@@ -110,6 +115,8 @@ library.add(
   faYoutube,
   faSquareGithub,
   faSquareXmark,
+  faCircleExclamation,
+  faCheck,
 );
 
 export { FontAwesomeIcon };

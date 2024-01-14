@@ -11,7 +11,8 @@
         <div class="intro-container">
             <div class="left-intro">
                 <div class="poster">
-                    <img src="https://img.ophim10.cc/uploads/movies/cong-chua-da-den-gio-tham-van-roi-poster.jpg" alt="" width="256" height="400" style="cursor: pointer">
+                    <img src="https://img.ophim10.cc/uploads/movies/cong-chua-da-den-gio-tham-van-roi-poster.jpg" alt=""
+                        width="256" height="400" style="cursor: pointer">
                 </div>
                 <div class="btn-reserve">
                     <router-link to="/ticketing">
@@ -83,7 +84,7 @@
                     <div class="rate-item" style="padding: 0 36px; display: flex; justify-content: space-between;">
                         <div>
                             <span class="user-name">Em việt</span>
-                            <span>   Hình ảnh sao  8</span>
+                            <span> Hình ảnh sao 8</span>
                             <div class="rate-comment">Hài phết!!</div>
                         </div>
                         <div>
@@ -94,7 +95,7 @@
                     <div class="rate-item" style="padding: 0 36px; display: flex; justify-content: space-between;">
                         <div>
                             <span class="user-name">Em việt</span>
-                            <span>   Hình ảnh sao  8</span>
+                            <span> Hình ảnh sao 8</span>
                             <div class="rate-comment">Hài phết!!</div>
                         </div>
                         <div>
@@ -105,7 +106,7 @@
                     <div class="rate-item" style="padding: 0 36px; display: flex; justify-content: space-between;">
                         <div>
                             <span class="user-name">Em việt</span>
-                            <span>   Hình ảnh sao  8</span>
+                            <span> Hình ảnh sao 8</span>
                             <div class="rate-comment">Hài phết!!</div>
                         </div>
                         <div>
@@ -238,6 +239,4 @@
 .all-rate .new-rate {
     display: flex;
 }
-
-.all-rate .list-rate {}
 </style>
