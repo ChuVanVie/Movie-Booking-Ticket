@@ -24,6 +24,97 @@ const allCinema = reactive([
     },
 ]);
 
+const allCategory = reactive([
+    {
+        id: 1,
+        categoryName: 'Tình Cảm',
+        slug: 'tinh-cam'
+    },
+    {
+        id: 2,
+        categoryName: 'Tâm Lý',
+        slug: 'tam-ly'
+    },
+    {
+        id: 3,
+        categoryName: 'Hành Động',
+        slug: 'hanh-dong'
+    },
+    {
+        id: 4,
+        categoryName: 'Kinh Dị',
+        slug: 'kinh-di'
+    },
+    {
+        id: 5,
+        categoryName: 'Phiêu Lưu',
+        slug: 'phieu-luu'
+    },
+    {
+        id: 6,
+        categoryName: 'Hình Sự',
+        slug: 'hinh-su'
+    },
+    {
+        id: 7,
+        categoryName: 'Bí Ẩn',
+        slug: 'bi-an'
+    },
+    {
+        id: 8,
+        categoryName: 'Chính Kịch',
+        slug: 'chinh-kich'
+    },
+    {
+        id: 9,
+        categoryName: 'Khoa Học',
+        slug: 'khoa-hoc'
+    },
+    {
+        id: 10,
+        categoryName: 'Viễn Tưởng',
+        slug: 'vien-tuong'
+    },
+]);
+
+const allCountry = reactive([
+    {
+        id: 1,
+        countryName: 'Hàn Quốc',
+        slug: 'han-quoc'
+    },
+    {
+        id: 2,
+        countryName: 'Trung Quốc',
+        slug: 'trung-quoc'
+    },
+    {
+        id: 3,
+        countryName: 'Canada',
+        slug: 'canada'
+    },
+    {
+        id: 4,
+        countryName: 'Âu Mỹ',
+        slug: 'au-my'
+    },
+    {
+        id: 5,
+        countryName: 'Thổ Nhĩ Kỳ',
+        slug: 'tho-nhi-ky'
+    },
+    {
+        id: 6,
+        countryName: 'Việt Nam',
+        slug: 'viet-nam'
+    },
+    {
+        id: 7,
+        countryName: 'Nhật Bản',
+        slug: 'nhat-ban'
+    },
+]);
+
 const filmType = reactive([
     'Phim đang chiếu',
     'Phim sắp chiếu'
@@ -56,16 +147,16 @@ const filmType = reactive([
             <div class="dropdown">
                 <p>Thể Loại</p>
                 <div class="dropdown-menu">
-                    <div class="dropdown-item" v-for="cinema in allCinema" :key="cinema.id">
-                        <router-link :to="'/cinemas/' + cinema.id" class="text">{{ cinema.cinemaName }}</router-link>
+                    <div class="dropdown-item" v-for="category in allCategory" :key="category.id">
+                        <router-link :to="'/search?category=' + category.slug" class="text">{{ category.categoryName }}</router-link>
                     </div>
                 </div>
             </div>
             <div class="dropdown">
                 <p>Quốc Gia</p>
                 <div class="dropdown-menu">
-                    <div class="dropdown-item" v-for="cinema in allCinema" :key="cinema.id">
-                        <router-link :to="'/cinemas/' + cinema.id" class="text">{{ cinema.cinemaName }}</router-link>
+                    <div class="dropdown-item" v-for="country in allCountry" :key="country.id">
+                        <router-link :to="'/search?country=' + country.slug" class="text">{{ country.countryName }}</router-link>
                     </div>
                 </div>
             </div>
@@ -127,7 +218,7 @@ const filmType = reactive([
 }
 
 .dropdown-menu .dropdown-item {
-    width: 150px;
+    width: 120px;
     padding: 8px 12px;
 }
 

@@ -12,7 +12,7 @@
             <div class="left-intro">
                 <div class="poster">
                     <img src="https://img.ophim10.cc/uploads/movies/cong-chua-da-den-gio-tham-van-roi-poster.jpg" alt=""
-                        width="256" height="400" style="cursor: pointer">
+                        style="width: 100%; height: 400px; cursor: pointer">
                 </div>
                 <div class="btn-reserve">
                     <router-link to="/ticketing">
@@ -71,46 +71,60 @@
                     Sort by Oldest/Newest
                 </div>
             </div>
-            <div class="b-line" style="border: 1px solid #fff;"></div>
+            <div class="b-line"></div>
             <div class="all-rate">
-                <p style="font-size: 32px; font-weight: 600; margin-bottom: 24px;">Xếp hạng và đánh giá phim</p>
+                <p>Xếp hạng và đánh giá phim</p>
                 <div class="new-rate">
-                    <div class="star">Số sao</div>
-                    <input type="text" placeholder="Add your comment">
-                    <button class="btn-send-rate">Gửi đánh giá</button>
+                    <div class="star-area">
+                        <p class="star-title">Xếp hạng</p>
+                        <div class="starscore"></div>
+                        <div class="star-sum">
+                            <span>0</span> điểm
+                        </div>
+                    </div>
+                    <textarea title="Nhập đánh giá phim" id="" cols="30" rows="10" placeholder="Bạn có thể đánh giá phim sau khi đăng nhập."></textarea>
+                    <div class="btn-send-rate">
+                        <button>Gửi đánh giá</button>
+                    </div>
                 </div>
-                <div class="b-line" style="margin: 16px 0; border: 1px solid #fff;"></div>
+                <div class="b-line" style="margin-top: 16px;"></div>
                 <div class="list-rate">
-                    <div class="rate-item" style="padding: 0 36px; display: flex; justify-content: space-between;">
-                        <div>
-                            <span class="user-name">Em việt</span>
-                            <span> Hình ảnh sao 8</span>
-                            <div class="rate-comment">Hài phết!!</div>
+                    <div class="rate-item">
+                        <div class="left-rate">
+                            <div class="items-center gap-12">
+                                <span class="user-name">Em việt</span>
+                                <div class="starscore"></div><span>8</span>
+                            </div>
+                            <div class="rate-comment">Hài phết!! Xem giải trí thôi chứ để mà xuất sắc thì chưa tới..</div>
                         </div>
-                        <div>
-                            <div class="rate-created-at">12/01/2024</div>
-                        </div>
-                    </div>
-                    <div class="c-line" style="margin: 16px 0; border-bottom: 1px solid #dadada;"></div>
-                    <div class="rate-item" style="padding: 0 36px; display: flex; justify-content: space-between;">
-                        <div>
-                            <span class="user-name">Em việt</span>
-                            <span> Hình ảnh sao 8</span>
-                            <div class="rate-comment">Hài phết!!</div>
-                        </div>
-                        <div>
-                            <div class="rate-created-at">12/01/2024</div>
+                        <div class="right-rate">
+                            <p class="rate-created-at">12/01/2024</p>
                         </div>
                     </div>
-                    <div class="c-line" style="margin: 16px 0; border-bottom: 1px solid #dadada;"></div>
-                    <div class="rate-item" style="padding: 0 36px; display: flex; justify-content: space-between;">
-                        <div>
-                            <span class="user-name">Em việt</span>
-                            <span> Hình ảnh sao 8</span>
-                            <div class="rate-comment">Hài phết!!</div>
+                    <div class="c-line"></div>
+                    <div class="rate-item">
+                        <div class="left-rate">
+                            <div class="items-center gap-12">
+                                <span class="user-name">Em việt</span>
+                                <div class="starscore"></div><span>8</span>
+                            </div>
+                            <div class="rate-comment">Hài phết!! Xem giải trí thôi chứ để mà xuất sắc thì chưa tới..</div>
                         </div>
-                        <div>
-                            <div class="rate-created-at">12/01/2024</div>
+                        <div class="right-rate">
+                            <p class="rate-created-at">12/01/2024</p>
+                        </div>
+                    </div>
+                    <div class="c-line"></div>
+                    <div class="rate-item">
+                        <div class="left-rate">
+                            <div class="items-center gap-12">
+                                <span class="user-name">Em việt</span>
+                                <div class="starscore"></div><span>8</span>
+                            </div>
+                            <div class="rate-comment">Hài phết!! Xem giải trí thôi chứ để mà xuất sắc thì chưa tới..</div>
+                        </div>
+                        <div class="right-rate">
+                            <p class="rate-created-at">12/01/2024</p>
                         </div>
                     </div>
                 </div>
@@ -139,6 +153,7 @@
 }
 
 .intro-container .left-intro {
+    width: 20%;
     margin-right: 48px;
 }
 
@@ -162,6 +177,7 @@
 }
 
 .right-intro {
+    max-width: 60%;
     padding: 16px 0;
 }
 
@@ -236,7 +252,98 @@
     padding: 40px 0;
 }
 
+.all-rate>p {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
 .all-rate .new-rate {
+    border: 1px solid #dedede;
     display: flex;
+}
+
+.new-rate .star-area {
+    width: 15%;
+    border-right: 1px solid #dedede;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.star-area .star-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.starscore {
+    display: inline-block;
+    vertical-align: middle;
+    width: 80px;
+    height: 15px;
+    background: url(../assets/img/icon_score_star.png) no-repeat 0 -18px;
+}
+
+.new-rate textarea {
+    width: 70%;
+    height: 100px;
+    color: #666;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border: none;
+    resize: none;
+}
+
+.new-rate textarea:focus {
+    outline: none;
+}
+
+.new-rate .btn-send-rate {
+    width: 15%;
+}
+
+.btn-send-rate button {
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #3c3e4d;
+    border: none;
+    text-align: center;
+    color: #cdc197;
+    cursor: pointer;
+}
+
+.all-rate .list-rate {
+    min-height: 480px;
+    color: #000;
+    background-color: #fff;
+    padding: 16px 0;
+}
+
+
+.all-rate .list-rate .rate-item {
+    padding: 0 48px;
+    display: flex;
+    Justify-content: space-between;
+}
+
+.rate-item .user-name {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.rate-item .rate-comment {
+    margin-top: 4px;
+}
+
+.b-line {
+    border: 1px solid #fff;
+}
+
+.c-line {
+    margin: 16px 0;
+    border-bottom: 1px solid #dadada;
 }
 </style>

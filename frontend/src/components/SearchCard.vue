@@ -18,7 +18,7 @@ const search = function () {
 </template>
 <style scoped>
 .home-search {
-    padding: 4px;
+    padding: 6px;
     background-color: #fff;
     border: 1px solid #777;
     border-radius: 4px;

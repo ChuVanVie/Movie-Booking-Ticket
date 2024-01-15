@@ -1,7 +1,7 @@
 <script setup>
 
 import { ref } from "vue";
-// import VueDatePicker from "@vuepic/vue-datepicker";
+import VueDatePicker from "@vuepic/vue-datepicker";
 // import TheLoading from "../components/TheLoading.vue";
 import { useAuthStore } from "../store/useAuth";
 // import { isValidEmail, isValidPassword } from "../common/validateForm";
@@ -22,7 +22,7 @@ const handleClickShowConfirmPass = () => {
     showConfirmPass.value = !showConfirmPass.value;
 };
 
-// const customPosition = () => ({ top: 0 });
+const customPosition = () => ({ top: 0 });
 // Form Register
 const firstName = ref("");
 const lastName = ref("");
@@ -91,8 +91,8 @@ const handleSubmitRegister = async () => {
         <div class="left-container">
             <p>Booking Movie Cinema for Everyone, Everywhere</p>
             <div class="img-container">
-                <img src="../assets/cinemaImg.svg" alt="" class="t1">
-                <img src="../assets/EllipseSignIn.png" alt="" class="t2">
+                <img src="../assets/img/cinemaImg.svg" alt="" class="t1">
+                <img src="../assets//img/EllipseSignIn.png" alt="" class="t2">
             </div>
         </div>
         <div class="right-container">
@@ -117,16 +117,16 @@ const handleSubmitRegister = async () => {
                     <input type="text" name="email" id="email" class="form-control" placeholder="Ex: myanlien14@gmail.com"
                         v-model="email" />
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="dob">Date of birth (MM/DD/YY)</label>
                     <input type="text" name="dob" id="dob" class="form-control" placeholder="Date of Birth..."
                         v-model="dateOfBirth" />
-                </div>
-                <!-- <div class="form-group">
+                </div> -->
+                <div class="form-group">
                     <label for="dateOfBirth">Date of birth (MM/DD/YY)</label>
                     <VueDatePicker v-model="dateOfBirth" :alt-position="customPosition" placeholder="Date of Birth...">
                     </VueDatePicker>
-                </div> -->
+                </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <div class="show-pass">
@@ -168,7 +168,7 @@ const handleSubmitRegister = async () => {
     overflow: hidden;
     width: 100%;
     height: 100vh;
-    padding: 40px 100px;
+    padding: 80px 100px;
     background: linear-gradient(90deg, rgb(0, 45, 255) 0%, rgb(0, 188, 212) 47%, rgb(0, 188, 212) 48%, rgb(130, 238, 198) 100%);
 }
 
@@ -209,7 +209,7 @@ const handleSubmitRegister = async () => {
 .right-container {
     max-width: 60%;
     width: 100%;
-    padding: 40px;
+    padding: 60px 40px 40px 60px;
 }
 
 .right-container .title {

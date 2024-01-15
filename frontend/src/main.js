@@ -5,6 +5,7 @@ import { createPinia } from "pinia";
 import { FontAwesomeIcon } from "./helper/font-awesome-icons";
 import clickOutside from './directive/clickoutside.js'
 import esc from './directive/esc.js'
+import "@vuepic/vue-datepicker/dist/main.css";
 
 const app = createApp(App)
 

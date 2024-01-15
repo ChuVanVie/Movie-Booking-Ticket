@@ -95,6 +95,13 @@ const theaterList = reactive([
     // },
 ]);
 
+const currentDate = new Date();
+const daysOfWeek = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+
+const showNow = () => {
+    console.log(`Ngày: ${currentDate.getDate()}, Tháng: ${currentDate.getMonth() + 1}, Năm: ${currentDate.getFullYear()}, Thứ: ${daysOfWeek[currentDate.getDay()]}`);
+}
+
 const cinemaChoosed = reactive({
     id: cinemaList[0].id,
     cinemaName: cinemaList[0].cinemaName,
@@ -145,7 +152,7 @@ const removeTheater = () => {
 <template>
     <div id="showtime-info">
         <div class="calendar" style="text-align: center;">
-            Chọn Ngày đi
+            <button @click="showNow">Chọn ngày</button>
         </div>
         <div class="all-info">
             <div class="cinema-info">

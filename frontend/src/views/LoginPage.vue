@@ -56,8 +56,8 @@ const handleSubmitLogin = async () => {
         <div class="left-container">
             <p>Booking Movie Cinema for Everyone, Everywhere</p>
             <div class="img-container">
-                <img src="../assets/cinemaImg.svg" alt="" class="t1">
-                <img src="../assets/EllipseSignIn.png" alt="" class="t2">
+                <img src="../assets/img/cinemaImg.svg" alt="" class="t1">
+                <img src="../assets/img/EllipseSignIn.png" alt="" class="t2">
             </div>
         </div>
         <div class="right-container">
@@ -103,7 +103,7 @@ const handleSubmitLogin = async () => {
     overflow: hidden;
     width: 100%;
     height: 100vh;
-    padding: 40px 100px;
+    padding: 80px 100px;
     background: linear-gradient(90deg, rgb(0, 45, 255) 0%, rgb(0, 188, 212) 47%, rgb(0, 188, 212) 48%, rgb(130, 238, 198) 100%);
 }
 
@@ -144,7 +144,7 @@ const handleSubmitLogin = async () => {
 .right-container {
     max-width: 60%;
     width: 100%;
-    padding: 40px;
+    padding: 60px 40px 40px 60px;
 }
 
 .right-container .title {
