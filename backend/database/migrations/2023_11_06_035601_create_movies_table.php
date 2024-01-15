@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('duration')->comment('Thời lượng');
             $table->integer('year')->comment('Năm phát hành');
             $table->text('desc')->comment('Mô tả');
+            $table->date('premiere_date')->comment('Ngày  khởi chiếu');
             $table->float('rating')->nullable()->comment('Đánh giá trung bình');
             $table->string('thumb_url')->comment('Link thumbnail');
             $table->string('poster_url')->comment('Link poster');

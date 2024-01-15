@@ -17,42 +17,42 @@ class TheaterSeeder extends Seeder
             'cinema_id' => 1,
             'theater_name' => 'HN001',
             'capacity' => 40,
-            'status' => 'Available',
+            'status' => config('constants.THEATER_STATUS.AVAILABLE'),
         ]);
 
         Theater::create([
             'cinema_id' => 1,
             'theater_name' => 'HN002',
             'capacity' => 40,
-            'status' => 'Available',
+            'status' => config('constants.THEATER_STATUS.AVAILABLE'),
         ]);
 
         Theater::create([
             'cinema_id' => 1,
             'theater_name' => 'HN003',
             'capacity' => 40,
-            'status' => 'Available',
+            'status' => config('constants.THEATER_STATUS.AVAILABLE'),
         ]);
 
         Theater::create([
             'cinema_id' => 2,
             'theater_name' => 'HP001',
             'capacity' => 30,
-            'status' => 'Available',
+            'status' => config('constants.THEATER_STATUS.AVAILABLE'),
         ]);
 
         Theater::create([
             'cinema_id' => 3,
             'theater_name' => 'VP001',
             'capacity' => 30,
-            'status' => 'Available',
+            'status' => config('constants.THEATER_STATUS.AVAILABLE'),
         ]);
 
         Theater::create([
             'cinema_id' => 4,
             'theater_name' => 'PT001',
             'capacity' => 30,
-            'status' => 'Available',
+            'status' => config('constants.THEATER_STATUS.AVAILABLE'),
         ]);
     }
 }

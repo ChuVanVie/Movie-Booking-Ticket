@@ -7,9 +7,37 @@ return [
         'GUEST' => 2,
     ],
     'ROLE_NAME' => [
-        0 => 'ADMIN',
-        1 => 'USER',
-        2 => 'GUEST',
+        0 => 'Admin',
+        1 => 'User',
+        2 => 'Guest',
+    ],
+    'SHOWTIME_STATUS' => [
+        'NOW_SHOWING' => 0,
+        'UPCOMING' => 1,
+        'CANCELLED' => 2,
+    ],
+    'SHOWTIME_STATUS_NAME' => [
+        0 => 'Now Showing',
+        1 => 'Upcoming',
+        2 => 'Cancelled',
+    ],
+    'THEATER_STATUS' => [
+        'AVAILABLE' => 0,
+        'IN_USE' => 1,
+    ],
+    'THEATER_STATUS_NAME' => [
+        0 => 'Available',
+        1 => 'In Use',
+    ],
+    'SEAT_STATUS' => [
+        'AVAILABLE' => 0,
+        'UNAVAILABLE' => 1,
+        'RESERVED' => 2,
+    ],
+    'SEAT_STATUS_NAME' => [
+        0 => 'Available',
+        1 => 'Unavailable',
+        2 => 'Reserved',
     ],
     'REGEX_PATTERN' => [
         'URL' => '/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/'

@@ -20,6 +20,7 @@ class Showtime extends Model
         'theater_id',
         'start_time',
         'end_time',
+        'status'
     ];
 
     public function movie(){
@@ -32,6 +33,11 @@ class Showtime extends Model
 
     public function theater(){
         return $this->belongsTo(Theater::class, 'theater_id');
+    }
+
+    public function seatStatuses()
+    {
+        return $this->hasMany(SeatStatus::class);
     }
 
     public function reservations(){

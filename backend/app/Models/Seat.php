@@ -17,12 +17,16 @@ class Seat extends Model
     protected $fillable = [
         'theater_id',
         'seat_number',
-        'status',
         'price',
     ];
 
     public function theater(){
         return $this->belongsTo(Theater::class, 'theater_id');
+    }
+
+    public function seatStatuses()
+    {
+        return $this->hasMany(SeatStatus::class);
     }
 
 }

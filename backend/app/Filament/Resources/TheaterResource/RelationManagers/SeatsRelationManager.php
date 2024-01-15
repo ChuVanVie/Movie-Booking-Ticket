@@ -1,0 +1,84 @@
+<?php
+
+namespace App\Filament\Resources\TheaterResource\RelationManagers;
+
+use Filament\Forms;
+use Filament\Resources\Form;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Resources\Table;
+use Filament\Tables;
+
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\BelongsToSelect;
+
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+class SeatsRelationManager extends RelationManager
+{
+    protected static string $relationship = 'seats';
+
+    protected static ?string $recordTitleAttribute = 'theater_id';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Card::make()->schema([
+                    Section::make('Seat')
+                        ->schema([
+                            BelongsToSelect::make('theater_id')
+                                ->relationship('theater', 'theater_name')
+                                ->required()
+                                ->disabledOn('edit'),
+                            TextInput::make('seat_number')->maxLength(255)->required(),
+                            Select::make('status')
+                                ->options([
+                                    'Available' => 'Available',
+                                    'Not Available' => 'Not Available',
+                                    'Reserved' => 'Reserved',
+                                ])
+                                ->required(),
+                            TextInput::make('price')->numeric()->required(),
+                        ])->columns(2),
+                ])
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('id')->sortable(),
+                TextColumn::make('seat_number')->searchable()->alignment('center'),
+                TextColumn::make('status'),
+                TextColumn::make('price')->sortable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
+            ])
+            ->filters([
+                SelectFilter::make('Status')
+                    ->options([
+                        'Available' => 'Available',
+                        'Reserved' => 'Reserved',
+                    ])
+            ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]);
+    }    
+}

@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
                 TheaterSeeder::class,
                 SeatSeeder::class,
                 ShowtimeSeeder::class,
+                SeatStatusSeeder::class,
                 ReservationSeeder::class,
                 RateSeeder::class,
                 PaymentHistorySeeder::class,

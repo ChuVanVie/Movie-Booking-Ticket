@@ -87,6 +87,19 @@ PASSPORT_PASSWORD_GRANT_CLIENT_SECRET=K3AKgZGMtXo9lPXBDT6UFrnyr4o0XThrZvthfsUq
 # REDIS_PASSWORD=null
 # REDIS_PORT=6379
 # REDIS_CLIENT=predis
+```
+
+#### Cronjob configuration:
+This config is for the cronjob to run the command `php artisan schedule:run` every minute. It will config in cronjob of the server.
+```sh
+crontab -e
+```
+Add this line to the end of the file: `* * * * * docker exec backend php artisan schedule:run`
+
+Check the cronjob is running:
+```sh
+crontab -l
+```
 
 ### 5. Stop and clear services:
 
@@ -102,9 +115,7 @@ npm install
 yarn install
 
 yarn build
-```
 
-```sh
 Go to http://localhost:8080/ to test api on swagger.
 ```
 
