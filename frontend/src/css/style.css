@@ -1,0 +1,173 @@
+/* @import url(../css/base/table.css);
+@import url(../css/base/button.css);
+@import url(../css/base/input.css);
+@import url(../css/base/droplist.css); */
+
+:root {
+    --border-radius: 4px;
+    --primary-color: #041434;
+    --secondary-color: #004999;
+    --success-color: #50B83C;
+    --error-color: red;
+    --warning-color: rgb(206, 139, 14);
+    --info-color: rgb(64, 141, 241);
+    --border-color: #E0E0E0;
+    --btn-height: 36px;
+}
+
+@font-face {
+    font-family: tahoma;
+    src: url(../assets/fonts/Tahoma\ Regular\ font.ttf);
+}
+
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+  }
+
+/* body {
+    color: #fff;
+    background-color: #0f172a;
+} */
+
+.m-mask {
+    position: fixed;
+    background-color: #00000080;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 500;
+}
+
+.color-success {
+    color: var(--warning-color) !important;
+}
+
+.color-warning {
+    color: var(--warning-color) !important;
+}
+
+.color-error {
+    color: var(--error-color) !important;
+}
+
+.border-error {
+    border-color: red !important;
+}
+
+
+.flex {
+    display: flex;
+}
+
+.flex-c {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-r-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.items-center {
+    display: flex !important;
+    align-items: center;
+}
+
+.align-center {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.space-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.justify-end {
+    display: flex;
+    justify-content: end !important;
+}
+
+.no-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+
+.gap-8 {
+    gap: 8px;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+.gap-12 {
+    gap: 12px;
+}
+
+.gap-16 {
+    gap: 16px;
+}
+
+.gap-24 {
+    gap: 24px;
+}
+
+/* position */
+.fixed {
+    position: fixed;
+}
+
+.relative {
+    position: relative;
+}
+
+.sticky {
+    position: sticky;
+}
+
+.absolute {
+    position: absolute;
+}
+
+input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+@keyframes opacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+}
+@keyframes topToBot {
+    from {
+        transform: translateY(-20px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
