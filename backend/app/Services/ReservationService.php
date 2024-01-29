@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use App\Repositories\Reservation\ReservationRepository;
 use App\Repositories\Theater\TheaterRepository;
 use App\Repositories\Seat\SeatRepository;
+use App\Repositories\SeatStatus\SeatStatusRepository;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
@@ -19,12 +20,14 @@ class ReservationService
 
     protected TheaterRepository $theaterRepository;
     protected SeatRepository $seatRepository;
+    protected SeatStatusRepository $seatStatusRepository;
     protected ReservationRepository $reservationRepository;
 
-    public function __construct(TheaterRepository $theaterRepository, SeatRepository $seatRepository, ReservationRepository $reservationRepository)
+    public function __construct(TheaterRepository $theaterRepository, SeatRepository $seatRepository, SeatStatusRepository $seatStatusRepository, ReservationRepository $reservationRepository)
     {
         $this->theaterRepository = $theaterRepository;
         $this->seatRepository = $seatRepository;
+        $this->seatStatusRepository = $seatStatusRepository;
         $this->reservationRepository = $reservationRepository;
     }
 
@@ -118,7 +121,7 @@ class ReservationService
 
             //Update status seat 'Available' to 'Reserved'
             foreach ($seatIds as $seatId) {
-                $this->seatRepository->updateStatus($seatId);
+                $this->seatStatusRepository->updateStatus($showtimeId, $seatId);
             }
 
             DB::commit();

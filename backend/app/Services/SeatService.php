@@ -28,9 +28,9 @@ class SeatService
      * @return Response
      * @throws Exception
      */
-    public function getList(int $theaterId): Response
+    public function getList(int $showtimeId): Response
     {
-        $seats = $this->seatRepository->getList($theaterId);
+        $seats = $this->seatRepository->getList($showtimeId);
         
         if (!$seats) {
             return $this->apiResponseError('Seats not found', Response::HTTP_NOT_FOUND);

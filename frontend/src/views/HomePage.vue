@@ -1,12 +1,40 @@
 <script setup>
-import { reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import Flicking from "@egjs/vue3-flicking";
 import ThumbnailMovie from "@/components/ThumbnailMovie.vue";
+import TheLoading from "@/components/TheLoading.vue";
 import { AutoPlay, Pagination } from "@egjs/flicking-plugins";
 import "@egjs/vue3-flicking/dist/flicking.css";
 import "@egjs/flicking-plugins/dist/pagination.css";
+import { useAuthStore } from "../store/useAuth"
+import { useMovieStore } from "../store/useMovie"
+import { chunkArray } from "../helper/formatArray";
+// import { useAuthStore } from "../store/useAuth";
 
 const plugins = [new AutoPlay({ duration: 2000, direction: "NEXT", stopOnHover: false }), new Pagination({ type: 'bullet' })];
+
+const authStore = useAuthStore();
+const movieStore = useMovieStore();
+
+onMounted(async () => {
+    await movieStore.getAllMovie();
+});
+
+// const allMovies = movieStore.allMovie;
+
+// const currentIndex = ref(2);
+const isShowBtn = ref(true);
+
+// const listRowMovies = chunkArray(movieStore.allMovie, 4);
+// let displayedRowMovies = listRowMovies.slice(0, currentIndex.value);
+
+// const handleShowMoreBtn = () => {
+//     currentIndex.value += 2;
+//     displayedRowMovies = listRowMovies.slice(0, currentIndex.value);
+//     if (currentIndex.value >= listRowMovies.length) {
+//         isShowBtn.value = false;
+//     }
+// }
 
 const items = reactive([
     {
@@ -39,6 +67,7 @@ const items = reactive([
 </script>
 <template>
     <div id="homepage">
+        <TheLoading v-if="authStore.isLoading"></TheLoading>
         <Flicking :options="{ align: 'prev', circular: true, moveType: 'strict', panelsPerView: 1 }" :plugins="plugins"
             id="slideshow">
             <!-- <div v-for="(item, index) in items" :key="index" style="width: 60%; margin: 0 16px;"> -->
@@ -55,23 +84,11 @@ const items = reactive([
                 <button class="movie-btn">Phim sắp chiếu</button>
             </div>
             <div class="movies-list">
-                <div class="movies-row">
-                    <ThumbnailMovie></ThumbnailMovie>
-                    <ThumbnailMovie></ThumbnailMovie>
-                    <ThumbnailMovie></ThumbnailMovie>
-                    <ThumbnailMovie></ThumbnailMovie>
+                <TheLoading v-if="movieStore.isLoading"></TheLoading>
+                <div class="movies-row" v-for="row in chunkArray(movieStore.allMovie, 4)" :key="row">
+                    <ThumbnailMovie v-for="movie in row" :key="movie.id" :movie="movie"></ThumbnailMovie>
                 </div>
-                <div class="movies-row">
-                    <ThumbnailMovie></ThumbnailMovie>
-                    <ThumbnailMovie></ThumbnailMovie>
-                    <ThumbnailMovie></ThumbnailMovie>
-                    <ThumbnailMovie></ThumbnailMovie>
-                </div>
-                <div class="movies-row">
-                    <ThumbnailMovie></ThumbnailMovie>
-                    <ThumbnailMovie></ThumbnailMovie>
-                </div>
-                <div class="btn-more">
+                <div class="btn-more" @click="handleShowMoreBtn" v-if="isShowBtn">
                     <button>Xem Thêm ...</button>
                 </div>
             </div>
@@ -126,6 +143,10 @@ const items = reactive([
     background: #231f20;
     color: #cdc197;
     font-weight: bold;
+}
+
+.movies-list {
+    position: relative;
 }
 
 .movies-list .movies-row {

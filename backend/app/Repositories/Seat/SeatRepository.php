@@ -2,6 +2,7 @@
 namespace App\Repositories\Seat;
 
 use App\Models\Seat;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -18,10 +19,16 @@ class SeatRepository implements SeatRepositoryInterface
      * @param int $theaterId
      * @return Collection|null
      */
-    public function getList(int $theaterId): Collection {
+    public function getList(int $showtimeId): Collection {
+        $theaterId = DB::table('showtimes')
+            ->where('id', $showtimeId)
+            ->value('theater_id');
         return $this->seat 
                     ->where('theater_id', $theaterId)
-                    ->select(['id', 'seat_number', 'status', 'price'])
+                    ->select(['id', 'seat_number', 'price'])
+                    ->with(['seatStatuses' => function($query) use($showtimeId) {
+                        $query->where('showtime_id', $showtimeId)->select(['id', 'seat_id', 'status']);
+                    }])
                     ->orderBy('seat_number')
                     ->get()
                     ->groupBy(function ($seat) {

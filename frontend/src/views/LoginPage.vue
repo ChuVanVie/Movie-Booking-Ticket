@@ -1,14 +1,14 @@
 <script setup>
 
 import { ref } from "vue";
-// import { useAuthStore } from "../store/useAuth";
-// import { toast } from "vue3-toastify";
-// import { isValidEmail, isValidPassword } from "../common/validateForm";
-// import TheLoading from "../components/TheLoading.vue";
-// import { useRouter } from "vue-router";
+import TheLoading from "@/components/TheLoading.vue";
+import { useAuthStore } from "../store/useAuth";
+import { toast } from "vue3-toastify";
+import { isValidEmail, isValidPassword } from "../helper/validateForm.js";
+import { useRouter } from "vue-router";
 //
-// const authStore = useAuthStore();
-// const router = useRouter();
+const authStore = useAuthStore();
+const router = useRouter();
 const email = ref("");
 const password = ref("");
 
@@ -19,40 +19,41 @@ const handleClickShowPass = () => {
 };
 
 // Handle Login
-// const validateFormLogin = () => {
-//     if (!email.value || !password.value) {
-//         toast.error("Please enter all fields!");
-//         return true;
-//     } else if (!isValidPassword(password.value)) {
-//         toast.error("Password minimum 8 characters!");
-//         return true;
-//     } else if (!isValidEmail(email.value)) {
-//         toast.error("Please enter correct email format!");
-//         return true;
-//     }
-//     return false;
-// };
+const validateFormLogin = () => {
+    if (!email.value || !password.value) {
+        toast.error("Please enter all fields!");
+        return true;
+    } else if (!isValidEmail(email.value)) {
+        toast.error("Please enter correct email format!");
+        return true;
+    } else if (!isValidPassword(password.value)) {
+        toast.error("Password minimum 8 characters!");
+        return true;
+    }
+    return false;
+};
 
 const handleSubmitLogin = async () => {
-    // if (validateFormLogin()) {
-    //     return;
-    // }
+    if (validateFormLogin()) {
+        return;
+    }
 
-    // try {
-    //     await authStore.login({ email: email.value, password: password.value });
-    //     if (authStore.isLoggedIn) {
-    //         router.push("/");
-    //     } else {
-    //         toast.error("Login error!");
-    //     }
-    // } catch (error) {
-    //     toast.error("Login error!");
-    // }
+    try {
+        await authStore.login({ email: email.value, password: password.value });
+        if (authStore.isLoggedIn) {
+            router.push("/");
+        } else {
+            toast.error("Login error!");
+        }
+    } catch (error) {
+        toast.error("Login error!");
+    }
 };
 
 </script>
 <template>
     <div id="login-container">
+        <TheLoading v-if="authStore.isLoading"></TheLoading>
         <div class="left-container">
             <p>Booking Movie Cinema for Everyone, Everywhere</p>
             <div class="img-container">
@@ -61,7 +62,9 @@ const handleSubmitLogin = async () => {
             </div>
         </div>
         <div class="right-container">
-            <img src="../assets/img/teeiv-cinema-logo.png" alt="" width="180" height="60">
+            <router-link to="/">
+                <img src="../assets/img/teeiv-cinema-logo.png" alt="" width="180" height="60">
+            </router-link>
             <div class="title">
                 <h1>Welcome back</h1>
                 <p>Have a good day!</p>
@@ -96,6 +99,7 @@ const handleSubmitLogin = async () => {
 #login-container {
     background-color: #e6e6e6;
     display: flex;
+    position: relative;
 }
 
 .left-container {

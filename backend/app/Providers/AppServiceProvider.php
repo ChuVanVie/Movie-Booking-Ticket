@@ -51,6 +51,11 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton(
+            \App\Repositories\SeatStatus\SeatStatusRepositoryInterface::class,
+            \App\Repositories\SeatStatus\SeatStatusRepository::class,
+        );
+
+        $this->app->singleton(
             \App\Repositories\Reservation\ReservationRepositoryInterface::class,
             \App\Repositories\Reservation\ReservationRepository::class,
         );

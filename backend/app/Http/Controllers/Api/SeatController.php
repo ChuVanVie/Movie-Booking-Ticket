@@ -20,11 +20,11 @@ class SeatController extends Controller
      * @param Request $request
      * @return Response
      * @throws Exception
-     * @api /api/seats/theater{theaterId}
+     * @api /api/showtimes/{showtimeId}/seats
      */
     public function getListSeats(Request $request): Response
     {
-        return $this->seatService->getList($request->theaterId);
+        return $this->seatService->getList($request->showtimeId);
     }
 
     /**

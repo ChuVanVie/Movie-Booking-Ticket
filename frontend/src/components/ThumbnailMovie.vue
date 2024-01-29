@@ -1,18 +1,20 @@
 <script setup>
-import { reactive } from 'vue'
+import { defineProps } from 'vue'
+import { useRouter } from "vue-router";
+import { useMovieStore } from "../store/useMovie"
+import { formatDate } from "../helper/formatDateTime";
 
-const movie = reactive(
-    {
-        id: 1,
-        movie_name: "Đại Chiến Người Khổng Lồ (Phần Cuối)",
-        slug: "dai-chien-nguoi-khong-lo-phan-cuoi",
-        thumb_url: "https://img.ophim10.cc/uploads/movies/dai-chien-nguoi-khong-lo-phan-cuoi-thumb.jpg",
-        duration: "60 phút",
-        rating: 8.7,
-        showtime: "12/12/2023",
-        caption: "Đại Chiến Người Khổng Lồ (Phần Cuối)",
-    },
-);
+const router = useRouter();
+const movieStore = useMovieStore();
+
+const props = defineProps({
+    movie: Object,
+});
+
+const handleBooking = (movie) => {
+    movieStore.setMovieData({ movieId: movie.id, movieName: movie.movie_name });
+    router.push({ path: '/ticketing' });
+}
 
 </script>
 <template>
@@ -20,29 +22,30 @@ const movie = reactive(
         <div class="thumb-box">
             <span class="movie-rating">1</span>
             <span class="movie-img">
-                <img :src="movie.thumb_url" alt="">
+                <img :src="props.movie.thumb_url" alt="">
             </span>
             <div class="overlay">
-                <router-link to="/ticketing">
+                <div @click="handleBooking(props.movie)">
                     <button>Đặt vé</button>
-                </router-link>
-                <router-link :to="'/movies/' + movie.id + '/detail'">
+                </div>
+                <router-link :to="{ name: 'Detail Movie', params: { id: props.movie.id }, }">
                     <button>Chi tiết</button>
                 </router-link>
             </div>
         </div>
         <div class="text-box">
             <div class="movie-name">
-                <router-link :to="'/movies/' + movie.id + '/detail'">{{ movie.movie_name }}</router-link>
+                <router-link :to="'/movies/' + props.movie.id + '/detail'">{{ props.movie.movie_name
+                }}</router-link>
             </div>
             <div class="movie-info">
                 <div class="time">
-                    <span>{{ movie.duration }}</span>
+                    <span>{{ props.movie.duration }}</span>
                     <div style="height: 16px; margin: 0 4px; border: 1px solid #c5c5c5;"></div>
-                    <span>{{ movie.showtime }}</span>
+                    <span>{{ formatDate(props.movie.premiere_date) }}</span>
                 </div>
                 <div class="rating">
-                    <b>{{ movie.rating }}</b>
+                    <b>{{ props.movie.rating ? props.movie.rating : 0 }}</b>
                     <font-awesome-icon icon="fa-solid fa-star" style=" color: #ffff00; margin-left: 4px;" />
                 </div>
             </div>
@@ -84,7 +87,7 @@ const movie = reactive(
 }
 
 .thumb-box .movie-img img {
-    width: 100%;
+    width: 228px;
     height: 330px;
 }
 

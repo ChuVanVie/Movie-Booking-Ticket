@@ -41,4 +41,24 @@ class ShowtimeService
             Response::HTTP_OK
         );
     }
+
+    /**
+     * Get detail showtime
+     * @param int $showtimeId
+     * @return Response
+     * @throws Exception
+     */
+    public function getDetail(int $showtimeId): Response
+    {
+        $showtime = $this->showtimeRepository->getDetail($showtimeId);
+        
+        if (!$showtime) {
+            return $this->apiResponseError('Showtime not found', Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->apiResponse(
+            $showtime,
+            Response::HTTP_OK
+        );
+    }
 }

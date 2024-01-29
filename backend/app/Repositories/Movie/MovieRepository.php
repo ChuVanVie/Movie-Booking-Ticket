@@ -18,7 +18,8 @@ class MovieRepository implements MovieRepositoryInterface
     public function getAll(): Collection
     {
         return $this->movie
-                ->select('id', 'movie_name', 'slug', 'duration', 'year', 'rating', 'thumb_url')
+                ->select('id', 'movie_name', 'slug', 'duration', 'year', 'premiere_date', 'rating', 'thumb_url', 'poster_url')
+                ->orderBy('rating', 'desc')
                 ->get();
     }
 
@@ -47,17 +48,17 @@ class MovieRepository implements MovieRepositoryInterface
     {
         return $this->movie
                 ->where('movie_name', 'like', '%' . $name . '%')
-                ->where(function ($query) use ($category) {
-                    $query->whereHas('categories', function ($query) use ($category) {
-                                $query->where('slug', $category);
-                            });
+                ->when($category, function ($query) use ($category) {
+                    return $query->whereHas('categories', function ($query) use ($category) {
+                        $query->where('slug', $category);
+                    });
                 })
-                ->where(function ($query) use ($country) {
-                    $query->whereHas('country', function ($query) use ($country) {
-                                $query->where('slug', $country);
-                            });
+                ->when($country, function ($query) use ($country) {
+                    return $query->whereHas('country', function ($query) use ($country) {
+                        $query->where('slug', $country);
+                    });
                 })
-                ->select('id', 'movie_name', 'slug', 'duration', 'year', 'rating', 'thumb_url')
+                ->select('id', 'movie_name', 'slug', 'duration', 'year', 'premiere_date', 'rating', 'thumb_url')
                 ->get();
     }
 

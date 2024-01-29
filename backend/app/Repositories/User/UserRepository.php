@@ -37,7 +37,7 @@ class UserRepository implements UserRepositoryInterface
     public function findByPhoneNumber(string $phoneNumber): ?User
     {
         return $this->user
-            ->where('phone_number', $phoneNumber)
+            ->where('phone', $phoneNumber)
             ->first();
     }
 
