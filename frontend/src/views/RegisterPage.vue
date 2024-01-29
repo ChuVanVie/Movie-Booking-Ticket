@@ -2,11 +2,11 @@
 
 import { ref } from "vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
-// import TheLoading from "../components/TheLoading.vue";
+import TheLoading from "@/components/TheLoading.vue";
 import { useAuthStore } from "../store/useAuth";
-// import { isValidEmail, isValidPassword } from "../common/validateForm";
+import { isValidEmail, isValidPhoneNumber, isValidPassword } from "../helper/validateForm.js";
 import { toast } from "vue3-toastify";
-// import { formatDateOfBirth } from "../common/formatDateTime";
+import { formatDateOfBirth } from "../helper/formatDateTime";
 import { useRouter } from "vue-router";
 
 //
@@ -27,7 +27,9 @@ const customPosition = () => ({ top: 0 });
 const firstName = ref("");
 const lastName = ref("");
 const email = ref("");
+const phoneNumber = ref("");
 const dateOfBirth = ref("");
+const address = ref("");
 const password = ref("");
 const cfPassword = ref("");
 
@@ -38,19 +40,25 @@ const validateFormRegister = () => {
         !firstName.value ||
         !lastName.value ||
         !email.value ||
-        !password.value ||
-        !dateOfBirth.value
+        !phoneNumber.value ||
+        !dateOfBirth.value ||
+        !address.value ||
+        !password.value
     ) {
         toast.error("Please enter all fields!");
         return true;
     }
-    // else if (!isValidEmail(email.value)) {
-    //     toast.error("Please enter correct email format!");
-    //     return true;
-    // } else if (!isValidPassword(password.value)) {
-    //     toast.error("Password minimum 8 characters!");
-    //     return true;
-    // } 
+    else if (!isValidEmail(email.value)) {
+        toast.error("Please enter correct email format!");
+        return true;
+    }
+    else if (!isValidPhoneNumber(phoneNumber.value)) {
+        toast.error("Please enter correct phone number format!");
+        return true;
+    } else if (!isValidPassword(password.value)) {
+        toast.error("Password minimum 8 characters!");
+        return true;
+    }
     else if (cfPassword.value !== password.value) {
         toast.error("Password does not match!");
 
@@ -65,20 +73,26 @@ const handleSubmitRegister = async () => {
     }
     try {
         await authStore.register({
-            name: firstName.value + lastName.value,
+            name: firstName.value + ' ' + lastName.value,
             email: email.value,
             password: password.value,
             password_confirmation: cfPassword.value,
-            // dob: formatDateOfBirth(dateOfBirth.value),
+            phone: phoneNumber.value,
+            dob: formatDateOfBirth(dateOfBirth.value),
+            address: address.value,
         });
+        console.log(authStore.isRegister);
         if (authStore.isRegister) {
             toast.success("Register successful!");
             setTimeout(() => {
-                router.push("/auth/signup");
+                router.push("/auth/login");
             }, 2000);
         }
+        else {
+            toast.error(authStore.message.message);
+        }
     } catch (error) {
-        toast.error("Register error!");
+        console.log(error.data);
     }
 };
 
@@ -88,18 +102,20 @@ const handleSubmitRegister = async () => {
         <TheLoading />
     </div> -->
     <div id="signup-container">
+        <TheLoading v-if="authStore.isLoading"></TheLoading>
         <div class="left-container">
             <p>Booking Movie Cinema for Everyone, Everywhere</p>
             <div class="img-container">
                 <img src="../assets/img/cinemaImg.svg" alt="" class="t1">
-                <img src="../assets//img/EllipseSignIn.png" alt="" class="t2">
+                <img src="../assets/img/EllipseSignIn.png" alt="" class="t2">
             </div>
         </div>
         <div class="right-container">
-            <img src="../assets/img/teeiv-cinema-logo.png" alt="" width="180" height="60">
+            <router-link to="/">
+                <img src="../assets/img/teeiv-cinema-logo.png" alt="" width="180" height="60">
+            </router-link>
             <div class="title">
                 <h1>Create account</h1>
-                <p>For business, band or celebrity.</p>
             </div>
             <form @submit.prevent="handleSubmitRegister" class="signup-form">
                 <div class="form-group">
@@ -108,24 +124,29 @@ const handleSubmitRegister = async () => {
                         v-model="firstName" />
                 </div>
                 <div class="form-group">
-                    <label for="lastname">Last Name</label>
-                    <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Last name..."
+                    <label for="name">Last Name</label>
+                    <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Last name..."
                         v-model="lastName" />
                 </div>
                 <div class="form-group">
-                    <label for="email">Email or phone number</label>
+                    <label for="email">Email</label>
                     <input type="text" name="email" id="email" class="form-control" placeholder="Ex: myanlien14@gmail.com"
                         v-model="email" />
                 </div>
-                <!-- <div class="form-group">
-                    <label for="dob">Date of birth (MM/DD/YY)</label>
-                    <input type="text" name="dob" id="dob" class="form-control" placeholder="Date of Birth..."
-                        v-model="dateOfBirth" />
-                </div> -->
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" placeholder="Ex: 0824935011"
+                        v-model="phoneNumber" />
+                </div>
                 <div class="form-group">
                     <label for="dateOfBirth">Date of birth (MM/DD/YY)</label>
                     <VueDatePicker v-model="dateOfBirth" :alt-position="customPosition" placeholder="Date of Birth...">
                     </VueDatePicker>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" name="Address" id="Address" class="form-control" placeholder="Address..."
+                        v-model="address" />
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
@@ -161,6 +182,7 @@ const handleSubmitRegister = async () => {
 #signup-container {
     background-color: #e6e6e6;
     display: flex;
+    position: relative;
 }
 
 .left-container {
@@ -209,7 +231,7 @@ const handleSubmitRegister = async () => {
 .right-container {
     max-width: 60%;
     width: 100%;
-    padding: 60px 40px 40px 60px;
+    padding: 20px 40px 0 60px;
 }
 
 .right-container .title {

@@ -74,7 +74,7 @@ class AuthService
      */
     public function register(RegisterRequest $req): Response
     {
-        $credentials = $req->only(['email', 'password', 'name', 'phone']);
+        $credentials = $req->only(['email', 'password', 'name', 'phone', 'dob', 'address']);
 
         // Check email exists
         $user = $this->userRepository->findByEmail($credentials['email']);
@@ -100,7 +100,7 @@ class AuthService
             ]);
         } catch (Exception $e) {
             dd($e->getMessage());
-            throw new HttpResponseException($this->apiResponseError('Register failed', Response::HTTP_BAD_REQUEST));
+            throw new HttpResponseException($this->apiResponseError('Register failed', Response::HTTP_INTERNAL_SERVER_ERROR));
         }
 
         return $this->apiResponse(

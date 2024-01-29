@@ -1,119 +1,19 @@
 <script setup>
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from "../store/useAuth";
+import { allCinema, allCategory, allCountry } from "../helper/resource";
 import SearchCard from './SearchCard.vue';
 
 const router = useRouter();
+const authStore = useAuthStore();
 
-const allCinema = reactive([
-    {
-        id: 1,
-        cinemaName: 'Rạp Hà Nội',
-    },
-    {
-        id: 2,
-        cinemaName: 'Rạp Hải Phòng',
-    },
-    {
-        id: 3,
-        cinemaName: 'Rạp Vĩnh Phúc',
-    },
-    {
-        id: 4,
-        cinemaName: 'Rạp Phú Thọ',
-    },
-]);
-
-const allCategory = reactive([
-    {
-        id: 1,
-        categoryName: 'Tình Cảm',
-        slug: 'tinh-cam'
-    },
-    {
-        id: 2,
-        categoryName: 'Tâm Lý',
-        slug: 'tam-ly'
-    },
-    {
-        id: 3,
-        categoryName: 'Hành Động',
-        slug: 'hanh-dong'
-    },
-    {
-        id: 4,
-        categoryName: 'Kinh Dị',
-        slug: 'kinh-di'
-    },
-    {
-        id: 5,
-        categoryName: 'Phiêu Lưu',
-        slug: 'phieu-luu'
-    },
-    {
-        id: 6,
-        categoryName: 'Hình Sự',
-        slug: 'hinh-su'
-    },
-    {
-        id: 7,
-        categoryName: 'Bí Ẩn',
-        slug: 'bi-an'
-    },
-    {
-        id: 8,
-        categoryName: 'Chính Kịch',
-        slug: 'chinh-kich'
-    },
-    {
-        id: 9,
-        categoryName: 'Khoa Học',
-        slug: 'khoa-hoc'
-    },
-    {
-        id: 10,
-        categoryName: 'Viễn Tưởng',
-        slug: 'vien-tuong'
-    },
-]);
-
-const allCountry = reactive([
-    {
-        id: 1,
-        countryName: 'Hàn Quốc',
-        slug: 'han-quoc'
-    },
-    {
-        id: 2,
-        countryName: 'Trung Quốc',
-        slug: 'trung-quoc'
-    },
-    {
-        id: 3,
-        countryName: 'Canada',
-        slug: 'canada'
-    },
-    {
-        id: 4,
-        countryName: 'Âu Mỹ',
-        slug: 'au-my'
-    },
-    {
-        id: 5,
-        countryName: 'Thổ Nhĩ Kỳ',
-        slug: 'tho-nhi-ky'
-    },
-    {
-        id: 6,
-        countryName: 'Việt Nam',
-        slug: 'viet-nam'
-    },
-    {
-        id: 7,
-        countryName: 'Nhật Bản',
-        slug: 'nhat-ban'
-    },
-]);
+// Handle Logout
+const handleLogout = () => {
+    authStore.isLoggedIn = false;
+    authStore.logout({ token: authStore.accessToken });
+    router.push("/");
+};
 
 const filmType = reactive([
     'Phim đang chiếu',
@@ -140,7 +40,7 @@ const filmType = reactive([
                 <p>Rạp</p>
                 <div class="dropdown-menu">
                     <div class="dropdown-item" v-for="cinema in allCinema" :key="cinema.id">
-                        <router-link :to="'/cinemas/' + cinema.id" class="text">{{ cinema.cinemaName }}</router-link>
+                        <router-link :to="'/cinemas/' + cinema.id" class="text">{{ cinema.cinema_name }}</router-link>
                     </div>
                 </div>
             </div>
@@ -148,7 +48,7 @@ const filmType = reactive([
                 <p>Thể Loại</p>
                 <div class="dropdown-menu">
                     <div class="dropdown-item" v-for="category in allCategory" :key="category.id">
-                        <router-link :to="'/search?category=' + category.slug" class="text">{{ category.categoryName }}</router-link>
+                        <router-link :to="'/search?name=&category=' + category.slug + '&country='" class="text">{{ category.category_name }}</router-link>
                     </div>
                 </div>
             </div>
@@ -156,21 +56,19 @@ const filmType = reactive([
                 <p>Quốc Gia</p>
                 <div class="dropdown-menu">
                     <div class="dropdown-item" v-for="country in allCountry" :key="country.id">
-                        <router-link :to="'/search?country=' + country.slug" class="text">{{ country.countryName }}</router-link>
+                        <router-link :to="'/search?name=&category=&country=' + country.slug" class="text">{{ country.country_name }}</router-link>
                     </div>
                 </div>
             </div>
             <p style="font-size: 18px; font-weight: 600; cursor: pointer;" @click="router.push('/ticketing')">Đặt vé</p>
         </div>
-        <div class="home-user">
-            <!-- <font-awesome-icon icon="fa-solid fa-user" /> -->
-            <span>
-                <router-link to="/auth/login" class="auth">Đăng nhập</router-link>
-            </span>
-            <span> / </span> 
-            <span>
-                <router-link to="/auth/register" class="auth">Đăng kí</router-link>
-            </span>
+        <div class="home-user" v-if="authStore?.isLoggedIn">
+            <p>{{ authStore?.userLogin?.name }}</p>
+            <div class="auth" @click="handleLogout">Đăng xuất</div>
+        </div>
+        <div class="home-user" v-else>
+            <router-link to="/auth/login" class="auth">Đăng nhập</router-link>
+            <router-link to="/auth/register" class="auth">Đăng kí</router-link>
         </div>
         
     </div>
@@ -180,6 +78,7 @@ const filmType = reactive([
 #header {
     height: 80px;
     background-color: antiquewhite;
+    /* background: linear-gradient(90deg, rgb(0, 45, 255) 0%, rgb(0, 188, 212) 47%, rgb(0, 188, 212) 48%, rgb(130, 238, 198) 100%); */
     padding: 8px;
     display: flex;
     justify-content: center;
@@ -218,7 +117,7 @@ const filmType = reactive([
 }
 
 .dropdown-menu .dropdown-item {
-    width: 120px;
+    width: 130px;
     padding: 8px 12px;
 }
 
@@ -231,15 +130,21 @@ const filmType = reactive([
     color: #337ab7;
 }
 
-.home-user span .auth{
+.home-user {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.home-user .auth {
     font-size: 16px;
     color: #000;
     text-decoration: none;
+    cursor: pointer;
 }
 
-.home-user span .auth:hover {
+.home-user .auth:hover {
     color: #337ab7;
     text-decoration: underline;
 }
-
 </style>

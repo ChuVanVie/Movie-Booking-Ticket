@@ -18,4 +18,11 @@ interface ShowtimeRepositoryInterface
      */
     public function getShowtimes(?int $movieId, ?int $cinemaId, string $time): ?Collection;
 
+    /**
+     * Get detail showtime
+     * @param int $showtimeId
+     * @return Showtime|null
+     */
+    public function getDetail(int $showtimeId): ?Showtime ;
+
 }

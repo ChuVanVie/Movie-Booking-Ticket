@@ -42,7 +42,10 @@ class ShowtimeRepository implements ShowtimeRepositoryInterface
             ->where('status', config('constants.SHOWTIME_STATUS.NOW_SHOWING'))
             ->whereDate('start_time', '<=', $time)
             ->whereDate('end_time', '>=', $time)
-            ->with(['theater' => function($query) {
+            ->with(['cinema' => function($query) {
+                        $query->select(['id', 'cinema_name']);
+                    },
+                    'theater' => function($query) {
                         $query->select(['id', 'theater_name', 'capacity', 'status'])
                         ->withCount(['seats as available_seats_count' => function($query){
                                 $query->where('status', 'Available');
@@ -59,6 +62,32 @@ class ShowtimeRepository implements ShowtimeRepositoryInterface
         $showtimes = $query->get();
 
         return $showtimes;
+    }
+
+    /**
+     * Get detail showtime
+     * @param int $showtimeId
+     * @return Showtime|null
+     */
+    public function getDetail(int $showtimeId): ?Showtime {
+        return $this->showtime
+                    ->where(['id' => $showtimeId])
+                    ->select(['id', 'movie_id', 'cinema_id', 'theater_id', 'start_time', 'end_time'])
+                        ->with([
+                            //Get movie info
+                            'movie' => function($query) {
+                                $query->select(['id', 'movie_name']);
+                            },
+                            //Get cinema info
+                            'cinema' => function($query) {
+                                $query->select(['id', 'cinema_name']);
+                            },
+                            //Get theater info
+                            'theater' => function($query) {
+                                $query->select(['id', 'theater_name']);
+                            },
+                        ])
+                    ->first();
     }
 
 }

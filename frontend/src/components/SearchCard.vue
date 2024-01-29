@@ -4,16 +4,19 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const searchString = reactive();
+const searchInfo = reactive({
+    string: "",
+});
 const search = function () {
-    router.push("/search");
+    router.push({ path: "/search", query: { name: searchInfo.string, category: '', country: '' } });
+    searchInfo.string = "";
 };
 
 </script>
 <template>
     <div class="home-search" @keydown.enter="search()">
         <font-awesome-icon icon="fa-solid fa-magnifying-glass" style="font-size: 16px; cursor: pointer;" @click="search" />
-        <input type="text" placeholder="Search" v-model="searchString">
+        <input type="text" placeholder="Search" v-model="searchInfo.string">
     </div>
 </template>
 <style scoped>

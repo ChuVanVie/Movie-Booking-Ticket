@@ -27,7 +27,8 @@ class CinemaRepository implements CinemaRepositoryInterface
         return $this->cinema
                 ->where('id', $cinemaId)
                 ->select('id', 'cinema_name', 'slug', 'address', 'phone')
-                ->withCount('theaters')->withSum('theaters', 'capacity')
+                ->with('theaters')
+                ->withSum('theaters', 'capacity')
                 ->first();
     }
 

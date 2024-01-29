@@ -17,7 +17,7 @@ class ShowtimeController extends Controller
         $this->showtimeService = $showtimeService;
     }
 
-    /** Get detail cinema
+    /** Get all showtime
      * @param ShowtimeRequest $request
      * @return Response
      * @throws Exception
@@ -26,5 +26,16 @@ class ShowtimeController extends Controller
     public function getShowtimes(ShowtimeRequest $request): Response
     {
         return $this->showtimeService->getShowtimes($request->movieId, $request->cinemaId, $request->time);
+    }
+
+    /** Get detail showtime
+     * @param Request $request
+     * @return Response
+     * @throws Exception
+     * @api /api/showtimes/{showtimeId}
+     */
+    public function getDetailShowtime(Request $request): Response
+    {
+        return $this->showtimeService->getDetail($request->showtimeId);
     }
 }

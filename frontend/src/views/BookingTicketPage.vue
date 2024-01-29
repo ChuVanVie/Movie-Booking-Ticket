@@ -1,161 +1,125 @@
 <script setup>
-import { reactive } from 'vue';
-const movieList = reactive([
-    {
-        id: 1,
-        movieName: "Người đánh cá",
-    },
-    {
-        id: 2,
-        movieName: "Người đánh cá",
-    },
-    {
-        id: 3,
-        movieName: "Người đánh cá",
-    },
-    {
-        id: 4,
-        movieName: "Người đánh cá",
-    },
-    {
-        id: 5,
-        movieName: "Người đánh cá",
-    },
-    {
-        id: 6,
-        movieName: "Người đánh cá",
-    },
-    {
-        id: 7,
-        movieName: "Người đánh cá",
-    },
-    {
-        id: 8,
-        movieName: "Người đánh cá",
-    },
-    {
-        id: 9,
-        movieName: "Người đánh cá",
-    },
-    {
-        id: 10,
-        movieName: "Người đánh cá",
-    }
-]);
+import { reactive, onBeforeMount } from 'vue';
+import { useRouter } from "vue-router";
+import TheLoading from "@/components/TheLoading.vue";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import { useAuthStore } from "../store/useAuth";
+import { useMovieStore } from "../store/useMovie"
+import { useCinemaStore } from "../store/useCinema"
+import { useShowtimeStore } from "../store/useShowtime"
 
-const cinemaList = reactive([
-    {
-        id: 1,
-        cinemaName: 'Hà Nội(3)',
-    },
-    {
-        id: 2,
-        cinemaName: 'Hải Phòng(1)',
-    },
-    {
-        id: 3,
-        cinemaName: 'Vĩnh Phúc(1)',
-    },
-    {
-        id: 4,
-        cinemaName: 'Phú Thọ(1)',
-    },
-]);
+const router = useRouter();
 
-const theaterList = reactive([
-    {
-        id: 1,
-        cinemaId: 1,
-        theaterName: 'HN001',
-    },
-    {
-        id: 2,
-        cinemaId: 1,
-        theaterName: 'HN002',
-    },
-    {
-        id: 3,
-        cinemaId: 1,
-        theaterName: 'HN003',
-    },
-    // {
-    //     id: 4,
-    //     cinemaId: 2,
-    //     theaterName: 'HP001',
-    // },
-    // {
-    //     id: 5,
-    //     cinemaId: 3,
-    //     theaterName: 'VP001',
-    // },
-    // {
-    //     id: 6,
-    //     cinemaId: 4,
-    //     theaterName: 'PT001',
-    // },
-]);
+
+const authStore = useAuthStore();
+const movieStore = useMovieStore();
+const cinemaStore = useCinemaStore();
+const showtimeStore = useShowtimeStore();
 
 const currentDate = new Date();
-const daysOfWeek = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+// const daysOfWeek = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+// const customPosition = () => ({ top: 0 });
+const customDateFormat = (date) => {
+    date = new Date(date);
+    console.log(date.getMonth());
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+};
 
-const showNow = () => {
-    console.log(`Ngày: ${currentDate.getDate()}, Tháng: ${currentDate.getMonth() + 1}, Năm: ${currentDate.getFullYear()}, Thứ: ${daysOfWeek[currentDate.getDay()]}`);
-}
+const customDateApi = (date) => {
+    date = new Date(date);
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+};
 
-const cinemaChoosed = reactive({
-    id: cinemaList[0].id,
-    cinemaName: cinemaList[0].cinemaName,
+const showtimeInfo = reactive({
+    dateChoosed: customDateFormat(currentDate),
+    cinemaChoosed: {
+        id: null,
+        cinemaName: null,
+    },
+    theaterChoosed: {
+        id: null,
+        cinemaId: null,
+        theaterName: null,
+    },
+    movieChoosed: {
+        id: "",
+        movieName: "",
+    }
 });
 
-const theaterChoosed = reactive({
-    id: null,
-    cinemaId: null,
-    theaterName: null,
+onBeforeMount(async () => {
+    await cinemaStore.getAllCinema();
+    await movieStore.getAllMovie();
+    // console.log(movieStore.movieChoosed);
+    if (movieStore.movieChoosed) {
+        showtimeInfo.movieChoosed.id = movieStore.movieChoosed.movieId;
+        showtimeInfo.movieChoosed.movieName = movieStore.movieChoosed.movieName;
+    }
 });
 
-const movieChoosed = reactive({
-    id: null,
-    movieName: null,
-});
+const selectCinema = async (cinema) => {
+    showtimeInfo.cinemaChoosed.id = cinema.id;
+    showtimeInfo.cinemaChoosed.cinemaName = cinema.cinema_name;
 
-const selectCinema = (cinema) => {
-    cinemaChoosed.id = cinema.id;
-    cinemaChoosed.cinemaName = cinema.cinemaName;
-    // theaterList = theaterList.map((item) => {
-    //     return item.cinemaId = cinema.id;
-    // })
+    await cinemaStore.getInfoCinema(cinema.id);
 }
 
-const selectMovie = (movie) => {
-    movieChoosed.id = movie.id;
-    movieChoosed.movieName = movie.movieName;
+const selectMovie = async (movie) => {
+    showtimeInfo.movieChoosed.id = movie.id;
+    showtimeInfo.movieChoosed.movieName = movie.movie_name;
+
+    if (showtimeInfo.dateChoosed && showtimeInfo.theaterChoosed.cinemaId) {
+        await showtimeStore.getAllShowtime(showtimeInfo.movieChoosed.id, showtimeInfo.theaterChoosed.cinemaId, customDateApi(showtimeInfo.dateChoosed));
+    }
 }
 
-const removeMovie = () => {
-    movieChoosed.id = null;
-    movieChoosed.movieName = null;
+const removeMovie = async () => {
+    showtimeInfo.movieChoosed.id = "";
+    showtimeInfo.movieChoosed.movieName = "";
+
+    if (showtimeInfo.dateChoosed && showtimeInfo.theaterChoosed.cinemaId) {
+        await showtimeStore.getAllShowtime(showtimeInfo.movieChoosed.id, showtimeInfo.theaterChoosed.cinemaId, customDateApi(showtimeInfo.dateChoosed));
+    }
 }
 
-const selectTheater = (theater) => {
-    theaterChoosed.id = theater.id;
-    theaterChoosed.cinemaId = theater.cinemaId;
-    theaterChoosed.theaterName = theater.theaterName;
+const selectTheater = async (theater) => {
+    showtimeInfo.theaterChoosed.id = theater.id;
+    showtimeInfo.theaterChoosed.cinemaId = theater.cinema_id;
+    showtimeInfo.theaterChoosed.theaterName = theater.theater_name;
+
+    if (showtimeInfo.dateChoosed) {
+        await showtimeStore.getAllShowtime(showtimeInfo.movieChoosed.id, showtimeInfo.theaterChoosed.cinemaId, customDateApi(showtimeInfo.dateChoosed));
+    }
 }
 
 const removeTheater = () => {
-    theaterChoosed.id = null;
-    theaterChoosed.cinemaId = null;
-    theaterChoosed.theaterName = null;
+    showtimeInfo.theaterChoosed.id = null;
+    showtimeInfo.theaterChoosed.cinemaId = null;
+    showtimeInfo.theaterChoosed.theaterName = null;
+}
+
+const selectShowtime = (showtime) => {
+    if (!authStore.isLoggedIn) {
+        router.push("/auth/login");
+    }
+    else {
+        console.log(showtime);
+        router.push({ name: "Seats in Showtime", params: { id: showtime.id } });
+    }
 }
 
 </script>
 <template>
     <div id="showtime-info">
         <div class="calendar" style="text-align: center;">
-            <button @click="showNow">Chọn ngày</button>
+            <p style="font-size: 18px; font-weight: bold;">Ngày chiếu: </p>
+            <VueDatePicker v-model="showtimeInfo.dateChoosed" :alt-position="customPosition" :format="customDateFormat"
+                placeholder="Chọn ngày chiếu..." style="width: 180px">
+            </VueDatePicker>
         </div>
         <div class="all-info">
             <div class="cinema-info">
+                <TheLoading v-if="cinemaStore.isLoading"></TheLoading>
                 <p class="header-i">Rạp</p>
                 <div class="sub-i" style="gap: 48px;">
                     <p style="font-size: 16px; font-weight: bold; color: #231f20;">Rạp chiếu phim của tôi</p>
@@ -163,18 +127,19 @@ const removeTheater = () => {
                 </div>
                 <div class="cinema-container">
                     <div class="cinema-list">
-                        <div class="cinema-item" v-for="cinema in cinemaList" :key="cinema.id"
-                            :class="{ 'cinema-selected': cinema.id == cinemaChoosed.id }" @click="selectCinema(cinema)">
-                            <p>{{ cinema.cinemaName }}</p>
+                        <div class="cinema-item" v-for="cinema in cinemaStore.allCinema" :key="cinema.id"
+                            :class="{ 'cinema-selected': cinema.id == showtimeInfo.cinemaChoosed.id }"
+                            @click="selectCinema(cinema)">
+                            <p>{{ cinema.cinema_name }}</p>
                         </div>
                     </div>
                     <div class="theater-list">
-                        <div class="theater-item" v-for="theater in theaterList" :key="theater.id"
-                            :class="{ 'theater-selected': theater.id == theaterChoosed.id }"
+                        <div class="theater-item" v-for="theater in cinemaStore.infoCinema.theaters" :key="theater.id"
+                            :class="{ 'theater-selected': theater.id == showtimeInfo.theaterChoosed.id }"
                             @click="selectTheater(theater)">
                             <font-awesome-icon icon="fa-solid fa-check" class="i-theater-selected"
                                 style="margin-right: 24px; visibility: hidden;" />
-                            <p>{{ theater.theaterName }}</p>
+                            <p>{{ theater.theater_name }}</p>
                         </div>
                     </div>
                 </div>
@@ -187,11 +152,11 @@ const removeTheater = () => {
                     <p style="font-size: 16px; cursor: pointer;">Đánh giá tốt nhất</p>
                 </div>
                 <div class="movie-container">
-                    <div class="movie-item" v-for="movie in movieList" :key="movie.id"
-                        :class="{ 'movie-selected': movie.id == movieChoosed.id }" @click="selectMovie(movie)">
+                    <div class="movie-item" v-for="movie in movieStore.allMovie" :key="movie.id"
+                        :class="{ 'movie-selected': movie.id == showtimeInfo.movieChoosed.id }" @click="selectMovie(movie)">
                         <font-awesome-icon icon="fa-solid fa-check" class="i-movie-selected"
                             style="margin-right: 12px; visibility: hidden;" />
-                        <p>{{ movie.movieName }}</p>
+                        <p>{{ movie.movie_name }}</p>
                     </div>
                 </div>
             </div>
@@ -201,21 +166,21 @@ const removeTheater = () => {
         <div class="showtime-choosed">
             <div class="date showtime-item">
                 <p>Ngày</p>
-                <p class="ptent">13/01/2024(Thứ Bảy)</p>
+                <p class="ptent">{{ customDateFormat(showtimeInfo.dateChoosed) }}</p>
             </div>
             <div class="cinema showtime-item">
                 <p>Rạp</p>
-                <p class="ptent" v-if="theaterChoosed.id == null">Vui lòng chọn phòng chiếu</p>
+                <p class="ptent" v-if="showtimeInfo.theaterChoosed.id == null">Vui lòng chọn phòng chiếu</p>
                 <div class="choosed" v-else>
-                    <p>{{ theaterChoosed.theaterName }}</p>
+                    <p>{{ showtimeInfo.theaterChoosed.theaterName }}</p>
                     <font-awesome-icon icon="fa-solid fa-square-xmark" class="i-cancel" @click="removeTheater" />
                 </div>
             </div>
             <div class="movie showtime-item">
                 <p>Phim</p>
-                <p class="ptent" v-if="movieChoosed.id == null">Vui lòng chọn phim</p>
+                <p class="ptent" v-if="!showtimeInfo.movieChoosed.id">Vui lòng chọn phim</p>
                 <div class="choosed" v-else>
-                    <p>{{ movieChoosed.movieName }}</p>
+                    <p>{{ showtimeInfo.movieChoosed.movieName }}</p>
                     <font-awesome-icon icon="fa-solid fa-square-xmark" class="i-cancel" @click="removeMovie" />
                 </div>
             </div>
@@ -227,67 +192,30 @@ const removeTheater = () => {
                     chiếu phim có thể chênh lệch 15 phút do chiếu quảng cáo, giới thiệu phim ra rạp</p>
             </div>
             <div class="screen-list">
-                <div class="screen" v-if="theaterChoosed.id != null">
-                    <div class="screen-container">
+                <TheLoading v-if="showtimeStore.isLoading"></TheLoading>
+                <div class="screen" v-if="Array.isArray(showtimeStore.allShowtime) && showtimeStore.allShowtime.length > 0">
+                    <div class="screen-container" v-for="showtime in showtimeStore.allShowtime" :key="showtime.id">
                         <div class="movie-choosed">
-                            <p>Quỷ Cẩu</p>
+                            <p>{{ showtime.movie.movie_name }}</p>
                             <font-awesome-icon icon="fa-solid fa-circle-exclamation"
                                 style="font-size: 20px; color: #777;" />
                         </div>
-                        <div class="cinema-choosed">Hà Đông</div>
+                        <div class="cinema-choosed">{{ showtime.cinema.cinema_name }}</div>
                         <div class="all-screen">
-                            <div class="screen-item" v-for="i in 3" :key="i">
-                                <div class="theater-name">Screen 06</div>
-                                <div class="theater-time">11:30 ~ 13:29</div>
-                                <div class="available-seats">100 / 120 Ghế trống</div>
+                            <div class="screen-item" @click="selectShowtime(showtime)">
+                                <div class="theater-name">{{ showtime.theater.theater_name }}</div>
+                                <div class="theater-time">{{ showtime.start_time.substring(11, 16) }} ~ {{
+                                    showtime.end_time.substring(11, 16) }}</div>
+                                <div class="available-seats">{{ showtime.theater.available_seats_count }} / {{
+                                    showtime.theater.capacity }} Ghế trống</div>
                             </div>
                         </div>
                     </div>
-                    <div class="screen-container">
-                        <div class="movie-choosed">
-                            <p>Quỷ Cẩu</p>
-                            <font-awesome-icon icon="fa-solid fa-circle-exclamation"
-                                style="font-size: 20px; color: #777;" />
-                        </div>
-                        <div class="cinema-choosed">Hà Đông</div>
-                        <div class="all-screen">
-                            <div class="screen-item" v-for="i in 8" :key="i">
-                                <div class="theater-name">Screen 06</div>
-                                <div class="theater-time">11:30 ~ 13:29</div>
-                                <div class="available-seats">100 / 120 Ghế trống</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="screen-container">
-                        <div class="movie-choosed">
-                            <p>Quỷ Cẩu</p>
-                            <font-awesome-icon icon="fa-solid fa-circle-exclamation"
-                                style="font-size: 20px; color: #777;" />
-                        </div>
-                        <div class="cinema-choosed">Hà Đông</div>
-                        <div class="all-screen">
-                            <div class="screen-item" v-for="i in 2" :key="i">
-                                <div class="theater-name">Screen 06</div>
-                                <div class="theater-time">11:30 ~ 13:29</div>
-                                <div class="available-seats">100 / 120 Ghế trống</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="screen-container">
-                        <div class="movie-choosed">
-                            <p>Quỷ Cẩu</p>
-                            <font-awesome-icon icon="fa-solid fa-circle-exclamation"
-                                style="font-size: 20px; color: #777;" />
-                        </div>
-                        <div class="cinema-choosed">Hà Đông</div>
-                        <div class="all-screen">
-                            <div class="screen-item" v-for="i in 3" :key="i">
-                                <div class="theater-name">Screen 06</div>
-                                <div class="theater-time">11:30 ~ 13:29</div>
-                                <div class="available-seats">100 / 120 Ghế trống</div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                <div class="please-choose"
+                    v-else-if="Array.isArray(showtimeStore.allShowtime) && showtimeStore.allShowtime.length == 0">
+                    <font-awesome-icon icon="fa-solid fa-circle-exclamation" style="font-size: 24px; color: #777;" />
+                    <p style=" font-size: 18px; color: #777; margin-left: 8px;">Không tìm thấy lịch chiếu phù hợp.</p>
                 </div>
                 <div class="please-choose" v-else>
                     <font-awesome-icon icon="fa-solid fa-circle-exclamation" style="font-size: 24px; color: #777;" />
@@ -304,7 +232,12 @@ const removeTheater = () => {
 }
 
 #showtime-info .calendar {
-    height: 120px;
+    height: 80px;
+    padding-top: 32px;
+    margin: 0 200px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 
 #showtime-info .all-info {
@@ -313,6 +246,7 @@ const removeTheater = () => {
     background-color: #fff;
     border-top: 1px solid #000;
     display: flex;
+    position: relative;
 }
 
 .all-info .header-i {
@@ -370,6 +304,7 @@ const removeTheater = () => {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    position: relative;
 }
 
 .theater-list .theater-item {

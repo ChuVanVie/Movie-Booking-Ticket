@@ -34,7 +34,7 @@ class SeatStatusSeeder extends Seeder
             SeatStatus::create([
                 'showtime_id' => 3,
                 'seat_id' => $id + 40,
-                'status' => in_array($id, [42, 43]) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
+                'status' => ($id == 42 || $id == 43) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
             ]);
         }
 
@@ -58,7 +58,7 @@ class SeatStatusSeeder extends Seeder
             SeatStatus::create([
                 'showtime_id' => 6,
                 'seat_id' => $id,
-                'status' => in_array($id, [12, 13]) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
+                'status' => ($id == 12 || $id == 13) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
             ]);
         }
 
@@ -74,7 +74,7 @@ class SeatStatusSeeder extends Seeder
             SeatStatus::create([
                 'showtime_id' => 8,
                 'seat_id' => $id + 40,
-                'status' => in_array($id, [52]) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
+                'status' => ($id == 52) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
             ]);
         }
 
@@ -82,7 +82,7 @@ class SeatStatusSeeder extends Seeder
             SeatStatus::create([
                 'showtime_id' => 9,
                 'seat_id' => $id + 80,
-                'status' => in_array($id, [98, 99, 100, 101]) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
+                'status' => ($id == 98 || $id == 99 || $id == 100 || $id == 101) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
             ]);
         }
 
@@ -98,7 +98,7 @@ class SeatStatusSeeder extends Seeder
             SeatStatus::create([
                 'showtime_id' => 11,
                 'seat_id' => $id + 180,
-                'status' => in_array($id, [181, 182]) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
+                'status' => ($id == 181 || $id == 182) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
             ]);
         }
 
@@ -114,7 +114,7 @@ class SeatStatusSeeder extends Seeder
             SeatStatus::create([
                 'showtime_id' => 13,
                 'seat_id' => $id + 80,
-                'status' => in_array($id, [83, 84]) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
+                'status' => ($id == 83 || $id == 84) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
             ]);
         }
 
@@ -122,7 +122,7 @@ class SeatStatusSeeder extends Seeder
             SeatStatus::create([
                 'showtime_id' => 14,
                 'seat_id' => $id + 150,
-                'status' => in_array($id, [175, 176, 177]) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
+                'status' => ($id == 175 || $id == 176 || $id == 177) ? config('constants.SEAT_STATUS.RESERVED') : config('constants.SEAT_STATUS.AVAILABLE'),
             ]);
         }
 

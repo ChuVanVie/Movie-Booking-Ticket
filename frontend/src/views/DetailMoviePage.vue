@@ -1,7 +1,68 @@
 <script setup>
+import { ref, reactive, onMounted } from 'vue'
+import { useRouter, useRoute } from "vue-router";
+import { toast } from "vue3-toastify";
+import TheLoading from "@/components/TheLoading.vue";
+import { formatDate } from "../helper/formatDateTime";
+import { useAuthStore } from "../store/useAuth"
+import { useMovieStore } from "../store/useMovie"
+import { useRateStore } from "../store/useRate"
+
+const route = useRoute();
+const router = useRouter();
+const movieId = ref(route.params.id);
+
+const rateInfo = reactive({
+    movieId: movieId.value,
+    star: null,
+    comment: "",
+});
+
+const authStore = useAuthStore();
+const movieStore = useMovieStore();
+const rateStore = useRateStore();
+onMounted(async () => {
+    await movieStore.getDetailMovie(movieId.value);
+});
+
+const handleBooking = (movie) => {
+    // console.log(movie.id, movie.movie_name);
+    movieStore.setMovieData({ movieId: movie.id, movieName: movie.movie_name });
+    router.push({ path: '/ticketing' });
+}
+
+const handleTyping = () => {
+    if (!authStore.isLoggedIn) {
+        router.push('/auth/login');
+    }
+}
+
+const handleNewRate = async (movieId, star, comment) => {
+    if (star === null || isNaN(star)) {
+        toast.error("Please fill a rate star!");
+    }
+    else {
+        await rateStore.createNewRate({
+            movieId: movieId,
+            star: star,
+            comment: comment,
+            token: authStore.accessToken
+        });
+        if (rateStore.isRateSuccess) {
+            rateInfo.star = null;
+            rateInfo.comment = "";
+            toast.success("Create new rate successful!");
+        }
+        else {
+            toast.error(rateStore.errMsg.message);
+        }
+    }
+}
+
 
 </script>
 <template>
+    <TheLoading v-if="movieStore.isLoading"></TheLoading>
     <div id="detail-movie">
         <div class="badge">
             <p>Trang chủ</p>
@@ -11,44 +72,40 @@
         <div class="intro-container">
             <div class="left-intro">
                 <div class="poster">
-                    <img src="https://img.ophim10.cc/uploads/movies/cong-chua-da-den-gio-tham-van-roi-poster.jpg" alt=""
+                    <img :src="movieStore.detailMovie.poster_url" alt=""
                         style="width: 100%; height: 400px; cursor: pointer">
                 </div>
-                <div class="btn-reserve">
-                    <router-link to="/ticketing">
-                        <button>Đặt vé</button>
-                    </router-link>
+                <div class="btn-reserve" @click="handleBooking(movieStore.detailMovie)">
+                    <button>Đặt vé</button>
                 </div>
             </div>
             <div class="right-intro">
-                <p class="movie-name">Đại Chiến Người Khổng Lồ (Phần Cuối)</p>
-                <p class="movie-desc">Trấn Hồn Nhai Phần 3 &nbsp; kể về câu chuyện Thiếu niên trấn hồng tướng Tào Diệm Binh
-                    sở hữu cơ thể Võ Thần, vì muốn tìm tung tích cha mẹ đã cùng thiếu nữ Hạ Linh và các đồng môn xâm nhập
-                    cấm địa Linh vực Lô Hoa Cổ Lâu, đồng thời triển khai giao chiến cùng tứ vương bảo vệ Phong Hoa Tuyết
-                    Nguyệt.</p>
+                <p class="movie-name">{{ movieStore.detailMovie.movie_name }}</p>
+                <p class="movie-desc">{{ movieStore.detailMovie.desc }}</p>
                 <div class="movie-info">
                     <p class="key">Thể loại:</p>
-                    <p class="value">Hành Động, Viễn Tưởng, Kinh dị</p>
+                    <p class="value"><span v-for="category in movieStore.detailMovie.categories"
+                            :key="category.category_id">{{ category.category_name }}, </span></p>
                 </div>
                 <div class="movie-info">
                     <p class="key">Quốc gia: </p>
-                    <p class="value">Nhật Bản</p>
+                    <!-- <p class="value">{{ movieStore.detailMovie.country.country_name }}</p> -->
                 </div>
                 <div class="movie-info">
                     <p class="key">Thời lượng:</p>
-                    <p class="value">60 phút</p>
+                    <p class="value">{{ movieStore.detailMovie.duration }}</p>
                 </div>
                 <div class="movie-info">
                     <p class="key">Năm: </p>
-                    <p class="value">2023</p>
+                    <p class="value">{{ movieStore.detailMovie.year }}</p>
                 </div>
                 <div class="movie-info">
                     <p class="key">Ngày khởi chiếu: </p>
-                    <p class="value">12/12/2023</p>
+                    <p class="value">{{ formatDate(movieStore.detailMovie.premiere_date) }}</p>
                 </div>
                 <div class="movie-info">
                     <p class="key">Đánh giá: </p>
-                    <p class="value">8.7/10</p>
+                    <p class="value">{{ movieStore.detailMovie.rating ? movieStore.detailMovie.rating : 0 }}</p>
                 </div>
             </div>
         </div>
@@ -66,7 +123,8 @@
         </video>
         <div class="rating-container">
             <div class="total-rate">
-                <div class="number-rate">0 ratings</div>
+                <div class="number-rate">{{ movieStore.detailMovie.rates ? movieStore.detailMovie.rates.length : 0 }}
+                    ratings</div>
                 <div class="sort-by">
                     Sort by Oldest/Newest
                 </div>
@@ -78,55 +136,32 @@
                     <div class="star-area">
                         <p class="star-title">Xếp hạng</p>
                         <div class="starscore"></div>
-                        <div class="star-sum">
-                            <span>0</span> điểm
+                        <div class="star-sum" style="margin-top: 4px;">
+                            <input type="number" min="1" max="10" style="padding-left: 4px;" v-model="rateInfo.star"> điểm
                         </div>
                     </div>
-                    <textarea title="Nhập đánh giá phim" id="" cols="30" rows="10" placeholder="Bạn có thể đánh giá phim sau khi đăng nhập."></textarea>
-                    <div class="btn-send-rate">
+                    <textarea title="Nhập đánh giá phim" id="" cols="30" rows="10"
+                        placeholder="Bạn có thể đánh giá phim sau khi đăng nhập." v-model="rateInfo.comment"
+                        @click="handleTyping"></textarea>
+                    <div class="btn-send-rate" @click="handleNewRate(rateInfo.movieId, rateInfo.star, rateInfo.comment)">
                         <button>Gửi đánh giá</button>
                     </div>
                 </div>
                 <div class="b-line" style="margin-top: 16px;"></div>
                 <div class="list-rate">
-                    <div class="rate-item">
+                    <div class="rate-item" v-for="rate in movieStore.detailMovie.rates" :key="rate.id">
                         <div class="left-rate">
                             <div class="items-center gap-12">
-                                <span class="user-name">Em việt</span>
-                                <div class="starscore"></div><span>8</span>
+                                <span class="user-name">{{ rate.user.name }}</span>
+                                <div class="starscore"></div><span>{{ rate.star }}</span>
                             </div>
-                            <div class="rate-comment">Hài phết!! Xem giải trí thôi chứ để mà xuất sắc thì chưa tới..</div>
+                            <div class="rate-comment">{{ rate.comment }}</div>
                         </div>
                         <div class="right-rate">
-                            <p class="rate-created-at">12/01/2024</p>
+                            <p class="rate-created-at">{{ formatDate(rate.created_at) }}</p>
                         </div>
                     </div>
                     <div class="c-line"></div>
-                    <div class="rate-item">
-                        <div class="left-rate">
-                            <div class="items-center gap-12">
-                                <span class="user-name">Em việt</span>
-                                <div class="starscore"></div><span>8</span>
-                            </div>
-                            <div class="rate-comment">Hài phết!! Xem giải trí thôi chứ để mà xuất sắc thì chưa tới..</div>
-                        </div>
-                        <div class="right-rate">
-                            <p class="rate-created-at">12/01/2024</p>
-                        </div>
-                    </div>
-                    <div class="c-line"></div>
-                    <div class="rate-item">
-                        <div class="left-rate">
-                            <div class="items-center gap-12">
-                                <span class="user-name">Em việt</span>
-                                <div class="starscore"></div><span>8</span>
-                            </div>
-                            <div class="rate-comment">Hài phết!! Xem giải trí thôi chứ để mà xuất sắc thì chưa tới..</div>
-                        </div>
-                        <div class="right-rate">
-                            <p class="rate-created-at">12/01/2024</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -153,7 +188,7 @@
 }
 
 .intro-container .left-intro {
-    width: 20%;
+    width: 25%;
     margin-right: 48px;
 }
 
@@ -181,7 +216,8 @@
     padding: 16px 0;
 }
 
-.right-intro p {
+.right-intro p,
+.right-intro span {
     font-size: 18px;
 }
 
@@ -325,6 +361,7 @@
 
 .all-rate .list-rate .rate-item {
     padding: 0 48px;
+    margin-bottom: 16px;
     display: flex;
     Justify-content: space-between;
 }
