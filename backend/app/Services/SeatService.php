@@ -23,7 +23,7 @@ class SeatService
     }
 
     /**
-     * Get list seats of theater
+     * Get list seats in showtime
      * @param int $theaterId
      * @return Response
      * @throws Exception
@@ -38,30 +38,6 @@ class SeatService
 
         return $this->apiResponse(
             $seats,
-            Response::HTTP_OK
-        );
-    }
-
-    /**
-     * Update status of seat
-     * @param int $seatId
-     * @param string $status
-     * @return Response
-     * @throws Exception
-     */
-    public function updateStatus(int $seatId): Response
-    {
-        try {
-            $this->seatRepository->updateStatus($seatId);
-        } catch (Exception $e) {
-            return $this->apiResponseError(
-                'Update status seat failed!', 
-                Response::HTTP_INTERNAL_SERVER_ERROR,
-            );
-        }
-
-        return $this->apiResponse(
-            'Update status seat successful!',
             Response::HTTP_OK
         );
     }

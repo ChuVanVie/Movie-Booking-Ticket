@@ -69,16 +69,4 @@ class SeatRepository implements SeatRepositoryInterface
         return $totalPrice;
     }
 
-    /**
-     * Update status of seat in theater
-     * @param int $seatId
-     * @param string $status
-     * @return bool
-     */
-    public function updateStatus(int $seatId): bool {
-        return $this->seat
-                    ->where('id', $seatId)
-                    ->update(['status' => 'Reserved']);
-    }
-
 }

@@ -51,7 +51,6 @@ Route::get('/showtimes/{showtimeId}', [ShowtimeController::class, 'getDetailShow
 
 // Apis seat
 Route::get('/showtimes/{showtimeId}/seats', [SeatController::class, 'getListSeats'])->where(['showtimeId' => '[0-9]+'])->middleware('auth:api');
-// Route::post('/seats/{seatId}/update-status', [SeatController::class, 'updateStatusSeat'])->where(['seatId' => '[0-9]+'])->middleware('auth:api');
 
 // Apis reservation
 Route::get('/reservations', [ReservationController::class, 'getAllReservations'])->middleware('auth:api');

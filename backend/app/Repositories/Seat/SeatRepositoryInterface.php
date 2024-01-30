@@ -29,12 +29,4 @@ interface SeatRepositoryInterface
      */
     public function calculateTotalPrice(array $seatIds): int;
 
-    /**
-     * Update status of seat in theater
-     * @param int $seatId
-     * @param string $status
-     * @return bool
-     */
-    public function updateStatus(int $seatId): bool;
-
 }

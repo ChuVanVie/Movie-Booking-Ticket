@@ -7,10 +7,25 @@ info:
 servers:
   - url: http://localhost:8080/api
     description: local server
+  - url: http://18.139.6.218:8080/api
+    description: production server
+
 
 tags:
   - name: auth
     description: Everything about Api Authentication
+  - name: movies
+    description: Everything about Api Movies
+  - name: cinemas
+    description: Everything about Api Cinemas
+  - name: showtimes
+    description: Everything about Api Showtimes
+  - name: seats
+    description: Everything about Api Seats
+  - name: reservations
+    description: Everything about Api Reservations
+  - name: rates
+    description: Everything about Api Rates
 
 paths:
   /auth/login:
@@ -302,6 +317,579 @@ paths:
                   success:
                     type: boolean
                     default: false
+
+  /movies:
+    get:
+      tags:
+        - movies
+      summary: Api get all movies
+      description: Get all movies
+      operationId: getAllMovies
+      responses:
+        "200":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "404":
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Not Found!'
+
+  /movies/{movieId}:
+    get:
+      tags:
+        - movies
+      summary: Api get detail movie
+      description: Get detail movie
+      operationId: getDetailMovie
+      parameters:
+      - name: movieId
+        in: path
+        required: true
+        description: The ID of the movie
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "404":
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Not Found!'
+
+  /search/movies:
+    get:
+      tags:
+        - movies
+      summary: Api search movie
+      description: Search movie
+      operationId: searchMovie
+      parameters:
+      - name: name
+        in: query
+        required: false
+        description: Search query for movies by movie_name
+        schema:
+          type: string
+      - name: country
+        in: query
+        required: false
+        description: Search query for movies by country(slug)
+        schema:
+          type: string
+      - name: category
+        in: query
+        required: false
+        description: Search query for movies by category(slug)
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "404":
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Not Found!'
+
+  /cinemas:
+    get:
+      tags:
+        - cinemas
+      summary: Api get all cinemas
+      description: Get all cinemas
+      operationId: getAllCinemas
+      responses:
+        "200":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "404":
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Not Found!'
+
+  /cinemas/{cinemaId}:
+    get:
+      tags:
+        - cinemas
+      summary: Api get detail cinema
+      description: Get detail cinema
+      operationId: getDetailCinema
+      parameters:
+      - name: cinemaId
+        in: path
+        required: true
+        description: The ID of the cinema
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "404":
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Not Found!'
+
+  /showtimes:
+    get:
+      tags:
+        - showtimes
+      summary: Api get all showtimes
+      description: Get all showtimes
+      operationId: getAllShowtimes
+      parameters:
+      - name: movieId
+        in: query
+        required: false
+        description: Info movie in showtime
+        schema:
+          type: integer
+      - name: cinemaId
+        in: query
+        required: false
+        description: Info Cinema in showtime
+        schema:
+          type: integer
+      - name: time
+        in: query
+        required: true
+        description: Date which showtime can occured
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "404":
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Not Found!'
+
+  /showtimes/{showtimeId}:
+    get:
+      tags:
+        - showtimes
+      summary: Api get detail showtime
+      description: Get detail showtime
+      operationId: getDetailShowtime
+      parameters:
+      - name: showtimeId
+        in: path
+        required: true
+        description: The ID of the showtime
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "404":
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Not Found!'
+
+  /showtimes/{showtimeId}/seats:
+    get:
+      tags:
+        - seats
+      summary: Api get seats of showtime
+      description: Get seats of showtime
+      operationId: getSeatsOfShowtime
+      parameters:
+      - name: showtimeId
+        in: path
+        required: true
+        description: The ID of the showtime
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "404":
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Not Found!'
+      security:
+        - bearerAuth: [ ]
+
+  /reservations:
+    get:
+      tags:
+        - reservations
+      summary: Api get all reservations of user
+      description: Get all reservations of user
+      operationId: getAllReservations
+      responses:
+        "200":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "404":
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Not Found!'
+      security:
+        - bearerAuth: [ ]
+
+  /reservations/{reservationId}:
+    get:
+      tags:
+        - reservations
+      summary: Api get detail of reservation
+      description: Get detail of reservation
+      operationId: getDetailReservation
+      parameters:
+      - name: reservationId
+        in: path
+        required: true
+        description: The ID of the reservation
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "404":
+          description: Not Found!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Not Found!'
+      security:
+        - bearerAuth: [ ]
+
+  /reservations/new-reservation:
+    post:
+      tags:
+        - reservations
+      summary: Api create new reservation
+      description: Create new reservation
+      operationId: createNewReservation
+      requestBody:
+        description: new reservation properties
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                showtime_id:
+                  type: integer
+                  default: 1
+                seat_ids:
+                  type: array
+                  items:
+                    type: integer
+
+      responses:
+        "201":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "500":
+          description: An error occured!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'An error occured!'
+      security:
+        - bearerAuth: [ ]
+
+  /rates/new-rating:
+    post:
+      tags:
+        - rates
+      summary: Api create new rate
+      description: Create new rate
+      operationId: createNewRate
+      requestBody:
+        description: new rate properties
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                movie_id:
+                  type: integer
+                  default: 1
+                star:
+                  type: integer
+                  default: 0
+                comment:
+                  type: string
+                  default: ''
+
+      responses:
+        "201":
+          description: Successfully!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: true
+                  code:
+                    type: integer
+                    default: 200
+                  data:
+                    type: object
+        "400":
+          description: Bad request!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'Bad request!'
+        "500":
+          description: An error occured!
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    default: false
+                  message:
+                    type: string
+                    default: 'An error occured!'
+      security:
+        - bearerAuth: [ ]
+
         
 components:
   schemas:
