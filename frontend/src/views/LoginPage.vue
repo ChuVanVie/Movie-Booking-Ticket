@@ -66,17 +66,17 @@ const handleSubmitLogin = async () => {
                 <img src="../assets/img/teeiv-cinema-logo.png" alt="" width="180" height="60">
             </router-link>
             <div class="title">
-                <h1>Welcome back</h1>
-                <p>Have a good day!</p>
+                <h1>Chào mừng quay trở lại</h1>
+                <p>Chúc bạn có một ngày tốt lành!</p>
             </div>
             <form @submit.prevent="handleSubmitLogin" class="login-form">
                 <div class="form-group">
-                    <label for="email">Email or phone number</label>
+                    <label for="email">Email hoặc SĐT</label>
                     <input type="text" name="email" id="email" class="form-control" placeholder="Ex: myanlien14@gmail.com"
                         v-model="email" />
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Mật khẩu</label>
                     <div class="show-pass">
                         <input :type="showPass ? 'text' : 'password'" name="password" id="password" class="form-control"
                             placeholder="Password ..." v-model="password" />
@@ -85,11 +85,11 @@ const handleSubmitLogin = async () => {
                             @click="handleClickShowPass" />
                     </div>
                 </div>
-                <button type="submit" class="login-btn">Log In</button>
+                <button type="submit" class="login-btn">Đăng nhập</button>
             </form>
             <p class="no-account">
-                Don’t have an account?
-                <router-link to="/auth/register">Sign Up</router-link>
+                Bạn chưa có tài khoản?
+                <router-link to="/auth/register">Đăng ký</router-link>
             </p>
         </div>
     </div>

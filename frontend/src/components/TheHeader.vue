@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from "../store/useAuth";
 import { allCinema, allCategory, allCountry } from "../helper/resource";
@@ -8,17 +8,29 @@ import SearchCard from './SearchCard.vue';
 const router = useRouter();
 const authStore = useAuthStore();
 
-// Handle Logout
-const handleLogout = () => {
-    authStore.isLoggedIn = false;
-    authStore.logout({ token: authStore.accessToken });
-    router.push("/");
-};
-
 const filmType = reactive([
     'Phim đang chiếu',
     'Phim sắp chiếu'
 ]);
+
+const isShowUserOptions = ref(false);
+
+const showUserOptions = () => {
+    isShowUserOptions.value = !isShowUserOptions.value;
+}
+
+const goToReservationPage = () => {
+    isShowUserOptions.value = false;
+    router.push("/reservations");
+}
+
+// Handle Logout
+const handleLogout = () => {
+    isShowUserOptions.value = false;
+    authStore.isLoggedIn = false;
+    authStore.logout({ token: authStore.accessToken });
+    router.push("/");
+};
 
 </script>
 <template lang="">
@@ -63,12 +75,16 @@ const filmType = reactive([
             <p style="font-size: 18px; font-weight: 600; cursor: pointer;" @click="router.push('/ticketing')">Đặt vé</p>
         </div>
         <div class="home-user" v-if="authStore?.isLoggedIn">
-            <p>{{ authStore?.userLogin?.name }}</p>
-            <div class="auth" @click="handleLogout">Đăng xuất</div>
+            <p style="font-size: 16px; font-weight: 600;">{{ authStore?.userLogin?.name }}</p>
+            <font-awesome-icon icon="fa-solid fa-chevron-down" style="font-size: 16px; cursor: pointer;" @click="showUserOptions" />
+            <div class="user-options" v-if="isShowUserOptions" v-outside="showUserOptions">
+                <div class="user-option">Thông tin tài khoản</div>
+                <div class="user-option" @click="goToReservationPage">Các vé đã đặt</div>
+                <div class="user-option" @click="handleLogout">Đăng xuất</div>
+            </div>
         </div>
         <div class="home-user" v-else>
             <router-link to="/auth/login" class="auth">Đăng nhập</router-link>
-            <router-link to="/auth/register" class="auth">Đăng kí</router-link>
         </div>
         
     </div>
@@ -133,7 +149,30 @@ const filmType = reactive([
 .home-user {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    position: relative;
+}
+
+.home-user .user-options {
+    width: 130%;
+    overflow-y: auto;
+    position: absolute;
+    left: 0;
+    top: 28px;
+    z-index: 1;
+    display: block;
+    margin-top: 2px;
+    background-color: #f9f9f9;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.user-options .user-option {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.user-options .user-option:hover {
+    color: #337ab7;
 }
 
 .home-user .auth {
@@ -142,6 +181,7 @@ const filmType = reactive([
     text-decoration: none;
     cursor: pointer;
 }
+
 
 .home-user .auth:hover {
     color: #337ab7;

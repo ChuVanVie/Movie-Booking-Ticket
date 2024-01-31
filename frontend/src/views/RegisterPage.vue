@@ -115,16 +115,16 @@ const handleSubmitRegister = async () => {
                 <img src="../assets/img/teeiv-cinema-logo.png" alt="" width="180" height="60">
             </router-link>
             <div class="title">
-                <h1>Create account</h1>
+                <h1>Đăng ký tài khoản</h1>
             </div>
             <form @submit.prevent="handleSubmitRegister" class="signup-form">
                 <div class="form-group">
-                    <label for="firstName">First Name</label>
+                    <label for="firstName">Họ và tên đệm</label>
                     <input type="text" name="firstName" id="firstName" class="form-control" placeholder="First name..."
                         v-model="firstName" />
                 </div>
                 <div class="form-group">
-                    <label for="name">Last Name</label>
+                    <label for="name">Tên</label>
                     <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Last name..."
                         v-model="lastName" />
                 </div>
@@ -134,22 +134,22 @@ const handleSubmitRegister = async () => {
                         v-model="email" />
                 </div>
                 <div class="form-group">
-                    <label for="phoneNumber">Phone Number</label>
+                    <label for="phoneNumber">SĐT</label>
                     <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" placeholder="Ex: 0824935011"
                         v-model="phoneNumber" />
                 </div>
                 <div class="form-group">
-                    <label for="dateOfBirth">Date of birth (MM/DD/YY)</label>
+                    <label for="dateOfBirth">Ngày sinh (MM/DD/YY)</label>
                     <VueDatePicker v-model="dateOfBirth" :alt-position="customPosition" placeholder="Date of Birth...">
                     </VueDatePicker>
                 </div>
                 <div class="form-group">
-                    <label for="address">Address</label>
+                    <label for="address">Địa chỉ</label>
                     <input type="text" name="Address" id="Address" class="form-control" placeholder="Address..."
                         v-model="address" />
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Mật khẩu</label>
                     <div class="show-pass">
                         <input :type="showPass ? 'text' : 'password'" name="password" id="password" class="form-control"
                             placeholder="Password ..." v-model="password" />
@@ -159,7 +159,7 @@ const handleSubmitRegister = async () => {
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="cfpassword">Confirm password</label>
+                    <label for="cfpassword">Xác nhận mật khẩu</label>
                     <div class="show-pass">
                         <input :type="showConfirmPass ? 'text' : 'password'" name="cfpassword" id="cfpassword"
                             class="form-control" placeholder="Confirm Password ..." v-model="cfPassword" />
@@ -168,11 +168,11 @@ const handleSubmitRegister = async () => {
                             " @click="handleClickShowConfirmPass" />
                     </div>
                 </div>
-                <button type="submit" class="signup-btn">Create Account</button>
+                <button type="submit" class="signup-btn">Đăng ký</button>
             </form>
             <p class="no-account">
-                Allready have a account?
-                <router-link to="/auth/login">Sign Up</router-link>
+                Bạn đã có tài khoản?
+                <router-link to="/auth/login">Đăng nhập</router-link>
             </p>
         </div>
     </div>
