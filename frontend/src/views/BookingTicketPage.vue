@@ -21,7 +21,6 @@ const currentDate = new Date();
 // const customPosition = () => ({ top: 0 });
 const customDateFormat = (date) => {
     date = new Date(date);
-    console.log(date.getMonth());
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 };
 
@@ -123,7 +122,8 @@ const selectShowtime = (showtime) => {
                 <p class="header-i">Rạp</p>
                 <div class="sub-i" style="gap: 48px;">
                     <p style="font-size: 16px; font-weight: bold; color: #231f20;">Rạp chiếu phim của tôi</p>
-                    <p style="font-size: 13px; color: #777;">Bạn có thể kiểm tra sau khi đăng nhập.</p>
+                    <p style="font-size: 13px; color: #777;" v-if="!authStore.isLoggedIn">Bạn có thể kiểm tra sau khi đăng
+                        nhập.</p>
                 </div>
                 <div class="cinema-container">
                     <div class="cinema-list">

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
-import { useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import TheLoading from "@/components/TheLoading.vue";
 import { toast } from "vue3-toastify";
 import { useAuthStore } from "../store/useAuth";
@@ -8,6 +8,7 @@ import { useShowtimeStore } from "../store/useShowtime";
 import { useReservationStore } from "../store/useReservation";
 
 const route = useRoute();
+const router = useRouter();
 const showtimeId = ref(route.params.id);
 
 const authStore = useAuthStore();
@@ -81,6 +82,7 @@ const handlePayment = async () => {
         });
 
         if (reservationStore.isCreatedSuccess) {
+            router.push('/');
             toast.success("Create new reservation successful!");
         }
         else {
@@ -149,14 +151,15 @@ const handlePayment = async () => {
         <div id="reservation-container">
             <div class="showtime">
                 <p class="title">Thông tin suất chiếu</p>
-                <!-- <p class="showtime-info">Movie: <span style="font-size: 18px; font-weight: 600; margin-left: 8px">{{
-                    showtimeStore.detailShowtime.movie.movie_name }}</span></p> -->
-                <!-- <p class="showtime-info">Rạp: <span style="font-size: 18px; font-weight: 600; margin-left: 8px">{{
-                    showtimeStore.detailShowtime.cinema.cinema_name }}</span></p> -->
-                <!-- <p class="showtime-info">Phòng chiếu: <span style="font-size: 18px; font-weight: 600; margin-left: 8px">{{
-                    showtimeStore.detailShowtime.theater.theater_name }}</span></p> -->
-                <p class="showtime-info">Thời gian: <span style="font-size: 18px; font-weight: 600; margin-left: 8px">{{
-                    showtimeStore.detailShowtime.start_time }}</span></p>
+                <p class="showtime-info">Movie: <span style="font-size: 18px; font-weight: 600; margin-left: 8px">{{
+                    showtimeStore.detailShowtime.movie.movie_name }}</span></p>
+                <p class="showtime-info">Rạp: <span style="font-size: 18px; font-weight: 600; margin-left: 8px">{{
+                    showtimeStore.detailShowtime.cinema.cinema_name }}</span></p>
+                <p class="showtime-info">Phòng chiếu: <span style="font-size: 18px; font-weight: 600; margin-left: 8px">{{
+                    showtimeStore.detailShowtime.theater.theater_name }}</span></p>
+                <p class="showtime-info">Thời gian: <span style="font-size: 18px; font-weight: 600; margin-left: 8px">
+                        {{ showtimeStore.detailShowtime.start_time.substring(11, 16) }} ~ {{
+                            showtimeStore.detailShowtime.end_time.substring(11, 16) }}</span></p>
             </div>
             <div class="seats-selected">
                 <p class="title">Chỗ ngồi đã chọn</p>
